@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Head -50)",
+      "PowerShell($nodePaths = @\\(\"C:\\\\Program Files\\\\nodejs\\\\node.exe\", \"C:\\\\Program Files \\(x86\\)\\\\nodejs\\\\node.exe\", \"$env:APPDATA\\\\npm\\\\node.exe\", \"$env:ProgramFiles\\\\nodejs\\\\node.exe\"\\); foreach \\($p in $nodePaths\\) { if \\(Test-Path $p\\) { Write-Output \"Found: $p\" } })",
+      "PowerShell(Start-Process \"c:\\\\Users\\\\Daniel Whibley\\\\OneDrive - National Drones\\\\Desktop\\\\3AW website\\\\index.html\")",
+      "PowerShell($env:PATH = \"C:\\\\Program Files\\\\nodejs;\" + $env:PATH; Set-Location \"C:\\\\Users\\\\Daniel Whibley\\\\OneDrive - National Drones\\\\Desktop\\\\3AW website\"; & \"C:\\\\Program Files\\\\nodejs\\\\node.exe\" snap-theme.mjs)"
+    ]
+  }
+}

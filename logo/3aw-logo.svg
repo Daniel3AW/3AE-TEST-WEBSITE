@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 220" width="520" height="220">
+  <!-- "3" in black -->
+  <text
+    x="10"
+    y="190"
+    font-family="'Arial Black', 'Franklin Gothic Heavy', 'Impact', sans-serif"
+    font-size="200"
+    font-weight="900"
+    fill="#1a1a1a"
+    letter-spacing="-8"
+  >3</text>
+
+  <!-- "A" in black -->
+  <text
+    x="148"
+    y="190"
+    font-family="'Arial Black', 'Franklin Gothic Heavy', 'Impact', sans-serif"
+    font-size="200"
+    font-weight="900"
+    fill="#1a1a1a"
+    letter-spacing="-8"
+  >A</text>
+
+  <!-- "W" in dark green -->
+  <text
+    x="308"
+    y="190"
+    font-family="'Arial Black', 'Franklin Gothic Heavy', 'Impact', sans-serif"
+    font-size="200"
+    font-weight="900"
+    fill="#1e5c2e"
+    letter-spacing="-8"
+  >W</text>
+</svg>
