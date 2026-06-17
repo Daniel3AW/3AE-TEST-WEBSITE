@@ -563,7 +563,18 @@
   <div class="max-w-7xl mx-auto flex items-center justify-between h-20">
     <!-- Logo -->
     <a href="#" class="flex-shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-light rounded-sm">
-      <img id="nav-logo-img" src="logo/3AW-primary-dark.png" alt="3 Axis Works" style="height:44px;width:auto;display:block;" />
+      <svg id="nav-logo-img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 60" style="height:44px;width:auto;display:block;" role="img" aria-label="3 Axis Works">
+        <defs><clipPath id="nav-ic"><rect x="2" y="2" width="56" height="56" rx="10"/></clipPath></defs>
+        <g clip-path="url(#nav-ic)">
+          <line x1="20.7" y1="2" x2="20.7" y2="58" stroke="#2a7a3e" stroke-width="1.2" opacity="0.75"/>
+          <line x1="39.3" y1="2" x2="39.3" y2="58" stroke="#2a7a3e" stroke-width="1.2" opacity="0.75"/>
+          <line x1="2" y1="20.7" x2="58" y2="20.7" stroke="#2a7a3e" stroke-width="1.2" opacity="0.75"/>
+          <line x1="2" y1="39.3" x2="58" y2="39.3" stroke="#2a7a3e" stroke-width="1.2" opacity="0.75"/>
+          <text x="30" y="30" text-anchor="middle" dominant-baseline="central" font-family="'Arial Black',sans-serif" font-size="42" font-weight="900" fill="white" fill-opacity="0.13">3</text>
+        </g>
+        <rect x="2" y="2" width="56" height="56" rx="10" fill="none" stroke="#2a7a3e" stroke-width="2.5"/>
+        <text x="70" y="30" text-anchor="start" dominant-baseline="central" font-family="'Arial Black','Franklin Gothic Heavy',Impact,sans-serif" font-size="44" font-weight="900" fill="var(--c-logo)">AW</text>
+      </svg>
     </a>
 
     <!-- Desktop nav links -->
@@ -1384,7 +1395,18 @@
   <div class="max-w-7xl mx-auto">
     <div class="grid md:grid-cols-4 gap-12 py-16">
       <div class="md:col-span-2">
-        <img id="footer-logo-img" src="logo/3AW-primary-dark.png" alt="3 Axis Works" class="mb-5" style="height:36px;width:auto;" />
+        <svg id="footer-logo-img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 60" style="height:38px;width:auto;display:block;margin-bottom:1.25rem;" role="img" aria-label="3 Axis Works">
+          <defs><clipPath id="footer-ic"><rect x="2" y="2" width="56" height="56" rx="10"/></clipPath></defs>
+          <g clip-path="url(#footer-ic)">
+            <line x1="20.7" y1="2" x2="20.7" y2="58" stroke="#2a7a3e" stroke-width="1.2" opacity="0.75"/>
+            <line x1="39.3" y1="2" x2="39.3" y2="58" stroke="#2a7a3e" stroke-width="1.2" opacity="0.75"/>
+            <line x1="2" y1="20.7" x2="58" y2="20.7" stroke="#2a7a3e" stroke-width="1.2" opacity="0.75"/>
+            <line x1="2" y1="39.3" x2="58" y2="39.3" stroke="#2a7a3e" stroke-width="1.2" opacity="0.75"/>
+            <text x="30" y="30" text-anchor="middle" dominant-baseline="central" font-family="'Arial Black',sans-serif" font-size="42" font-weight="900" fill="white" fill-opacity="0.13">3</text>
+          </g>
+          <rect x="2" y="2" width="56" height="56" rx="10" fill="none" stroke="#2a7a3e" stroke-width="2.5"/>
+          <text x="70" y="30" text-anchor="start" dominant-baseline="central" font-family="'Arial Black','Franklin Gothic Heavy',Impact,sans-serif" font-size="44" font-weight="900" fill="var(--c-logo)">AW</text>
+        </svg>
         <p class="text-white/30 text-sm max-w-xs" style="line-height: 1.8;">Precision 3D printing for engineers, designers, and businesses. Based in Perth, WA.</p>
         <div class="flex gap-3 mt-6">
           <a href="#" aria-label="Instagram" class="w-9 h-9 rounded-sm flex items-center justify-center text-white/30 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-light" style="border: 1px solid rgba(255,255,255,0.08);">
@@ -1446,9 +1468,6 @@
       sunActive.style.display   = isLight ? '' : 'none';
       sunIdle.style.display     = isLight ? 'none' : '';
       moonIdle.style.display    = isLight ? '' : 'none';
-      const logoSrc = isLight ? 'logo/3AW-primary-light.png' : 'logo/3AW-primary-dark.png';
-      document.getElementById('nav-logo-img').src    = logoSrc;
-      document.getElementById('footer-logo-img').src = logoSrc;
     }
 
     btn.addEventListener('click', () => {
