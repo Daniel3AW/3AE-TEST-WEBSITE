@@ -563,7 +563,7 @@
   <div class="max-w-7xl mx-auto flex items-center justify-between h-20">
     <!-- Logo -->
     <a href="#" class="flex-shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-light rounded-sm">
-      <img src="logo/3AW-primary-dark (7).png" alt="3 Axis Works" height="40" style="height:40px;width:auto;" />
+      <img id="nav-logo-img" src="logo/3AW-primary-dark (7).png" alt="3 Axis Works" height="40" style="height:40px;width:auto;" />
     </a>
 
     <!-- Desktop nav links -->
@@ -1384,7 +1384,7 @@
   <div class="max-w-7xl mx-auto">
     <div class="grid md:grid-cols-4 gap-12 py-16">
       <div class="md:col-span-2">
-        <img src="logo/3AW-primary-dark (7).png" alt="3 Axis Works" class="mb-5" style="height:36px;width:auto;" />
+        <img id="footer-logo-img" src="logo/3AW-primary-dark (7).png" alt="3 Axis Works" class="mb-5" style="height:36px;width:auto;" />
         <p class="text-white/30 text-sm max-w-xs" style="line-height: 1.8;">Precision 3D printing for engineers, designers, and businesses. Based in Perth, WA.</p>
         <div class="flex gap-3 mt-6">
           <a href="#" aria-label="Instagram" class="w-9 h-9 rounded-sm flex items-center justify-center text-white/30 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-light" style="border: 1px solid rgba(255,255,255,0.08);">
@@ -1446,6 +1446,9 @@
       sunActive.style.display   = isLight ? '' : 'none';
       sunIdle.style.display     = isLight ? 'none' : '';
       moonIdle.style.display    = isLight ? '' : 'none';
+      const logoSrc = isLight ? 'logo/3AW-primary-light (6).png' : 'logo/3AW-primary-dark (7).png';
+      document.getElementById('nav-logo-img').src    = logoSrc;
+      document.getElementById('footer-logo-img').src = logoSrc;
     }
 
     btn.addEventListener('click', () => {
