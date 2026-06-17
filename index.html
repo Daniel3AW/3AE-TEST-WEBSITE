@@ -1327,35 +1327,38 @@
 
     <div class="reveal" style="transition-delay: 0.1s;">
       <form class="space-y-4" onsubmit="handleSubmit(event)">
+        <input type="hidden" name="access_key" value="2c146f88-2f06-4c07-ba7f-a80e60c2bbd7" />
+        <input type="hidden" name="subject" value="New Quote Request — 3 Axis Works" />
+        <input type="hidden" name="from_name" value="3 Axis Works Website" />
         <div class="grid grid-cols-2 gap-4">
           <div>
             <label class="block text-white/40 text-xs uppercase tracking-widest mb-2">First Name</label>
-            <input type="text" class="form-input" placeholder="James" required />
+            <input type="text" name="first_name" class="form-input" placeholder="James" required />
           </div>
           <div>
             <label class="block text-white/40 text-xs uppercase tracking-widest mb-2">Last Name</label>
-            <input type="text" class="form-input" placeholder="Thompson" required />
+            <input type="text" name="last_name" class="form-input" placeholder="Thompson" required />
           </div>
         </div>
         <div>
           <label class="block text-white/40 text-xs uppercase tracking-widest mb-2">Email</label>
-          <input type="email" class="form-input" placeholder="james@example.com" required />
+          <input type="email" name="email" class="form-input" placeholder="james@example.com" required />
         </div>
         <div>
           <label class="block text-white/40 text-xs uppercase tracking-widest mb-2">Service</label>
-          <select class="form-input" style="appearance: none; cursor: pointer;">
+          <select name="service" class="form-input" style="appearance: none; cursor: pointer;">
             <option value="" style="background:var(--bg-card);">Select a service...</option>
-            <option value="fdm" style="background:var(--bg-card);">FDM Printing</option>
-            <option value="sla" style="background:var(--bg-card);">Resin / SLA</option>
-            <option value="prototyping" style="background:var(--bg-card);">Rapid Prototyping</option>
-            <option value="production" style="background:var(--bg-card);">Short Run Production</option>
-            <option value="post" style="background:var(--bg-card);">Post Processing</option>
-            <option value="scan" style="background:var(--bg-card);">3D Scanning</option>
+            <option value="FDM Printing" style="background:var(--bg-card);">FDM Printing</option>
+            <option value="Resin / SLA" style="background:var(--bg-card);">Resin / SLA</option>
+            <option value="Rapid Prototyping" style="background:var(--bg-card);">Rapid Prototyping</option>
+            <option value="Short Run Production" style="background:var(--bg-card);">Short Run Production</option>
+            <option value="Post Processing" style="background:var(--bg-card);">Post Processing</option>
+            <option value="3D Scanning" style="background:var(--bg-card);">3D Scanning</option>
           </select>
         </div>
         <div>
           <label class="block text-white/40 text-xs uppercase tracking-widest mb-2">Project Details</label>
-          <textarea rows="4" class="form-input resize-none" placeholder="Describe your project, quantity, material preferences, and timeline..."></textarea>
+          <textarea name="message" rows="4" class="form-input resize-none" placeholder="Describe your project, quantity, material preferences, and timeline..."></textarea>
         </div>
         <div>
           <label class="block text-white/40 text-xs uppercase tracking-widest mb-2">File Upload (optional)</label>
@@ -1364,7 +1367,7 @@
               <path d="M8 1v8M4 5l4-4 4 4"/><path d="M2 12v1a1 1 0 001 1h10a1 1 0 001-1v-1"/>
             </svg>
             <span class="text-white/30 text-sm" id="file-label">Upload STL, STEP, or OBJ</span>
-            <input type="file" id="file-input" accept=".stl,.step,.stp,.obj,.3mf" class="hidden" onchange="updateFileLabel(this)" />
+            <input type="file" id="file-input" name="attachment" accept=".stl,.step,.stp,.obj,.3mf" class="hidden" onchange="updateFileLabel(this)" />
           </div>
         </div>
         <button type="submit" class="btn-primary w-full justify-center mt-2">
@@ -1622,13 +1625,31 @@
   }
 
   // Form submit
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    const btn = e.target.querySelector('button[type="submit"]');
-    btn.textContent = 'Sent! We\'ll be in touch shortly.';
+    const form = e.target;
+    const btn = form.querySelector('button[type="submit"]');
+    btn.textContent = 'Sending...';
     btn.disabled = true;
-    btn.style.background = '#143f20';
-    btn.style.cursor = 'default';
+
+    const data = new FormData(form);
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: data });
+      const json = await res.json();
+      if (json.success) {
+        btn.textContent = 'Sent! We\'ll be in touch shortly.';
+        btn.style.background = '#143f20';
+        btn.style.cursor = 'default';
+        form.reset();
+        document.getElementById('file-label').textContent = 'Upload STL, STEP, or OBJ';
+      } else {
+        btn.textContent = 'Something went wrong — please try again.';
+        btn.disabled = false;
+      }
+    } catch {
+      btn.textContent = 'Something went wrong — please try again.';
+      btn.disabled = false;
+    }
   }
 </script>
 
