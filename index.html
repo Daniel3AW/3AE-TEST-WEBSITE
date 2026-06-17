@@ -610,17 +610,15 @@
     </div>
 
     <!-- Mobile hamburger -->
-    <button id="menu-btn" class="md:hidden p-2 text-white/60 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-light rounded-sm" aria-label="Open menu">
-      <svg width="22" height="16" viewBox="0 0 22 16" fill="none"><path d="M0 1h22M0 8h22M0 15h22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    <button id="menu-btn" class="md:hidden p-2 text-white/60 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-light rounded-sm" aria-label="Toggle menu">
+      <svg id="menu-icon-bars" width="22" height="16" viewBox="0 0 22 16" fill="none"><path d="M0 1h22M0 8h22M0 15h22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <svg id="menu-icon-close" width="20" height="20" viewBox="0 0 20 20" fill="none" style="display:none;"><path d="M1 1l18 18M19 1L1 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
     </button>
   </div>
 </nav>
 
 <!-- Mobile menu -->
-<div id="mobile-menu" class="fixed inset-0 z-50 bg-surface-base/95 backdrop-blur-xl flex-col items-center justify-center gap-8" style="display:none;">
-  <button id="menu-close" class="absolute top-6 right-6 p-2 text-white/60 hover:text-white transition-colors focus-visible:outline-none" aria-label="Close menu">
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M1 1l18 18M19 1L1 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-  </button>
+<div id="mobile-menu" class="fixed inset-0 bg-surface-base/95 backdrop-blur-xl flex-col items-center justify-center gap-8" style="display:none; z-index:200;">
   <div class="flex flex-col items-center gap-8">
     <a href="#services" class="text-white text-2xl font-display font-bold mobile-nav-link">Services</a>
     <a href="#process" class="text-white text-2xl font-display font-bold mobile-nav-link">Process</a>
@@ -1471,22 +1469,31 @@
 
   // Mobile menu
   const menuBtn = document.getElementById('menu-btn');
-  const closeBtn = document.getElementById('menu-close');
   const mobileMenu = document.getElementById('mobile-menu');
+  const iconBars = document.getElementById('menu-icon-bars');
+  const iconClose = document.getElementById('menu-icon-close');
 
   menuBtn.addEventListener('click', () => {
-    mobileMenu.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
+    const isOpen = mobileMenu.style.display === 'flex';
+    isOpen ? closeMobileMenu() : openMobileMenu();
   });
-  closeBtn.addEventListener('click', closeMobileMenu);
 
   document.querySelectorAll('.mobile-nav-link').forEach(link => {
     link.addEventListener('click', closeMobileMenu);
   });
 
+  function openMobileMenu() {
+    mobileMenu.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    iconBars.style.display = 'none';
+    iconClose.style.display = '';
+  }
+
   function closeMobileMenu() {
     mobileMenu.style.display = 'none';
     document.body.style.overflow = '';
+    iconBars.style.display = '';
+    iconClose.style.display = 'none';
   }
 
   // Scroll reveal
