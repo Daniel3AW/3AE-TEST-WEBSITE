@@ -1487,6 +1487,8 @@
     document.body.style.overflow = 'hidden';
     iconBars.style.display = 'none';
     iconClose.style.display = '';
+    menuBtn.style.position = 'relative';
+    menuBtn.style.zIndex = '300';
   }
 
   function closeMobileMenu() {
@@ -1494,6 +1496,8 @@
     document.body.style.overflow = '';
     iconBars.style.display = '';
     iconClose.style.display = 'none';
+    menuBtn.style.position = '';
+    menuBtn.style.zIndex = '';
   }
 
   // Scroll reveal
