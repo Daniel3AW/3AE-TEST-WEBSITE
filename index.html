@@ -1472,6 +1472,7 @@
   const mobileMenu = document.getElementById('mobile-menu');
   const iconBars = document.getElementById('menu-icon-bars');
   const iconClose = document.getElementById('menu-icon-close');
+  const navEl = document.getElementById('nav');
 
   menuBtn.addEventListener('click', () => {
     const isOpen = mobileMenu.style.display === 'flex';
@@ -1487,8 +1488,7 @@
     document.body.style.overflow = 'hidden';
     iconBars.style.display = 'none';
     iconClose.style.display = '';
-    menuBtn.style.position = 'relative';
-    menuBtn.style.zIndex = '300';
+    navEl.style.zIndex = '300';
   }
 
   function closeMobileMenu() {
@@ -1496,8 +1496,7 @@
     document.body.style.overflow = '';
     iconBars.style.display = '';
     iconClose.style.display = 'none';
-    menuBtn.style.position = '';
-    menuBtn.style.zIndex = '';
+    navEl.style.zIndex = '';
   }
 
   // Scroll reveal
