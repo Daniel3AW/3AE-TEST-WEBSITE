@@ -1322,7 +1322,7 @@
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#555" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
               <path d="M8 1v8M4 5l4-4 4 4"/><path d="M2 12v1a1 1 0 001 1h10a1 1 0 001-1v-1"/>
             </svg>
-            <span class="text-white/30 text-sm" id="file-label">Upload STL, STEP, or OBJ</span>
+            <span class="text-white/30 text-sm" id="file-label">STL, STEP, OBJ or 3MF</span>
             <input type="file" id="file-input" name="attachment" accept=".stl,.step,.stp,.obj,.3mf" class="hidden" onchange="updateFileLabel(this)" />
           </div>
         </div>
@@ -1547,7 +1547,7 @@
   // File upload label
   function updateFileLabel(input) {
     const label = document.getElementById('file-label');
-    label.textContent = input.files[0]?.name || 'Upload STL, STEP, or OBJ';
+    label.textContent = input.files[0]?.name || 'STL, STEP, OBJ or 3MF';
     label.style.color = input.files[0] ? 'rgba(255,255,255,0.7)' : '';
   }
 
