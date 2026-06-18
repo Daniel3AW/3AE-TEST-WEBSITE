@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — 3 Axis Works</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script>(function(){var t=localStorage.getItem('theme')||'dark';document.documentElement.setAttribute('data-theme',t);})();</script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { DEFAULT: '#1e5c2e', light: '#2a7a3e', lighter: '#3a9e52', dark: '#143f20', muted: '#1e5c2e33' },
+            surface: { base: '#0a0a0a', 1: '#111111', 2: '#171717', 3: '#1e1e1e', 4: '#262626' },
+          },
+          fontFamily: { display: ['Playfair Display', 'Georgia', 'serif'], body: ['Inter', 'system-ui', 'sans-serif'] },
+        },
+      },
+    };
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --bg-base:    #0a0a0a;
+      --bg-footer:  #080808;
+      --c-text:     #e8e8e8;
+      --c-logo:     #f0f0f0;
+      --bg-card:    #111111;
+      --br-subtle:  rgba(255,255,255,0.06);
+      --br-light:   rgba(255,255,255,0.08);
+      --br-mid:     rgba(255,255,255,0.1);
+      --nav-bg:     rgba(10,10,10,0.85);
+      --nav-br:     rgba(255,255,255,0.06);
+      --nav-link:   rgba(255,255,255,0.6);
+      --nav-link-h: #ffffff;
+      --nav-outline:rgba(255,255,255,0.3);
+      --ghost-c:    #e8e8e8;
+      --ghost-br:   rgba(255,255,255,0.2);
+      --ghost-br-h: rgba(255,255,255,0.5);
+    }
+    html[data-theme="light"] {
+      --bg-base:    #eae6de;
+      --bg-footer:  #dedad2;
+      --c-text:     #1a1a1a;
+      --c-logo:     #1a1a1a;
+      --bg-card:    #f0ece4;
+      --br-subtle:  rgba(0,0,0,0.07);
+      --br-light:   rgba(0,0,0,0.09);
+      --br-mid:     rgba(0,0,0,0.1);
+      --nav-bg:     rgba(247,245,240,0.92);
+      --nav-br:     rgba(0,0,0,0.08);
+      --nav-link:   rgba(0,0,0,0.55);
+      --nav-link-h: #1a1a1a;
+      --nav-outline:rgba(0,0,0,0.3);
+      --ghost-c:    #1a1a1a;
+      --ghost-br:   rgba(0,0,0,0.2);
+      --ghost-br-h: rgba(0,0,0,0.5);
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--c-text);
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 0.35s ease, color 0.35s ease;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      pointer-events: none;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+    }
+
+    #nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      transition: background 0.4s ease, backdrop-filter 0.4s ease, border-color 0.4s ease;
+      border-bottom: 1px solid transparent;
+    }
+    #nav.scrolled {
+      background: var(--nav-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom-color: var(--nav-br);
+    }
+
+    .nav-link {
+      color: var(--nav-link);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .nav-link:hover { color: var(--nav-link-h); }
+    .nav-link:focus-visible { outline: 2px solid var(--nav-outline); outline-offset: 3px; border-radius: 1px; }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #1e5c2e;
+      color: #fff;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.9rem 2rem;
+      border-radius: 1px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+      text-decoration: none;
+    }
+    .btn-primary:hover { background: #2a7a3e; box-shadow: 0 8px 32px rgba(30,92,46,0.35); transform: translateY(-1px); }
+    .btn-primary:active { transform: translateY(0); }
+    .btn-primary:focus-visible { outline: 2px solid #2a7a3e; outline-offset: 3px; }
+
+    .divider { border-color: var(--br-subtle); }
+
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #2a7a3e;
+    }
+    .accent-line {
+      display: block;
+      width: 40px;
+      height: 2px;
+      background: #2a7a3e;
+      margin-bottom: 1.5rem;
+    }
+
+    .theme-toggle {
+      display: flex; align-items: center;
+      width: 60px; height: 30px; padding: 3px;
+      border-radius: 9999px; cursor: pointer;
+      border: 1px solid #3f3f46; background: #18181b;
+      transition: background 0.3s ease, border-color 0.3s ease;
+      flex-shrink: 0;
+    }
+    html[data-theme="light"] .theme-toggle { background: #ffffff; border-color: #e4e4e7; }
+    .theme-toggle:focus-visible { outline: 2px solid #2a7a3e; outline-offset: 2px; }
+    .theme-toggle-inner { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+    .theme-toggle-thumb {
+      width: 22px; height: 22px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      background: #3f3f46;
+      transform: translateX(0);
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), background 0.3s ease;
+      flex-shrink: 0;
+    }
+    html[data-theme="light"] .theme-toggle-thumb { background: #e4e4e7; transform: translateX(30px); }
+    .theme-toggle-idle {
+      width: 22px; height: 22px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
+    }
+    html[data-theme="light"] .theme-toggle-idle { transform: translateX(-30px); }
+    .theme-toggle svg { width: 13px; height: 13px; }
+
+    html[data-theme="light"] .text-white\/15 { color: rgba(0,0,0,0.30) !important; }
+    html[data-theme="light"] .text-white\/20 { color: rgba(0,0,0,0.38) !important; }
+    html[data-theme="light"] .text-white\/30 { color: rgba(0,0,0,0.52) !important; }
+    html[data-theme="light"] .text-white\/40 { color: rgba(0,0,0,0.63) !important; }
+    html[data-theme="light"] .text-white\/45 { color: rgba(0,0,0,0.68) !important; }
+    html[data-theme="light"] .text-white\/50 { color: rgba(0,0,0,0.72) !important; }
+    html[data-theme="light"] .text-white\/60 { color: rgba(0,0,0,0.78) !important; }
+    html[data-theme="light"] .text-white\/70 { color: rgba(0,0,0,0.84) !important; }
+    html[data-theme="light"] .text-white { color: #1a1a1a !important; }
+    html[data-theme="light"] .hover\:text-white:hover { color: #1a1a1a !important; }
+    html[data-theme="light"] #mobile-menu { background: rgba(247,245,240,0.97) !important; }
+
+    /* Policy content */
+    .policy-section { padding: 2.5rem 0; border-bottom: 1px solid var(--br-subtle); }
+    .policy-section:last-child { border-bottom: none; }
+    .policy-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.75rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      color: #2a7a3e;
+      margin-bottom: 0.75rem;
+    }
+    .policy-heading {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.25rem, 2.5vw, 1.6rem);
+      font-weight: 700;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.25rem;
+    }
+    .policy-body {
+      font-size: 0.9rem;
+      line-height: 1.85;
+      color: rgba(255,255,255,0.65);
+    }
+    html[data-theme="light"] .policy-body { color: rgba(0,0,0,0.62); }
+    .policy-body p + p { margin-top: 1em; }
+    .policy-body ul { list-style: none; padding: 0; margin: 0.75em 0; }
+    .policy-body ul li {
+      padding-left: 1.25rem;
+      position: relative;
+      margin-bottom: 0.4em;
+    }
+    .policy-body ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.65em;
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: #2a7a3e;
+    }
+    .policy-body a { color: #3a9e52; text-decoration: underline; text-underline-offset: 3px; }
+    .policy-body a:hover { color: #2a7a3e; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav" class="px-6 md:px-12 lg:px-20">
+  <div class="max-w-7xl mx-auto flex items-center justify-between h-20">
+    <a href="index.html" class="flex-shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-light rounded-sm">
+      <img id="nav-logo-img" src="logo/3AW-primary-dark.png" alt="3 Axis Works" style="height:44px;width:auto;display:block;" />
+    </a>
+    <div class="hidden md:flex items-center gap-8">
+      <a href="index.html#services" class="nav-link">Services</a>
+      <a href="index.html#process" class="nav-link">Process</a>
+      <a href="index.html#portfolio" class="nav-link">Portfolio</a>
+      <a href="index.html#materials" class="nav-link">Materials</a>
+      <a href="index.html#contact" class="nav-link">Contact</a>
+    </div>
+    <div class="hidden md:flex items-center gap-4">
+      <button id="theme-toggle-btn" class="theme-toggle" aria-label="Toggle light/dark mode" tabindex="0">
+        <div class="theme-toggle-inner">
+          <div class="theme-toggle-thumb">
+            <svg id="toggle-moon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+            <svg id="toggle-sun-active" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          </div>
+          <div class="theme-toggle-idle">
+            <svg id="toggle-sun-idle" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            <svg id="toggle-moon-idle" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+          </div>
+        </div>
+      </button>
+      <a href="index.html#contact" class="btn-primary">
+        Get a Quote
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+    <button id="menu-btn" class="md:hidden p-2 text-white/60 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-light rounded-sm" aria-label="Toggle menu">
+      <svg id="menu-icon-bars" width="22" height="16" viewBox="0 0 22 16" fill="none"><path d="M0 1h22M0 8h22M0 15h22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <svg id="menu-icon-close" width="20" height="20" viewBox="0 0 20 20" fill="none" style="display:none;"><path d="M1 1l18 18M19 1L1 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile menu -->
+<div id="mobile-menu" class="fixed inset-0 bg-surface-base/95 backdrop-blur-xl flex-col items-center justify-center gap-8" style="display:none; z-index:200;">
+  <div class="flex flex-col items-center gap-8">
+    <a href="index.html#services" class="text-white text-2xl font-display font-bold">Services</a>
+    <a href="index.html#process" class="text-white text-2xl font-display font-bold">Process</a>
+    <a href="index.html#portfolio" class="text-white text-2xl font-display font-bold">Portfolio</a>
+    <a href="index.html#materials" class="text-white text-2xl font-display font-bold">Materials</a>
+    <a href="index.html#contact" class="text-white text-2xl font-display font-bold">Contact</a>
+    <a href="index.html#contact" class="btn-primary mt-4">Get a Quote</a>
+  </div>
+</div>
+
+<!-- PAGE HEADER -->
+<section class="pt-40 pb-16 px-6 md:px-12 lg:px-20" style="background: var(--bg-base); border-bottom: 1px solid var(--br-subtle);">
+  <div class="max-w-7xl mx-auto">
+    <div class="max-w-3xl">
+      <span class="accent-line"></span>
+      <p class="section-label mb-4">Legal</p>
+      <h1 class="font-display font-black text-white" style="font-size: clamp(2.5rem, 6vw, 4.5rem); line-height: 1.05; letter-spacing: -0.03em;">Privacy Policy</h1>
+      <p class="text-white/40 text-sm mt-5" style="font-family: 'Inter', sans-serif;">Last updated: June 2025 &nbsp;·&nbsp; ABN 12 386 703 207</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTENT -->
+<main class="px-6 md:px-12 lg:px-20 py-16">
+  <div class="max-w-3xl mx-auto">
+
+    <div class="policy-section">
+      <p class="policy-num">01</p>
+      <h2 class="policy-heading text-white">About Us</h2>
+      <div class="policy-body">
+        <p>3 Axis Works (ABN 12 386 703 207) is a 3D printing and rapid prototyping service based in Perth, Western Australia. We operate this website to provide information about our services and to allow customers to request quotes and contact us.</p>
+        <p>We are committed to protecting the privacy of anyone who interacts with our website or engages our services. This Privacy Policy explains what personal information we collect, how we use it, and your rights in relation to it.</p>
+      </div>
+    </div>
+
+    <div class="policy-section">
+      <p class="policy-num">02</p>
+      <h2 class="policy-heading text-white">Information We Collect</h2>
+      <div class="policy-body">
+        <p>We collect personal information only when you voluntarily provide it through our contact and quote form. This may include:</p>
+        <ul>
+          <li>Your name</li>
+          <li>Email address</li>
+          <li>Phone number (if provided)</li>
+          <li>Project details, messages, and enquiry information</li>
+          <li>Design files you upload for quoting (e.g. STL, STEP, OBJ, 3MF)</li>
+        </ul>
+        <p>We do not collect personal information passively through analytics tools or tracking pixels. We do not use cookies for advertising or tracking purposes.</p>
+      </div>
+    </div>
+
+    <div class="policy-section">
+      <p class="policy-num">03</p>
+      <h2 class="policy-heading text-white">How We Use Your Information</h2>
+      <div class="policy-body">
+        <p>We use the information you provide solely for the purpose of:</p>
+        <ul>
+          <li>Responding to your enquiry or quote request</li>
+          <li>Assessing and processing your order</li>
+          <li>Communicating with you about your project</li>
+          <li>Improving our services based on the nature of enquiries received</li>
+        </ul>
+        <p>We will not use your personal information to send unsolicited marketing communications without your explicit consent.</p>
+      </div>
+    </div>
+
+    <div class="policy-section">
+      <p class="policy-num">04</p>
+      <h2 class="policy-heading text-white">Third-Party Services</h2>
+      <div class="policy-body">
+        <p>Our contact form is processed by <strong style="color: inherit; font-weight: 600;">Web3Forms</strong>, a third-party form submission service. When you submit a form, your data is transmitted to Web3Forms and forwarded to our email address. Web3Forms operates under its own privacy policy.</p>
+        <p>Our website is hosted via <strong style="color: inherit; font-weight: 600;">Vercel</strong>, which may log basic server request data (IP address, browser type, pages visited) for operational purposes only. This data is not shared with us in identifiable form.</p>
+        <p>We do not use Google Analytics, Facebook Pixel, or any other advertising or behavioural tracking technology.</p>
+      </div>
+    </div>
+
+    <div class="policy-section">
+      <p class="policy-num">05</p>
+      <h2 class="policy-heading text-white">Cookies and Local Storage</h2>
+      <div class="policy-body">
+        <p>We use a single item of browser local storage to remember your light or dark theme preference. This data never leaves your device and is not associated with your identity.</p>
+        <p>We do not use any cookies for tracking, advertising, or analytics.</p>
+      </div>
+    </div>
+
+    <div class="policy-section">
+      <p class="policy-num">06</p>
+      <h2 class="policy-heading text-white">Data Security</h2>
+      <div class="policy-body">
+        <p>We take reasonable steps to protect your personal information from misuse, loss, and unauthorised access. Our website is served over HTTPS (encrypted connection). Design files and contact information are accessible only to authorised personnel of 3 Axis Works.</p>
+        <p>No method of transmission over the internet is 100% secure. While we strive to protect your information, we cannot guarantee absolute security.</p>
+      </div>
+    </div>
+
+    <div class="policy-section">
+      <p class="policy-num">07</p>
+      <h2 class="policy-heading text-white">Data Retention</h2>
+      <div class="policy-body">
+        <p>We retain your personal information for as long as is necessary to fulfil the purpose for which it was collected, or as required by applicable Australian law.</p>
+        <p>If you wish to have your personal information deleted from our records, please contact us and we will act on your request within a reasonable timeframe, except where retention is required by law.</p>
+      </div>
+    </div>
+
+    <div class="policy-section">
+      <p class="policy-num">08</p>
+      <h2 class="policy-heading text-white">Your Privacy Rights</h2>
+      <div class="policy-body">
+        <p>Under the <em>Privacy Act 1988</em> (Cth) and the Australian Privacy Principles, you have the right to:</p>
+        <ul>
+          <li>Request access to the personal information we hold about you</li>
+          <li>Request correction of inaccurate or out-of-date information</li>
+          <li>Request deletion of your personal information (subject to legal obligations)</li>
+          <li>Make a complaint if you believe your privacy rights have been breached</li>
+        </ul>
+        <p>If you have a complaint, please contact us in the first instance. If we are unable to resolve the matter, you may contact the Office of the Australian Information Commissioner (OAIC) at <a href="https://www.oaic.gov.au" target="_blank" rel="noopener">oaic.gov.au</a>.</p>
+      </div>
+    </div>
+
+    <div class="policy-section">
+      <p class="policy-num">09</p>
+      <h2 class="policy-heading text-white">Changes to This Policy</h2>
+      <div class="policy-body">
+        <p>We may update this Privacy Policy from time to time to reflect changes in our practices or for other operational, legal, or regulatory reasons. The "Last updated" date at the top of this page will reflect any changes. We encourage you to review this policy periodically.</p>
+      </div>
+    </div>
+
+    <div class="policy-section">
+      <p class="policy-num">10</p>
+      <h2 class="policy-heading text-white">Contact Us</h2>
+      <div class="policy-body">
+        <p>If you have any questions, concerns, or requests regarding your privacy or this policy, please contact us via the <a href="index.html#contact">enquiry form</a> on our website.</p>
+        <p><strong style="color: inherit; font-weight: 600;">3 Axis Works</strong><br />ABN 12 386 703 207<br />Perth, Western Australia</p>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="px-6 md:px-12 lg:px-20 border-t divider" style="background: var(--bg-footer);">
+  <div class="max-w-7xl mx-auto">
+    <div class="grid md:grid-cols-4 gap-12 py-16">
+      <div class="md:col-span-2">
+        <img id="footer-logo-img" src="logo/3AW-primary-dark.png" alt="3 Axis Works" class="mb-5" style="height:36px;width:auto;" />
+        <p class="text-white/30 text-sm max-w-xs" style="line-height: 1.8;">Precision 3D printing for engineers, designers, and businesses. Based in Perth, WA.</p>
+        <div class="flex gap-3 mt-6">
+          <a href="#" aria-label="Instagram" class="w-9 h-9 rounded-sm flex items-center justify-center text-white/30 hover:text-white transition-colors" style="border: 1px solid rgba(255,255,255,0.08);">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="#" aria-label="LinkedIn" class="w-9 h-9 rounded-sm flex items-center justify-center text-white/30 hover:text-white transition-colors" style="border: 1px solid rgba(255,255,255,0.08);">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+        </div>
+      </div>
+      <div>
+        <div class="text-white/20 text-xs uppercase tracking-widest mb-5">Services</div>
+        <ul class="space-y-3">
+          <li><a href="index.html#services" class="text-white/45 text-sm hover:text-white transition-colors">FDM Printing</a></li>
+          <li><a href="index.html#services" class="text-white/45 text-sm hover:text-white transition-colors">Resin / SLA</a></li>
+          <li><a href="index.html#services" class="text-white/45 text-sm hover:text-white transition-colors">Rapid Prototyping</a></li>
+          <li><a href="index.html#services" class="text-white/45 text-sm hover:text-white transition-colors">Short Run Production</a></li>
+          <li><a href="index.html#services" class="text-white/45 text-sm hover:text-white transition-colors">Post Processing</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-white/20 text-xs uppercase tracking-widest mb-5">Company</div>
+        <ul class="space-y-3">
+          <li><a href="index.html#about" class="text-white/45 text-sm hover:text-white transition-colors">About</a></li>
+          <li><a href="index.html#contact" class="text-white/45 text-sm hover:text-white transition-colors">Contact</a></li>
+          <li><a href="faq.html" class="text-white/45 text-sm hover:text-white transition-colors">FAQs</a></li>
+          <li><a href="privacy-policy.html" class="text-white/45 text-sm hover:text-white transition-colors">Privacy Policy</a></li>
+          <li><a href="terms.html" class="text-white/45 text-sm hover:text-white transition-colors">Terms &amp; Conditions</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t divider py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p class="text-white/20 text-xs">© 2025 3 Axis Works. ABN 12 386 703 207. All rights reserved.</p>
+      <div class="flex items-center gap-4">
+        <a href="privacy-policy.html" class="text-white/20 text-xs hover:text-white/40 transition-colors">Privacy Policy</a>
+        <span class="text-white/15 text-xs">·</span>
+        <a href="terms.html" class="text-white/20 text-xs hover:text-white/40 transition-colors">Terms &amp; Conditions</a>
+        <span class="text-white/15 text-xs">·</span>
+        <p class="text-white/15 text-xs">Perth, Western Australia</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Nav scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 20); }, { passive: true });
+  nav.classList.toggle('scrolled', window.scrollY > 20);
+
+  // Theme toggle
+  (function () {
+    const btn = document.getElementById('theme-toggle-btn');
+    const moonActive = document.getElementById('toggle-moon');
+    const sunActive  = document.getElementById('toggle-sun-active');
+    const sunIdle    = document.getElementById('toggle-sun-idle');
+    const moonIdle   = document.getElementById('toggle-moon-idle');
+
+    function applyTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('theme', theme);
+      const isLight = theme === 'light';
+      moonActive.style.display = isLight ? 'none' : '';
+      sunActive.style.display  = isLight ? '' : 'none';
+      sunIdle.style.display    = isLight ? 'none' : '';
+      moonIdle.style.display   = isLight ? '' : 'none';
+      const logoSrc = isLight ? 'logo/3AW-primary-light.png' : 'logo/3AW-primary-dark.png';
+      document.getElementById('nav-logo-img').src    = logoSrc;
+      document.getElementById('footer-logo-img').src = logoSrc;
+    }
+
+    btn.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme') || 'dark';
+      applyTheme(current === 'dark' ? 'light' : 'dark');
+    });
+
+    // Sync icon state on load
+    const t = document.documentElement.getAttribute('data-theme') || 'dark';
+    const isLight = t === 'light';
+    moonActive.style.display = isLight ? 'none' : '';
+    sunActive.style.display  = isLight ? '' : 'none';
+    sunIdle.style.display    = isLight ? 'none' : '';
+    moonIdle.style.display   = isLight ? '' : 'none';
+    if (isLight) {
+      document.getElementById('nav-logo-img').src    = 'logo/3AW-primary-light.png';
+      document.getElementById('footer-logo-img').src = 'logo/3AW-primary-light.png';
+    }
+  })();
+
+  // Mobile menu
+  (function () {
+    const btn  = document.getElementById('menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    const bars = document.getElementById('menu-icon-bars');
+    const close = document.getElementById('menu-icon-close');
+    let open = false;
+
+    function toggle() {
+      open = !open;
+      menu.style.display = open ? 'flex' : 'none';
+      bars.style.display  = open ? 'none' : '';
+      close.style.display = open ? '' : 'none';
+      document.body.style.overflow = open ? 'hidden' : '';
+    }
+
+    btn.addEventListener('click', toggle);
+    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { if (open) toggle(); }));
+  })();
+</script>
+</body>
+</html>

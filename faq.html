@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FAQs — 3 Axis Works</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script>(function(){var t=localStorage.getItem('theme')||'dark';document.documentElement.setAttribute('data-theme',t);})();</script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { DEFAULT: '#1e5c2e', light: '#2a7a3e', lighter: '#3a9e52', dark: '#143f20', muted: '#1e5c2e33' },
+            surface: { base: '#0a0a0a', 1: '#111111', 2: '#171717', 3: '#1e1e1e', 4: '#262626' },
+          },
+          fontFamily: { display: ['Playfair Display', 'Georgia', 'serif'], body: ['Inter', 'system-ui', 'sans-serif'] },
+        },
+      },
+    };
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --bg-base:    #0a0a0a;
+      --bg-footer:  #080808;
+      --c-text:     #e8e8e8;
+      --c-logo:     #f0f0f0;
+      --bg-card:    #111111;
+      --br-subtle:  rgba(255,255,255,0.06);
+      --br-light:   rgba(255,255,255,0.08);
+      --br-mid:     rgba(255,255,255,0.1);
+      --nav-bg:     rgba(10,10,10,0.85);
+      --nav-br:     rgba(255,255,255,0.06);
+      --nav-link:   rgba(255,255,255,0.6);
+      --nav-link-h: #ffffff;
+      --nav-outline:rgba(255,255,255,0.3);
+      --faq-q-c:    rgba(255,255,255,0.85);
+      --faq-a-c:    rgba(255,255,255,0.6);
+      --faq-item-bg:#111111;
+      --faq-item-br:rgba(255,255,255,0.07);
+      --faq-item-br-h:rgba(42,122,62,0.4);
+    }
+    html[data-theme="light"] {
+      --bg-base:    #eae6de;
+      --bg-footer:  #dedad2;
+      --c-text:     #1a1a1a;
+      --c-logo:     #1a1a1a;
+      --bg-card:    #f0ece4;
+      --br-subtle:  rgba(0,0,0,0.07);
+      --br-light:   rgba(0,0,0,0.09);
+      --br-mid:     rgba(0,0,0,0.1);
+      --nav-bg:     rgba(247,245,240,0.92);
+      --nav-br:     rgba(0,0,0,0.08);
+      --nav-link:   rgba(0,0,0,0.55);
+      --nav-link-h: #1a1a1a;
+      --nav-outline:rgba(0,0,0,0.3);
+      --faq-q-c:    rgba(0,0,0,0.85);
+      --faq-a-c:    rgba(0,0,0,0.6);
+      --faq-item-bg:#ffffff;
+      --faq-item-br:rgba(0,0,0,0.08);
+      --faq-item-br-h:rgba(30,92,46,0.35);
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--c-text);
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 0.35s ease, color 0.35s ease;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      pointer-events: none;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+    }
+
+    #nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      transition: background 0.4s ease, backdrop-filter 0.4s ease, border-color 0.4s ease;
+      border-bottom: 1px solid transparent;
+    }
+    #nav.scrolled {
+      background: var(--nav-bg);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-bottom-color: var(--nav-br);
+    }
+    .nav-link {
+      color: var(--nav-link);
+      font-size: 0.8rem; font-weight: 500;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .nav-link:hover { color: var(--nav-link-h); }
+    .nav-link:focus-visible { outline: 2px solid var(--nav-outline); outline-offset: 3px; border-radius: 1px; }
+
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: #1e5c2e; color: #fff;
+      font-size: 0.8rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.9rem 2rem; border-radius: 1px;
+      border: 1px solid transparent; cursor: pointer;
+      transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+      text-decoration: none;
+    }
+    .btn-primary:hover { background: #2a7a3e; box-shadow: 0 8px 32px rgba(30,92,46,0.35); transform: translateY(-1px); }
+    .btn-primary:active { transform: translateY(0); }
+    .btn-primary:focus-visible { outline: 2px solid #2a7a3e; outline-offset: 3px; }
+
+    .divider { border-color: var(--br-subtle); }
+    .section-label { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #2a7a3e; }
+    .accent-line { display: block; width: 40px; height: 2px; background: #2a7a3e; margin-bottom: 1.5rem; }
+
+    .theme-toggle {
+      display: flex; align-items: center;
+      width: 60px; height: 30px; padding: 3px;
+      border-radius: 9999px; cursor: pointer;
+      border: 1px solid #3f3f46; background: #18181b;
+      transition: background 0.3s ease, border-color 0.3s ease;
+      flex-shrink: 0;
+    }
+    html[data-theme="light"] .theme-toggle { background: #ffffff; border-color: #e4e4e7; }
+    .theme-toggle:focus-visible { outline: 2px solid #2a7a3e; outline-offset: 2px; }
+    .theme-toggle-inner { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+    .theme-toggle-thumb {
+      width: 22px; height: 22px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      background: #3f3f46;
+      transform: translateX(0);
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), background 0.3s ease;
+      flex-shrink: 0;
+    }
+    html[data-theme="light"] .theme-toggle-thumb { background: #e4e4e7; transform: translateX(30px); }
+    .theme-toggle-idle {
+      width: 22px; height: 22px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
+    }
+    html[data-theme="light"] .theme-toggle-idle { transform: translateX(-30px); }
+    .theme-toggle svg { width: 13px; height: 13px; }
+
+    html[data-theme="light"] .text-white\/15 { color: rgba(0,0,0,0.30) !important; }
+    html[data-theme="light"] .text-white\/20 { color: rgba(0,0,0,0.38) !important; }
+    html[data-theme="light"] .text-white\/30 { color: rgba(0,0,0,0.52) !important; }
+    html[data-theme="light"] .text-white\/40 { color: rgba(0,0,0,0.63) !important; }
+    html[data-theme="light"] .text-white\/45 { color: rgba(0,0,0,0.68) !important; }
+    html[data-theme="light"] .text-white\/50 { color: rgba(0,0,0,0.72) !important; }
+    html[data-theme="light"] .text-white\/60 { color: rgba(0,0,0,0.78) !important; }
+    html[data-theme="light"] .text-white { color: #1a1a1a !important; }
+    html[data-theme="light"] .hover\:text-white:hover { color: #1a1a1a !important; }
+    html[data-theme="light"] #mobile-menu { background: rgba(247,245,240,0.97) !important; }
+
+    /* FAQ accordion */
+    .faq-category-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #2a7a3e;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--br-subtle);
+      margin-bottom: 1rem;
+    }
+    .faq-item {
+      background: var(--faq-item-bg);
+      border: 1px solid var(--faq-item-br);
+      border-radius: 2px;
+      margin-bottom: 0.5rem;
+      transition: border-color 0.25s ease;
+      overflow: hidden;
+    }
+    .faq-item:hover { border-color: var(--faq-item-br-h); }
+    .faq-item.open { border-color: rgba(42,122,62,0.35); }
+    .faq-btn {
+      width: 100%;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1.25rem 1.5rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+    }
+    .faq-question {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--faq-q-c);
+      line-height: 1.5;
+      flex: 1;
+    }
+    .faq-chevron {
+      width: 18px; height: 18px;
+      flex-shrink: 0;
+      margin-top: 2px;
+      color: #2a7a3e;
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
+    }
+    .faq-item.open .faq-chevron { transform: rotate(180deg); }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s cubic-bezier(0.16,1,0.3,1);
+    }
+    .faq-item.open .faq-answer { max-height: 600px; }
+    .faq-answer-inner {
+      padding: 0 1.5rem 1.5rem;
+      font-size: 0.875rem;
+      line-height: 1.8;
+      color: var(--faq-a-c);
+    }
+    .faq-answer-inner a { color: #3a9e52; text-underline-offset: 3px; }
+    .faq-answer-inner a:hover { color: #2a7a3e; }
+    .faq-answer-inner ul { list-style: none; padding: 0; margin: 0.5em 0; }
+    .faq-answer-inner ul li { padding-left: 1.15rem; position: relative; margin-bottom: 0.35em; }
+    .faq-answer-inner ul li::before { content: ''; position: absolute; left: 0; top: 0.65em; width: 4px; height: 4px; border-radius: 50%; background: #2a7a3e; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav" class="px-6 md:px-12 lg:px-20">
+  <div class="max-w-7xl mx-auto flex items-center justify-between h-20">
+    <a href="index.html" class="flex-shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-light rounded-sm">
+      <img id="nav-logo-img" src="logo/3AW-primary-dark.png" alt="3 Axis Works" style="height:44px;width:auto;display:block;" />
+    </a>
+    <div class="hidden md:flex items-center gap-8">
+      <a href="index.html#services" class="nav-link">Services</a>
+      <a href="index.html#process" class="nav-link">Process</a>
+      <a href="index.html#portfolio" class="nav-link">Portfolio</a>
+      <a href="index.html#materials" class="nav-link">Materials</a>
+      <a href="index.html#contact" class="nav-link">Contact</a>
+    </div>
+    <div class="hidden md:flex items-center gap-4">
+      <button id="theme-toggle-btn" class="theme-toggle" aria-label="Toggle light/dark mode" tabindex="0">
+        <div class="theme-toggle-inner">
+          <div class="theme-toggle-thumb">
+            <svg id="toggle-moon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+            <svg id="toggle-sun-active" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          </div>
+          <div class="theme-toggle-idle">
+            <svg id="toggle-sun-idle" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            <svg id="toggle-moon-idle" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+          </div>
+        </div>
+      </button>
+      <a href="index.html#contact" class="btn-primary">
+        Get a Quote
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+    <button id="menu-btn" class="md:hidden p-2 text-white/60 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-light rounded-sm" aria-label="Toggle menu">
+      <svg id="menu-icon-bars" width="22" height="16" viewBox="0 0 22 16" fill="none"><path d="M0 1h22M0 8h22M0 15h22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <svg id="menu-icon-close" width="20" height="20" viewBox="0 0 20 20" fill="none" style="display:none;"><path d="M1 1l18 18M19 1L1 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile menu -->
+<div id="mobile-menu" class="fixed inset-0 bg-surface-base/95 backdrop-blur-xl flex-col items-center justify-center gap-8" style="display:none; z-index:200;">
+  <div class="flex flex-col items-center gap-8">
+    <a href="index.html#services" class="text-white text-2xl font-display font-bold">Services</a>
+    <a href="index.html#process" class="text-white text-2xl font-display font-bold">Process</a>
+    <a href="index.html#portfolio" class="text-white text-2xl font-display font-bold">Portfolio</a>
+    <a href="index.html#materials" class="text-white text-2xl font-display font-bold">Materials</a>
+    <a href="index.html#contact" class="text-white text-2xl font-display font-bold">Contact</a>
+    <a href="index.html#contact" class="btn-primary mt-4">Get a Quote</a>
+  </div>
+</div>
+
+<!-- PAGE HEADER -->
+<section class="pt-40 pb-16 px-6 md:px-12 lg:px-20" style="background: var(--bg-base); border-bottom: 1px solid var(--br-subtle);">
+  <div class="max-w-7xl mx-auto">
+    <div class="max-w-3xl">
+      <span class="accent-line"></span>
+      <p class="section-label mb-4">Support</p>
+      <h1 class="font-display font-black text-white" style="font-size: clamp(2.5rem, 6vw, 4.5rem); line-height: 1.05; letter-spacing: -0.03em;">Frequently Asked<br /><em>Questions</em></h1>
+      <p class="text-white/50 mt-6" style="font-size: 1rem; max-width: 38ch; line-height: 1.7;">Everything you need to know about our 3D printing service. Can't find what you're looking for? <a href="index.html#contact" style="color: #3a9e52; text-underline-offset: 3px;">Get in touch.</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ CONTENT -->
+<main class="px-6 md:px-12 lg:px-20 py-16">
+  <div class="max-w-4xl mx-auto">
+
+    <!-- Category: Getting Started -->
+    <div class="mb-12">
+      <p class="faq-category-label">Getting Started</p>
+
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false">
+          <span class="faq-question">How do I get a quote?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner">Use the <a href="index.html#contact">Get a Quote form</a> on our website. Upload your file (STL, STEP, OBJ, or 3MF), select your preferred material, and add any notes about finish requirements. We'll review your file and respond with a detailed quote within 24 hours on business days.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false">
+          <span class="faq-question">I have an idea but no 3D file — can you still help?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner">Yes. If you have a sketch, a photo, or a detailed description of what you need, send it through via the contact form. We offer 3D modelling as a separate service and can create a print-ready file from your concept. Modelling costs will be quoted separately.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false">
+          <span class="faq-question">Is there a minimum order quantity?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner">No — we accept single-part orders. Whether you need one prototype or a short production run, we can accommodate it. For large orders, please mention the quantity in your quote request so we can factor in any volume pricing.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false">
+          <span class="faq-question">How long is a quote valid for?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner">Quotes are valid for 30 days from the date of issue. Material prices can fluctuate, so if your quote has expired please request a fresh one before placing your order.</div></div>
+      </div>
+    </div>
+
+    <!-- Category: Files & Design -->
+    <div class="mb-12">
+      <p class="faq-category-label">Files &amp; Design</p>
+
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false">
+          <span class="faq-question">What file formats do you accept?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          We accept the following formats:
+          <ul>
+            <li><strong>STL</strong> — the most common format for 3D printing</li>
+            <li><strong>STEP / STP</strong> — preferred for engineering parts with precise geometry</li>
+            <li><strong>OBJ</strong> — good for complex organic shapes</li>
+            <li><strong>3MF</strong> — includes colour and material information</li>
+          </ul>
+          STEP files are often preferred as they preserve exact geometry. STL files should be exported at high resolution (deviation ≤ 0.05 mm).
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false">
+          <span class="faq-question">How should I prepare my file for 3D printing?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          For best results:
+          <ul>
+            <li>Ensure the model is watertight (no holes or non-manifold geometry)</li>
+            <li>Set units correctly — we work in millimetres</li>
+            <li>Keep wall thickness above 1.2 mm for FDM, 0.4 mm for resin</li>
+            <li>Avoid unsupported overhangs greater than 45° where possible</li>
+            <li>If tight tolerances are required, specify them in your notes</li>
+          </ul>
+          Don't worry if you're not sure — we'll review the file and flag any issues before quoting.
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false">
+          <span class="faq-question">Will my design files be kept confidential?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner">Yes. Your design files are used solely to produce your order and are not shared with third parties. We do not reproduce, sell, or distribute your designs. If you require a Non-Disclosure Agreement (NDA) for a sensitive project, please request one when making your enquiry.</div></div>
+      </div>
+    </div>
+
+    <!-- Category: Materials & Printing -->
+    <div class="mb-12">
+      <p class="faq-category-label">Materials &amp; Printing</p>
+
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false">
+          <span class="faq-question">What materials are available?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          Our FDM material range includes:
+          <ul>
+            <li><strong>PLA</strong> — general-purpose, great detail, wide colour range</li>
+            <li><strong>PETG</strong> — more durable than PLA, good chemical resistance</li>
+            <li><strong>ABS</strong> — heat-resistant, impact-resistant, machinable</li>
+            <li><strong>ASA</strong> — UV and weather-resistant, suited to outdoor use</li>
+            <li><strong>TPU</strong> — flexible and rubber-like</li>
+            <li><strong>Engineering filaments</strong> — nylon, PC, carbon-fibre blends for demanding applications</li>
+          </ul>
+          We also offer resin (SLA/MSLA) printing for high-detail parts. Not sure which material suits your application? Include a description of how the part will be used in your quote request and we'll advise.
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false">
+          <span class="faq-question">What is the difference between FDM and resin printing?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          <strong>FDM (Fused Deposition Modelling)</strong> builds parts by melting and depositing filament layer by layer. It's great for functional parts, structural components, large prints, and a wide range of engineering materials. Layer lines are visible but can be sanded smooth.
+          <br /><br />
+          <strong>Resin (SLA/MSLA)</strong> cures liquid photopolymer resin with UV light. It produces very fine detail and a smooth surface finish, making it ideal for miniatures, jewellery masters, dental models, and display items. Resin parts are generally more brittle and less heat-resistant than FDM engineering materials.
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false">
+          <span class="faq-question">What dimensional accuracy can I expect?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          Typical tolerances for FDM printing are ±0.2 mm for standard prints. Tighter tolerances (±0.1 mm) may be achievable depending on part geometry, material, and print orientation — please specify your requirements in the quote request so we can advise. Resin printing typically achieves ±0.05–0.1 mm.
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false">
+          <span class="faq-question">What post-processing options are available?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          We offer the following post-processing services:
+          <ul>
+            <li>Support removal and surface clean-up</li>
+            <li>Sanding (medium and fine grades)</li>
+            <li>Priming and spray painting</li>
+            <li>Heat-set insert installation</li>
+          </ul>
+          Please request any post-processing at the quoting stage so we can include it in the price.
+        </div></div>
+      </div>
+    </div>
+
+    <!-- Category: Turnaround & Delivery -->
+    <div class="mb-12">
+      <p class="faq-category-label">Turnaround &amp; Delivery</p>
+
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false">
+          <span class="faq-question">How long will my order take?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner">Most standard orders are ready within 48–72 hours of order confirmation and payment. Larger or more complex prints may take longer. We'll give you an estimated completion date in your quote confirmation. If you have a hard deadline, let us know upfront and we'll do our best to accommodate it.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false">
+          <span class="faq-question">Do you offer local pickup in Perth?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner">Yes. Local pickup is available for Perth-based customers. The pickup location will be confirmed when your order is ready. Pickup is our fastest option and avoids any shipping time or cost.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false">
+          <span class="faq-question">Do you ship Australia-wide?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner">Yes. We ship to all states and territories via express courier. Shipping costs are calculated based on package dimensions and weight and will be included in your quote. We pack parts carefully to ensure they arrive undamaged.</div></div>
+      </div>
+    </div>
+
+    <!-- Category: Pricing & Payment -->
+    <div class="mb-12">
+      <p class="faq-category-label">Pricing &amp; Payment</p>
+
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false">
+          <span class="faq-question">How is pricing determined?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner">
+          Pricing is based on:
+          <ul>
+            <li>Material type and volume used</li>
+            <li>Print time (complexity, infill, layer height)</li>
+            <li>Post-processing requirements</li>
+            <li>Quantity (volume discounts available)</li>
+          </ul>
+          Submit your file via the quote form for a detailed, no-obligation price.
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false">
+          <span class="faq-question">Do you charge GST?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner">All prices quoted are in Australian dollars. GST (10%) will be applied where applicable and itemised on your invoice. A Tax Invoice will be provided upon payment.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false">
+          <span class="faq-question">What payment methods do you accept?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner">We accept bank transfer (EFT). Payment details will be provided on your invoice. Please reference your invoice number when making payment so we can match it quickly and get your order into production.</div></div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="mt-16 p-10 text-center" style="background: var(--faq-item-bg); border: 1px solid var(--faq-item-br); border-radius: 2px;">
+      <p class="section-label mb-4">Still have questions?</p>
+      <h2 class="font-display font-bold text-white mb-4" style="font-size: clamp(1.5rem, 3vw, 2rem); letter-spacing: -0.02em;">We're happy to help.</h2>
+      <p class="text-white/50 text-sm mb-8 max-w-md mx-auto" style="line-height: 1.8;">Send us a message and we'll get back to you within one business day.</p>
+      <a href="index.html#contact" class="btn-primary">
+        Contact Us
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="px-6 md:px-12 lg:px-20 border-t divider" style="background: var(--bg-footer);">
+  <div class="max-w-7xl mx-auto">
+    <div class="grid md:grid-cols-4 gap-12 py-16">
+      <div class="md:col-span-2">
+        <img id="footer-logo-img" src="logo/3AW-primary-dark.png" alt="3 Axis Works" class="mb-5" style="height:36px;width:auto;" />
+        <p class="text-white/30 text-sm max-w-xs" style="line-height: 1.8;">Precision 3D printing for engineers, designers, and businesses. Based in Perth, WA.</p>
+        <div class="flex gap-3 mt-6">
+          <a href="#" aria-label="Instagram" class="w-9 h-9 rounded-sm flex items-center justify-center text-white/30 hover:text-white transition-colors" style="border: 1px solid rgba(255,255,255,0.08);">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="#" aria-label="LinkedIn" class="w-9 h-9 rounded-sm flex items-center justify-center text-white/30 hover:text-white transition-colors" style="border: 1px solid rgba(255,255,255,0.08);">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+        </div>
+      </div>
+      <div>
+        <div class="text-white/20 text-xs uppercase tracking-widest mb-5">Services</div>
+        <ul class="space-y-3">
+          <li><a href="index.html#services" class="text-white/45 text-sm hover:text-white transition-colors">FDM Printing</a></li>
+          <li><a href="index.html#services" class="text-white/45 text-sm hover:text-white transition-colors">Resin / SLA</a></li>
+          <li><a href="index.html#services" class="text-white/45 text-sm hover:text-white transition-colors">Rapid Prototyping</a></li>
+          <li><a href="index.html#services" class="text-white/45 text-sm hover:text-white transition-colors">Short Run Production</a></li>
+          <li><a href="index.html#services" class="text-white/45 text-sm hover:text-white transition-colors">Post Processing</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-white/20 text-xs uppercase tracking-widest mb-5">Company</div>
+        <ul class="space-y-3">
+          <li><a href="index.html#about" class="text-white/45 text-sm hover:text-white transition-colors">About</a></li>
+          <li><a href="index.html#contact" class="text-white/45 text-sm hover:text-white transition-colors">Contact</a></li>
+          <li><a href="faq.html" class="text-white/45 text-sm hover:text-white transition-colors">FAQs</a></li>
+          <li><a href="privacy-policy.html" class="text-white/45 text-sm hover:text-white transition-colors">Privacy Policy</a></li>
+          <li><a href="terms.html" class="text-white/45 text-sm hover:text-white transition-colors">Terms &amp; Conditions</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t divider py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p class="text-white/20 text-xs">© 2025 3 Axis Works. ABN 12 386 703 207. All rights reserved.</p>
+      <div class="flex items-center gap-4">
+        <a href="privacy-policy.html" class="text-white/20 text-xs hover:text-white/40 transition-colors">Privacy Policy</a>
+        <span class="text-white/15 text-xs">·</span>
+        <a href="terms.html" class="text-white/20 text-xs hover:text-white/40 transition-colors">Terms &amp; Conditions</a>
+        <span class="text-white/15 text-xs">·</span>
+        <p class="text-white/15 text-xs">Perth, Western Australia</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 20); }, { passive: true });
+  nav.classList.toggle('scrolled', window.scrollY > 20);
+
+  // Theme toggle
+  (function () {
+    const btn = document.getElementById('theme-toggle-btn');
+    const moonActive = document.getElementById('toggle-moon');
+    const sunActive  = document.getElementById('toggle-sun-active');
+    const sunIdle    = document.getElementById('toggle-sun-idle');
+    const moonIdle   = document.getElementById('toggle-moon-idle');
+
+    function applyTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('theme', theme);
+      const isLight = theme === 'light';
+      moonActive.style.display = isLight ? 'none' : '';
+      sunActive.style.display  = isLight ? '' : 'none';
+      sunIdle.style.display    = isLight ? 'none' : '';
+      moonIdle.style.display   = isLight ? '' : 'none';
+      const logoSrc = isLight ? 'logo/3AW-primary-light.png' : 'logo/3AW-primary-dark.png';
+      document.getElementById('nav-logo-img').src    = logoSrc;
+      document.getElementById('footer-logo-img').src = logoSrc;
+    }
+
+    btn.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme') || 'dark';
+      applyTheme(current === 'dark' ? 'light' : 'dark');
+    });
+
+    const t = document.documentElement.getAttribute('data-theme') || 'dark';
+    const isLight = t === 'light';
+    moonActive.style.display = isLight ? 'none' : '';
+    sunActive.style.display  = isLight ? '' : 'none';
+    sunIdle.style.display    = isLight ? 'none' : '';
+    moonIdle.style.display   = isLight ? '' : 'none';
+    if (isLight) {
+      document.getElementById('nav-logo-img').src    = 'logo/3AW-primary-light.png';
+      document.getElementById('footer-logo-img').src = 'logo/3AW-primary-light.png';
+    }
+  })();
+
+  // Mobile menu
+  (function () {
+    const btn  = document.getElementById('menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    const bars = document.getElementById('menu-icon-bars');
+    const close = document.getElementById('menu-icon-close');
+    let open = false;
+    function toggle() {
+      open = !open;
+      menu.style.display = open ? 'flex' : 'none';
+      bars.style.display  = open ? 'none' : '';
+      close.style.display = open ? '' : 'none';
+      document.body.style.overflow = open ? 'hidden' : '';
+    }
+    btn.addEventListener('click', toggle);
+    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { if (open) toggle(); }));
+  })();
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+
+      // Close all
+      document.querySelectorAll('.faq-item.open').forEach(el => {
+        el.classList.remove('open');
+        el.querySelector('.faq-btn').setAttribute('aria-expanded', 'false');
+      });
+
+      // Open clicked (unless it was already open)
+      if (!isOpen) {
+        item.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+</script>
+</body>
+</html>

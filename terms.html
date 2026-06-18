@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terms &amp; Conditions — 3 Axis Works</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script>(function(){var t=localStorage.getItem('theme')||'dark';document.documentElement.setAttribute('data-theme',t);})();</script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { DEFAULT: '#1e5c2e', light: '#2a7a3e', lighter: '#3a9e52', dark: '#143f20', muted: '#1e5c2e33' },
+            surface: { base: '#0a0a0a', 1: '#111111', 2: '#171717', 3: '#1e1e1e', 4: '#262626' },
+          },
+          fontFamily: { display: ['Playfair Display', 'Georgia', 'serif'], body: ['Inter', 'system-ui', 'sans-serif'] },
+        },
+      },
+    };
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --bg-base:    #0a0a0a;
+      --bg-footer:  #080808;
+      --c-text:     #e8e8e8;
+      --c-logo:     #f0f0f0;
+      --bg-card:    #111111;
+      --br-subtle:  rgba(255,255,255,0.06);
+      --br-light:   rgba(255,255,255,0.08);
+      --nav-bg:     rgba(10,10,10,0.85);
+      --nav-br:     rgba(255,255,255,0.06);
+      --nav-link:   rgba(255,255,255,0.6);
+      --nav-link-h: #ffffff;
+      --nav-outline:rgba(255,255,255,0.3);
+      --ghost-c:    #e8e8e8;
+      --ghost-br:   rgba(255,255,255,0.2);
+      --ghost-br-h: rgba(255,255,255,0.5);
+    }
+    html[data-theme="light"] {
+      --bg-base:    #eae6de;
+      --bg-footer:  #dedad2;
+      --c-text:     #1a1a1a;
+      --c-logo:     #1a1a1a;
+      --bg-card:    #f0ece4;
+      --br-subtle:  rgba(0,0,0,0.07);
+      --br-light:   rgba(0,0,0,0.09);
+      --nav-bg:     rgba(247,245,240,0.92);
+      --nav-br:     rgba(0,0,0,0.08);
+      --nav-link:   rgba(0,0,0,0.55);
+      --nav-link-h: #1a1a1a;
+      --nav-outline:rgba(0,0,0,0.3);
+      --ghost-c:    #1a1a1a;
+      --ghost-br:   rgba(0,0,0,0.2);
+      --ghost-br-h: rgba(0,0,0,0.5);
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--c-text);
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 0.35s ease, color 0.35s ease;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      pointer-events: none;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+    }
+
+    #nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      transition: background 0.4s ease, backdrop-filter 0.4s ease, border-color 0.4s ease;
+      border-bottom: 1px solid transparent;
+    }
+    #nav.scrolled {
+      background: var(--nav-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom-color: var(--nav-br);
+    }
+    .nav-link {
+      color: var(--nav-link);
+      font-size: 0.8rem; font-weight: 500;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .nav-link:hover { color: var(--nav-link-h); }
+    .nav-link:focus-visible { outline: 2px solid var(--nav-outline); outline-offset: 3px; border-radius: 1px; }
+
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: #1e5c2e; color: #fff;
+      font-size: 0.8rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.9rem 2rem; border-radius: 1px;
+      border: 1px solid transparent; cursor: pointer;
+      transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+      text-decoration: none;
+    }
+    .btn-primary:hover { background: #2a7a3e; box-shadow: 0 8px 32px rgba(30,92,46,0.35); transform: translateY(-1px); }
+    .btn-primary:active { transform: translateY(0); }
+    .btn-primary:focus-visible { outline: 2px solid #2a7a3e; outline-offset: 3px; }
+
+    .divider { border-color: var(--br-subtle); }
+    .section-label { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #2a7a3e; }
+    .accent-line { display: block; width: 40px; height: 2px; background: #2a7a3e; margin-bottom: 1.5rem; }
+
+    .theme-toggle {
+      display: flex; align-items: center;
+      width: 60px; height: 30px; padding: 3px;
+      border-radius: 9999px; cursor: pointer;
+      border: 1px solid #3f3f46; background: #18181b;
+      transition: background 0.3s ease, border-color 0.3s ease;
+      flex-shrink: 0;
+    }
+    html[data-theme="light"] .theme-toggle { background: #ffffff; border-color: #e4e4e7; }
+    .theme-toggle:focus-visible { outline: 2px solid #2a7a3e; outline-offset: 2px; }
+    .theme-toggle-inner { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+    .theme-toggle-thumb {
+      width: 22px; height: 22px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      background: #3f3f46;
+      transform: translateX(0);
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), background 0.3s ease;
+      flex-shrink: 0;
+    }
+    html[data-theme="light"] .theme-toggle-thumb { background: #e4e4e7; transform: translateX(30px); }
+    .theme-toggle-idle {
+      width: 22px; height: 22px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
+    }
+    html[data-theme="light"] .theme-toggle-idle { transform: translateX(-30px); }
+    .theme-toggle svg { width: 13px; height: 13px; }
+
+    html[data-theme="light"] .text-white\/15 { color: rgba(0,0,0,0.30) !important; }
+    html[data-theme="light"] .text-white\/20 { color: rgba(0,0,0,0.38) !important; }
+    html[data-theme="light"] .text-white\/30 { color: rgba(0,0,0,0.52) !important; }
+    html[data-theme="light"] .text-white\/45 { color: rgba(0,0,0,0.68) !important; }
+    html[data-theme="light"] .text-white { color: #1a1a1a !important; }
+    html[data-theme="light"] .hover\:text-white:hover { color: #1a1a1a !important; }
+    html[data-theme="light"] #mobile-menu { background: rgba(247,245,240,0.97) !important; }
+
+    .policy-section { padding: 2.5rem 0; border-bottom: 1px solid var(--br-subtle); }
+    .policy-section:last-child { border-bottom: none; }
+    .policy-num { font-family: 'Playfair Display', serif; font-size: 0.75rem; font-weight: 900; letter-spacing: 0.08em; color: #2a7a3e; margin-bottom: 0.75rem; }
+    .policy-heading { font-family: 'Playfair Display', serif; font-size: clamp(1.25rem, 2.5vw, 1.6rem); font-weight: 700; line-height: 1.25; letter-spacing: -0.02em; margin-bottom: 1.25rem; }
+    .policy-body { font-size: 0.9rem; line-height: 1.85; color: rgba(255,255,255,0.65); }
+    html[data-theme="light"] .policy-body { color: rgba(0,0,0,0.62); }
+    .policy-body p + p { margin-top: 1em; }
+    .policy-body ul { list-style: none; padding: 0; margin: 0.75em 0; }
+    .policy-body ul li { padding-left: 1.25rem; position: relative; margin-bottom: 0.4em; }
+    .policy-body ul li::before { content: ''; position: absolute; left: 0; top: 0.65em; width: 5px; height: 5px; border-radius: 50%; background: #2a7a3e; }
+    .policy-body a { color: #3a9e52; text-decoration: underline; text-underline-offset: 3px; }
+    .policy-body a:hover { color: #2a7a3e; }
+    .policy-body strong { color: inherit; font-weight: 600; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav" class="px-6 md:px-12 lg:px-20">
+  <div class="max-w-7xl mx-auto flex items-center justify-between h-20">
+    <a href="index.html" class="flex-shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-light rounded-sm">
+      <img id="nav-logo-img" src="logo/3AW-primary-dark.png" alt="3 Axis Works" style="height:44px;width:auto;display:block;" />
+    </a>
+    <div class="hidden md:flex items-center gap-8">
+      <a href="index.html#services" class="nav-link">Services</a>
+      <a href="index.html#process" class="nav-link">Process</a>
+      <a href="index.html#portfolio" class="nav-link">Portfolio</a>
+      <a href="index.html#materials" class="nav-link">Materials</a>
+      <a href="index.html#contact" class="nav-link">Contact</a>
+    </div>
+    <div class="hidden md:flex items-center gap-4">
+      <button id="theme-toggle-btn" class="theme-toggle" aria-label="Toggle light/dark mode" tabindex="0">
+        <div class="theme-toggle-inner">
+          <div class="theme-toggle-thumb">
+            <svg id="toggle-moon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+            <svg id="toggle-sun-active" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          </div>
+          <div class="theme-toggle-idle">
+            <svg id="toggle-sun-idle" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            <svg id="toggle-moon-idle" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+          </div>
+        </div>
+      </button>
+      <a href="index.html#contact" class="btn-primary">
+        Get a Quote
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+    <button id="menu-btn" class="md:hidden p-2 text-white/60 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-light rounded-sm" aria-label="Toggle menu">
+      <svg id="menu-icon-bars" width="22" height="16" viewBox="0 0 22 16" fill="none"><path d="M0 1h22M0 8h22M0 15h22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <svg id="menu-icon-close" width="20" height="20" viewBox="0 0 20 20" fill="none" style="display:none;"><path d="M1 1l18 18M19 1L1 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile menu -->
+<div id="mobile-menu" class="fixed inset-0 bg-surface-base/95 backdrop-blur-xl flex-col items-center justify-center gap-8" style="display:none; z-index:200;">
+  <div class="flex flex-col items-center gap-8">
+    <a href="index.html#services" class="text-white text-2xl font-display font-bold">Services</a>
+    <a href="index.html#process" class="text-white text-2xl font-display font-bold">Process</a>
+    <a href="index.html#portfolio" class="text-white text-2xl font-display font-bold">Portfolio</a>
+    <a href="index.html#materials" class="text-white text-2xl font-display font-bold">Materials</a>
+    <a href="index.html#contact" class="text-white text-2xl font-display font-bold">Contact</a>
+    <a href="index.html#contact" class="btn-primary mt-4">Get a Quote</a>
+  </div>
+</div>
+
+<!-- PAGE HEADER -->
+<section class="pt-40 pb-16 px-6 md:px-12 lg:px-20" style="background: var(--bg-base); border-bottom: 1px solid var(--br-subtle);">
+  <div class="max-w-7xl mx-auto">
+    <div class="max-w-3xl">
+      <span class="accent-line"></span>
+      <p class="section-label mb-4">Legal</p>
+      <h1 class="font-display font-black text-white" style="font-size: clamp(2.5rem, 6vw, 4.5rem); line-height: 1.05; letter-spacing: -0.03em;">Terms &amp; Conditions</h1>
+      <p class="text-white/40 text-sm mt-5" style="font-family: 'Inter', sans-serif;">Last updated: June 2025 &nbsp;·&nbsp; ABN 12 386 703 207</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTENT -->
+<main class="px-6 md:px-12 lg:px-20 py-16">
+  <div class="max-w-3xl mx-auto">
+
+    <div class="policy-section">
+      <p class="policy-num">01</p>
+      <h2 class="policy-heading text-white">Introduction</h2>
+      <div class="policy-body">
+        <p>These Terms and Conditions govern your use of the 3 Axis Works website and the provision of 3D printing and related services by 3 Axis Works (ABN 12 386 703 207), a business based in Perth, Western Australia ("we", "us", "our").</p>
+        <p>By submitting a quote request, placing an order, or otherwise engaging our services, you agree to be bound by these Terms and Conditions. Please read them carefully before proceeding.</p>
+      </div>
+    </div>
+
+    <div class="policy-section">
+      <p class="policy-num">02</p>
+      <h2 class="policy-heading text-white">Services</h2>
+      <div class="policy-body">
+        <p>3 Axis Works provides 3D printing, rapid prototyping, post-processing, and related manufacturing services. The specific scope of services for each order will be agreed upon in writing (via quote acceptance) prior to commencement.</p>
+        <p>We reserve the right to decline any order at our discretion, including but not limited to orders involving designs that are unlawful, infringe third-party intellectual property, or are not suitable for the 3D printing process.</p>
+      </div>
+    </div>
+
+    <div class="policy-section">
+      <p class="policy-num">03</p>
+      <h2 class="policy-heading text-white">Quotes and Orders</h2>
+      <div class="policy-body">
+        <p>All quotes provided by 3 Axis Works are:</p>
+        <ul>
+          <li>Valid for 30 days from the date of issue, unless otherwise stated</li>
+          <li>Based on the specific files, materials, and specifications provided at the time of quoting</li>
+          <li>Subject to revision if the files or specifications change after the quote is issued</li>
+        </ul>
+        <p>An order is confirmed when you formally accept a quote and any required deposit or payment is received. We will confirm acceptance of your order in writing (by email).</p>
+        <p>Minor variances in dimensions, colour, and surface finish are inherent to the 3D printing process and do not constitute a defect unless they fall outside tolerances specified in the accepted quote.</p>
+      </div>
+    </div>
+
+    <div class="policy-section">
+      <p class="policy-num">04</p>
+      <h2 class="policy-heading text-white">Payment</h2>
+      <div class="policy-body">
+        <p>Payment terms will be specified on each invoice. Unless otherwise agreed in writing:</p>
+        <ul>
+          <li>Full payment or an agreed deposit is required before production commences</li>
+          <li>Remaining balances are due upon completion, prior to dispatch or pickup</li>
+          <li>Accepted payment methods will be communicated at the time of invoicing</li>
+        </ul>
+        <p>We reserve the right to apply a late payment fee on overdue invoices at a rate of 1.5% per month on the outstanding balance.</p>
+      </div>
+    </div>
+
+    <div class="policy-section">
+      <p class="policy-num">05</p>
+      <h2 class="policy-heading text-white">Intellectual Property</h2>
+      <div class="policy-body">
+        <p>You retain full ownership of any design files, drawings, or intellectual property you provide to us. By submitting files for quoting or production, you:</p>
+        <ul>
+          <li>Warrant that you are the owner of the design, or that you have the legal right to reproduce it</li>
+          <li>Grant 3 Axis Works a limited licence to use those files solely for the purpose of providing the requested service</li>
+          <li>Confirm that the design does not infringe the intellectual property rights of any third party</li>
+        </ul>
+        <p>3 Axis Works does not claim any ownership over customer-submitted designs. We will not share, reproduce, or distribute your files to third parties without your permission, except as required to deliver the service (e.g. material suppliers).</p>
+        <p>With your permission only, we may photograph completed parts for use in our portfolio or marketing materials.</p>
+      </div>
+    </div>
+
+    <div class="policy-section">
+      <p class="policy-num">06</p>
+      <h2 class="policy-heading text-white">Customer Responsibilities</h2>
+      <div class="policy-body">
+        <p>You are responsible for:</p>
+        <ul>
+          <li>Providing print-ready files in a supported format (STL, STEP, OBJ, 3MF)</li>
+          <li>Ensuring the design is fit for its intended purpose</li>
+          <li>Clearly communicating any special requirements (tolerances, material preferences, finish standards) at the time of quoting</li>
+          <li>Reviewing and approving any pre-production confirmations we send before we proceed</li>
+        </ul>
+        <p>3 Axis Works will flag obvious printability issues during the quoting process, but we do not guarantee a full design review. Ultimate responsibility for design suitability rests with the customer.</p>
+      </div>
+    </div>
+
+    <div class="policy-section">
+      <p class="policy-num">07</p>
+      <h2 class="policy-heading text-white">Limitation of Liability</h2>
+      <div class="policy-body">
+        <p>3D printed parts produced by 3 Axis Works are intended for prototyping, display, and general-purpose use unless specifically agreed otherwise in writing. Parts are <strong>not certified for life-safety, structural, medical, aerospace, or other safety-critical applications</strong> without independent engineering assessment and certification.</p>
+        <p>To the maximum extent permitted by law, our liability for any claim arising from the supply of services is limited to the value of the relevant order. We are not liable for:</p>
+        <ul>
+          <li>Consequential, indirect, or incidental losses</li>
+          <li>Loss of profit, revenue, or business opportunity</li>
+          <li>Damage arising from the use of parts in applications for which they were not designed</li>
+          <li>Delays caused by circumstances outside our reasonable control</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="policy-section">
+      <p class="policy-num">08</p>
+      <h2 class="policy-heading text-white">Australian Consumer Law</h2>
+      <div class="policy-body">
+        <p>Nothing in these Terms excludes, restricts, or modifies any right or remedy, or any guarantee, warranty, or other term or condition, implied or imposed by the <em>Australian Consumer Law</em> (Schedule 2 of the <em>Competition and Consumer Act 2010</em> (Cth)) that cannot lawfully be excluded or limited.</p>
+        <p>Where the Australian Consumer Law applies, your remedies in the event of a major failure include a replacement, refund, or compensation. For minor failures, we are entitled to choose between providing a remedy and a replacement.</p>
+      </div>
+    </div>
+
+    <div class="policy-section">
+      <p class="policy-num">09</p>
+      <h2 class="policy-heading text-white">Cancellations and Returns</h2>
+      <div class="policy-body">
+        <p>Orders may be cancelled prior to commencement of production. Cancellations after production has commenced may be subject to a cancellation fee reflecting materials used and labour incurred.</p>
+        <p>Due to the custom nature of 3D printed parts, we do not accept returns for change of mind. If a part is defective or does not match the agreed specifications, please contact us within 7 days of receiving the order and we will work with you to find a suitable resolution.</p>
+      </div>
+    </div>
+
+    <div class="policy-section">
+      <p class="policy-num">10</p>
+      <h2 class="policy-heading text-white">Governing Law</h2>
+      <div class="policy-body">
+        <p>These Terms and Conditions are governed by the laws of Western Australia, Australia. Any disputes arising out of or in connection with these terms will be subject to the exclusive jurisdiction of the courts of Western Australia.</p>
+      </div>
+    </div>
+
+    <div class="policy-section">
+      <p class="policy-num">11</p>
+      <h2 class="policy-heading text-white">Changes to These Terms</h2>
+      <div class="policy-body">
+        <p>We may update these Terms and Conditions from time to time. The current version will always be available on this page with the date of the most recent update. Your continued use of our services after any changes constitutes acceptance of the revised terms.</p>
+      </div>
+    </div>
+
+    <div class="policy-section">
+      <p class="policy-num">12</p>
+      <h2 class="policy-heading text-white">Contact</h2>
+      <div class="policy-body">
+        <p>If you have any questions about these Terms and Conditions, please contact us via the <a href="index.html#contact">enquiry form</a> on our website.</p>
+        <p><strong>3 Axis Works</strong><br />ABN 12 386 703 207<br />Perth, Western Australia</p>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="px-6 md:px-12 lg:px-20 border-t divider" style="background: var(--bg-footer);">
+  <div class="max-w-7xl mx-auto">
+    <div class="grid md:grid-cols-4 gap-12 py-16">
+      <div class="md:col-span-2">
+        <img id="footer-logo-img" src="logo/3AW-primary-dark.png" alt="3 Axis Works" class="mb-5" style="height:36px;width:auto;" />
+        <p class="text-white/30 text-sm max-w-xs" style="line-height: 1.8;">Precision 3D printing for engineers, designers, and businesses. Based in Perth, WA.</p>
+        <div class="flex gap-3 mt-6">
+          <a href="#" aria-label="Instagram" class="w-9 h-9 rounded-sm flex items-center justify-center text-white/30 hover:text-white transition-colors" style="border: 1px solid rgba(255,255,255,0.08);">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="#" aria-label="LinkedIn" class="w-9 h-9 rounded-sm flex items-center justify-center text-white/30 hover:text-white transition-colors" style="border: 1px solid rgba(255,255,255,0.08);">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+        </div>
+      </div>
+      <div>
+        <div class="text-white/20 text-xs uppercase tracking-widest mb-5">Services</div>
+        <ul class="space-y-3">
+          <li><a href="index.html#services" class="text-white/45 text-sm hover:text-white transition-colors">FDM Printing</a></li>
+          <li><a href="index.html#services" class="text-white/45 text-sm hover:text-white transition-colors">Resin / SLA</a></li>
+          <li><a href="index.html#services" class="text-white/45 text-sm hover:text-white transition-colors">Rapid Prototyping</a></li>
+          <li><a href="index.html#services" class="text-white/45 text-sm hover:text-white transition-colors">Short Run Production</a></li>
+          <li><a href="index.html#services" class="text-white/45 text-sm hover:text-white transition-colors">Post Processing</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-white/20 text-xs uppercase tracking-widest mb-5">Company</div>
+        <ul class="space-y-3">
+          <li><a href="index.html#about" class="text-white/45 text-sm hover:text-white transition-colors">About</a></li>
+          <li><a href="index.html#contact" class="text-white/45 text-sm hover:text-white transition-colors">Contact</a></li>
+          <li><a href="faq.html" class="text-white/45 text-sm hover:text-white transition-colors">FAQs</a></li>
+          <li><a href="privacy-policy.html" class="text-white/45 text-sm hover:text-white transition-colors">Privacy Policy</a></li>
+          <li><a href="terms.html" class="text-white/45 text-sm hover:text-white transition-colors">Terms &amp; Conditions</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t divider py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p class="text-white/20 text-xs">© 2025 3 Axis Works. ABN 12 386 703 207. All rights reserved.</p>
+      <div class="flex items-center gap-4">
+        <a href="privacy-policy.html" class="text-white/20 text-xs hover:text-white/40 transition-colors">Privacy Policy</a>
+        <span class="text-white/15 text-xs">·</span>
+        <a href="terms.html" class="text-white/20 text-xs hover:text-white/40 transition-colors">Terms &amp; Conditions</a>
+        <span class="text-white/15 text-xs">·</span>
+        <p class="text-white/15 text-xs">Perth, Western Australia</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 20); }, { passive: true });
+  nav.classList.toggle('scrolled', window.scrollY > 20);
+
+  (function () {
+    const btn = document.getElementById('theme-toggle-btn');
+    const moonActive = document.getElementById('toggle-moon');
+    const sunActive  = document.getElementById('toggle-sun-active');
+    const sunIdle    = document.getElementById('toggle-sun-idle');
+    const moonIdle   = document.getElementById('toggle-moon-idle');
+
+    function applyTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('theme', theme);
+      const isLight = theme === 'light';
+      moonActive.style.display = isLight ? 'none' : '';
+      sunActive.style.display  = isLight ? '' : 'none';
+      sunIdle.style.display    = isLight ? 'none' : '';
+      moonIdle.style.display   = isLight ? '' : 'none';
+      const logoSrc = isLight ? 'logo/3AW-primary-light.png' : 'logo/3AW-primary-dark.png';
+      document.getElementById('nav-logo-img').src    = logoSrc;
+      document.getElementById('footer-logo-img').src = logoSrc;
+    }
+
+    btn.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme') || 'dark';
+      applyTheme(current === 'dark' ? 'light' : 'dark');
+    });
+
+    const t = document.documentElement.getAttribute('data-theme') || 'dark';
+    const isLight = t === 'light';
+    moonActive.style.display = isLight ? 'none' : '';
+    sunActive.style.display  = isLight ? '' : 'none';
+    sunIdle.style.display    = isLight ? 'none' : '';
+    moonIdle.style.display   = isLight ? '' : 'none';
+    if (isLight) {
+      document.getElementById('nav-logo-img').src    = 'logo/3AW-primary-light.png';
+      document.getElementById('footer-logo-img').src = 'logo/3AW-primary-light.png';
+    }
+  })();
+
+  (function () {
+    const btn  = document.getElementById('menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    const bars = document.getElementById('menu-icon-bars');
+    const close = document.getElementById('menu-icon-close');
+    let open = false;
+    function toggle() {
+      open = !open;
+      menu.style.display = open ? 'flex' : 'none';
+      bars.style.display  = open ? 'none' : '';
+      close.style.display = open ? '' : 'none';
+      document.body.style.overflow = open ? 'hidden' : '';
+    }
+    btn.addEventListener('click', toggle);
+    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { if (open) toggle(); }));
+  })();
+</script>
+</body>
+</html>
