@@ -39,9 +39,6 @@
       --nav-link:   rgba(255,255,255,0.6);
       --nav-link-h: #ffffff;
       --nav-outline:rgba(255,255,255,0.3);
-      --ghost-c:    #e8e8e8;
-      --ghost-br:   rgba(255,255,255,0.2);
-      --ghost-br-h: rgba(255,255,255,0.5);
     }
     html[data-theme="light"] {
       --bg-base:    #eae6de;
@@ -56,9 +53,6 @@
       --nav-link:   rgba(0,0,0,0.55);
       --nav-link-h: #1a1a1a;
       --nav-outline:rgba(0,0,0,0.3);
-      --ghost-c:    #1a1a1a;
-      --ghost-br:   rgba(0,0,0,0.2);
-      --ghost-br-h: rgba(0,0,0,0.5);
     }
 
     body {
@@ -82,24 +76,20 @@
     }
 
     #nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       transition: background 0.4s ease, backdrop-filter 0.4s ease, border-color 0.4s ease;
       border-bottom: 1px solid transparent;
     }
     #nav.scrolled {
       background: var(--nav-bg);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
       border-bottom-color: var(--nav-br);
     }
     .nav-link {
       color: var(--nav-link);
       font-size: 0.8rem; font-weight: 500;
       letter-spacing: 0.06em; text-transform: uppercase;
-      text-decoration: none;
-      transition: color 0.2s ease;
+      text-decoration: none; transition: color 0.2s ease;
     }
     .nav-link:hover { color: var(--nav-link-h); }
     .nav-link:focus-visible { outline: 2px solid var(--nav-outline); outline-offset: 3px; border-radius: 1px; }
@@ -127,8 +117,7 @@
       width: 60px; height: 30px; padding: 3px;
       border-radius: 9999px; cursor: pointer;
       border: 1px solid #3f3f46; background: #18181b;
-      transition: background 0.3s ease, border-color 0.3s ease;
-      flex-shrink: 0;
+      transition: background 0.3s ease, border-color 0.3s ease; flex-shrink: 0;
     }
     html[data-theme="light"] .theme-toggle { background: #ffffff; border-color: #e4e4e7; }
     .theme-toggle:focus-visible { outline: 2px solid #2a7a3e; outline-offset: 2px; }
@@ -136,17 +125,13 @@
     .theme-toggle-thumb {
       width: 22px; height: 22px; border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      background: #3f3f46;
-      transform: translateX(0);
-      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), background 0.3s ease;
-      flex-shrink: 0;
+      background: #3f3f46; transform: translateX(0);
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), background 0.3s ease; flex-shrink: 0;
     }
     html[data-theme="light"] .theme-toggle-thumb { background: #e4e4e7; transform: translateX(30px); }
     .theme-toggle-idle {
-      width: 22px; height: 22px;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
+      width: 22px; height: 22px; display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
     }
     html[data-theme="light"] .theme-toggle-idle { transform: translateX(-30px); }
     .theme-toggle svg { width: 13px; height: 13px; }
@@ -167,11 +152,28 @@
     html[data-theme="light"] .policy-body { color: rgba(0,0,0,0.62); }
     .policy-body p + p { margin-top: 1em; }
     .policy-body ul { list-style: none; padding: 0; margin: 0.75em 0; }
-    .policy-body ul li { padding-left: 1.25rem; position: relative; margin-bottom: 0.4em; }
+    .policy-body ul li { padding-left: 1.25rem; position: relative; margin-bottom: 0.45em; }
     .policy-body ul li::before { content: ''; position: absolute; left: 0; top: 0.65em; width: 5px; height: 5px; border-radius: 50%; background: #2a7a3e; }
+    .policy-body ol { padding-left: 1.5rem; margin: 0.75em 0; counter-reset: item; list-style: none; }
+    .policy-body ol li { counter-increment: item; padding-left: 0.5rem; position: relative; margin-bottom: 0.45em; }
+    .policy-body ol li::before { content: "(" counter(item, lower-alpha) ")"; position: absolute; left: -1.5rem; color: #2a7a3e; font-weight: 600; font-size: 0.8em; top: 0.15em; }
     .policy-body a { color: #3a9e52; text-decoration: underline; text-underline-offset: 3px; }
     .policy-body a:hover { color: #2a7a3e; }
     .policy-body strong { color: inherit; font-weight: 600; }
+    .policy-body em { font-style: italic; }
+
+    /* Warning callout */
+    .callout {
+      background: rgba(30,92,46,0.08);
+      border-left: 3px solid #2a7a3e;
+      border-radius: 0 2px 2px 0;
+      padding: 1rem 1.25rem;
+      margin: 1rem 0;
+      font-size: 0.875rem;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.7);
+    }
+    html[data-theme="light"] .callout { color: rgba(0,0,0,0.65); background: rgba(30,92,46,0.05); }
   </style>
 </head>
 <body>
@@ -244,10 +246,18 @@
 
     <div class="policy-section">
       <p class="policy-num">01</p>
-      <h2 class="policy-heading text-white">Introduction</h2>
+      <h2 class="policy-heading text-white">Introduction &amp; Acceptance</h2>
       <div class="policy-body">
-        <p>These Terms and Conditions govern your use of the 3 Axis Works website and the provision of 3D printing and related services by 3 Axis Works (ABN 12 386 703 207), a business based in Perth, Western Australia ("we", "us", "our").</p>
-        <p>By submitting a quote request, placing an order, or otherwise engaging our services, you agree to be bound by these Terms and Conditions. Please read them carefully before proceeding.</p>
+        <p>These Terms and Conditions ("Terms") govern all services provided by 3 Axis Works (ABN 12 386 703 207), a business based in Perth, Western Australia ("3 Axis Works", "we", "us", "our"), to the customer ("you", "your").</p>
+        <p>You accept these Terms when you:</p>
+        <ol>
+          <li>submit a quote request via our website or by any other means;</li>
+          <li>accept a quote in writing (including by email or electronic communication);</li>
+          <li>make full or partial payment for an order; or</li>
+          <li>otherwise instruct us to commence work on your project.</li>
+        </ol>
+        <p><strong>If you do not agree to these Terms, do not submit a quote request or place an order.</strong></p>
+        <p>These Terms apply to all orders unless expressly varied in writing and signed by an authorised representative of 3 Axis Works. No other terms or conditions (including any terms on a customer purchase order) shall apply unless expressly agreed by us in writing.</p>
       </div>
     </div>
 
@@ -255,8 +265,9 @@
       <p class="policy-num">02</p>
       <h2 class="policy-heading text-white">Services</h2>
       <div class="policy-body">
-        <p>3 Axis Works provides 3D printing, rapid prototyping, post-processing, and related manufacturing services. The specific scope of services for each order will be agreed upon in writing (via quote acceptance) prior to commencement.</p>
-        <p>We reserve the right to decline any order at our discretion, including but not limited to orders involving designs that are unlawful, infringe third-party intellectual property, or are not suitable for the 3D printing process.</p>
+        <p>3 Axis Works provides 3D printing, rapid prototyping, post-processing, 3D modelling, and related manufacturing services. The specific scope of services for each order will be confirmed in the accepted quote.</p>
+        <p>We reserve the right to decline any order at our absolute discretion, including orders involving designs that are unlawful, infringe third-party intellectual property rights, are not suitable for the 3D printing process, or which we consider unsafe to produce.</p>
+        <p>We reserve the right to correct any pricing errors in a quote before production commences. In the event of a clear pricing error (including where a price has been quoted significantly below cost), we will notify you and re-issue the corrected quote. You may cancel without penalty and receive a full refund of any deposit paid if you do not accept the corrected price.</p>
       </div>
     </div>
 
@@ -266,12 +277,19 @@
       <div class="policy-body">
         <p>All quotes provided by 3 Axis Works are:</p>
         <ul>
-          <li>Valid for 30 days from the date of issue, unless otherwise stated</li>
-          <li>Based on the specific files, materials, and specifications provided at the time of quoting</li>
-          <li>Subject to revision if the files or specifications change after the quote is issued</li>
+          <li>valid for 30 days from the date of issue, unless otherwise stated in writing;</li>
+          <li>based on the specific files, materials, and specifications provided at the time of quoting;</li>
+          <li>subject to revision if files or specifications are changed after the quote is issued; and</li>
+          <li>subject to material availability at the time of order confirmation.</li>
         </ul>
-        <p>An order is confirmed when you formally accept a quote and any required deposit or payment is received. We will confirm acceptance of your order in writing (by email).</p>
-        <p>Minor variances in dimensions, colour, and surface finish are inherent to the 3D printing process and do not constitute a defect unless they fall outside tolerances specified in the accepted quote.</p>
+        <p>An order is confirmed upon your written acceptance of the quote and receipt of the required deposit or full payment. We will confirm acceptance of your order in writing.</p>
+        <p>Minor variances in dimensions, colour, and surface finish are inherent to the 3D printing process. A part will only be considered defective where it <strong>materially deviates</strong> from specifications expressly stated in the accepted quote. The following are not considered defects:</p>
+        <ul>
+          <li>dimensional variation within ±0.3 mm for FDM parts and ±0.1 mm for resin parts;</li>
+          <li>visible layer lines, surface texture, or minor cosmetic blemishes inherent to the process;</li>
+          <li>colour variation between batches or from on-screen colour representations; and</li>
+          <li>warping, shrinkage, or other characteristics within normal process tolerances for the selected material.</li>
+        </ul>
       </div>
     </div>
 
@@ -279,100 +297,175 @@
       <p class="policy-num">04</p>
       <h2 class="policy-heading text-white">Payment</h2>
       <div class="policy-body">
-        <p>Payment terms will be specified on each invoice. Unless otherwise agreed in writing:</p>
-        <ul>
-          <li>Full payment or an agreed deposit is required before production commences</li>
-          <li>Remaining balances are due upon completion, prior to dispatch or pickup</li>
-          <li>Accepted payment methods will be communicated at the time of invoicing</li>
-        </ul>
-        <p>We reserve the right to apply a late payment fee on overdue invoices at a rate of 1.5% per month on the outstanding balance.</p>
+        <p>Unless otherwise stated in a specific quote:</p>
+        <ol>
+          <li>a deposit of 50% of the quoted order value (excluding GST) is required before production commences;</li>
+          <li>the remaining balance is due upon completion, prior to dispatch or pickup;</li>
+          <li>orders under $100 (excluding GST) require full prepayment; and</li>
+          <li>deposits are non-refundable once production has commenced, except where 3 Axis Works is unable to fulfil the order.</li>
+        </ol>
+        <p>All prices are in Australian dollars. GST (10%) will be applied where applicable and itemised on your invoice. A Tax Invoice will be issued upon payment.</p>
+        <p>If payment is not received by the due date on the invoice, we reserve the right to charge interest at 1.5% per month on the outstanding balance, calculated from the due date until the date of payment. We also reserve the right to withhold dispatch of completed parts until all outstanding amounts are paid in full.</p>
       </div>
     </div>
 
     <div class="policy-section">
       <p class="policy-num">05</p>
-      <h2 class="policy-heading text-white">Intellectual Property</h2>
+      <h2 class="policy-heading text-white">Customer Responsibilities</h2>
       <div class="policy-body">
-        <p>You retain full ownership of any design files, drawings, or intellectual property you provide to us. By submitting files for quoting or production, you:</p>
-        <ul>
-          <li>Warrant that you are the owner of the design, or that you have the legal right to reproduce it</li>
-          <li>Grant 3 Axis Works a limited licence to use those files solely for the purpose of providing the requested service</li>
-          <li>Confirm that the design does not infringe the intellectual property rights of any third party</li>
-        </ul>
-        <p>3 Axis Works does not claim any ownership over customer-submitted designs. We will not share, reproduce, or distribute your files to third parties without your permission, except as required to deliver the service (e.g. material suppliers).</p>
-        <p>With your permission only, we may photograph completed parts for use in our portfolio or marketing materials.</p>
+        <p>You are solely responsible for:</p>
+        <ol>
+          <li>providing print-ready files in a supported format (STL, STEP, OBJ, 3MF) that are free of errors, non-manifold geometry, or other defects that may affect print quality;</li>
+          <li>ensuring all dimensions and units in the file are correct and match the intended final part;</li>
+          <li>ensuring the design is fit for its intended purpose and application;</li>
+          <li>clearly communicating all requirements — including tolerances, material preferences, finish standards, and intended end use — at the time of quoting;</li>
+          <li>reviewing and approving any pre-production confirmations sent by us before production commences; and</li>
+          <li>ensuring that the part is independently assessed and certified by a qualified engineer before use in any application where safety, structural integrity, or regulatory compliance is required.</li>
+        </ol>
+        <p>While we may flag obvious printability issues during our quoting process, we do not provide a full engineering or design review. Our assessment is limited to printability only. Ultimate responsibility for design suitability and end-use application rests entirely with you.</p>
       </div>
     </div>
 
     <div class="policy-section">
       <p class="policy-num">06</p>
-      <h2 class="policy-heading text-white">Customer Responsibilities</h2>
+      <h2 class="policy-heading text-white">Intellectual Property</h2>
       <div class="policy-body">
-        <p>You are responsible for:</p>
-        <ul>
-          <li>Providing print-ready files in a supported format (STL, STEP, OBJ, 3MF)</li>
-          <li>Ensuring the design is fit for its intended purpose</li>
-          <li>Clearly communicating any special requirements (tolerances, material preferences, finish standards) at the time of quoting</li>
-          <li>Reviewing and approving any pre-production confirmations we send before we proceed</li>
-        </ul>
-        <p>3 Axis Works will flag obvious printability issues during the quoting process, but we do not guarantee a full design review. Ultimate responsibility for design suitability rests with the customer.</p>
+        <p>You retain full ownership of all design files, drawings, and intellectual property you provide to us. By submitting files, you:</p>
+        <ol>
+          <li>warrant that you are the legal owner of the design, or that you hold all necessary licences and permissions to reproduce it;</li>
+          <li>warrant that the design does not infringe the intellectual property rights, trade secrets, or other proprietary rights of any third party;</li>
+          <li>grant 3 Axis Works a limited, non-exclusive licence to use the files solely for the purpose of providing the services described in the accepted quote; and</li>
+          <li>confirm that producing the part does not violate any applicable law or regulation.</li>
+        </ol>
+        <p>3 Axis Works does not claim ownership of your designs. We will not reproduce, distribute, or share your files with third parties except as necessary to fulfil your order (e.g. material suppliers). With your explicit prior written consent only, we may photograph completed parts for use in our portfolio or marketing materials.</p>
       </div>
     </div>
 
     <div class="policy-section">
       <p class="policy-num">07</p>
-      <h2 class="policy-heading text-white">Limitation of Liability</h2>
+      <h2 class="policy-heading text-white">Indemnification</h2>
       <div class="policy-body">
-        <p>3D printed parts produced by 3 Axis Works are intended for prototyping, display, and general-purpose use unless specifically agreed otherwise in writing. Parts are <strong>not certified for life-safety, structural, medical, aerospace, or other safety-critical applications</strong> without independent engineering assessment and certification.</p>
-        <p>To the maximum extent permitted by law, our liability for any claim arising from the supply of services is limited to the value of the relevant order. We are not liable for:</p>
-        <ul>
-          <li>Consequential, indirect, or incidental losses</li>
-          <li>Loss of profit, revenue, or business opportunity</li>
-          <li>Damage arising from the use of parts in applications for which they were not designed</li>
-          <li>Delays caused by circumstances outside our reasonable control</li>
-        </ul>
+        <p>To the maximum extent permitted by law, you agree to indemnify, defend, and hold harmless 3 Axis Works and its employees, contractors, and agents from and against all claims, actions, proceedings, damages, losses, liabilities, costs, and expenses (including reasonable legal fees) arising from or relating to:</p>
+        <ol>
+          <li>your breach of any provision of these Terms;</li>
+          <li>any claim by a third party that the design files you provided infringe their intellectual property rights, trade secrets, or other proprietary rights;</li>
+          <li>your use or misuse of the printed parts, including use in any application beyond the scope confirmed in your order;</li>
+          <li>any injury, death, property damage, or other loss caused directly or indirectly by a part produced to your specifications;</li>
+          <li>any misrepresentation made by you in connection with your order; or</li>
+          <li>your negligence or wilful misconduct.</li>
+        </ol>
+        <p>This indemnification obligation survives the completion or termination of any order or engagement with 3 Axis Works.</p>
       </div>
     </div>
 
     <div class="policy-section">
       <p class="policy-num">08</p>
-      <h2 class="policy-heading text-white">Australian Consumer Law</h2>
+      <h2 class="policy-heading text-white">Limitation of Liability</h2>
       <div class="policy-body">
-        <p>Nothing in these Terms excludes, restricts, or modifies any right or remedy, or any guarantee, warranty, or other term or condition, implied or imposed by the <em>Australian Consumer Law</em> (Schedule 2 of the <em>Competition and Consumer Act 2010</em> (Cth)) that cannot lawfully be excluded or limited.</p>
-        <p>Where the Australian Consumer Law applies, your remedies in the event of a major failure include a replacement, refund, or compensation. For minor failures, we are entitled to choose between providing a remedy and a replacement.</p>
+        <div class="callout">
+          3D printed parts produced by 3 Axis Works are intended for prototyping, display, and general-purpose use only. <strong>Parts are not certified for life-safety, structural, medical, aerospace, automotive, or other safety-critical applications.</strong> You accept sole responsibility for determining part suitability for your intended application.
+        </div>
+        <p>To the maximum extent permitted by applicable law:</p>
+        <ol>
+          <li>the total liability of 3 Axis Works to you for any and all claims arising out of or in connection with these Terms or the supply of services — whether in contract, tort (including negligence), statute, or otherwise — is limited to the total amount paid by you for the specific order giving rise to the claim;</li>
+          <li>3 Axis Works is not liable, under any circumstances, for:
+            <ul>
+              <li>indirect, incidental, special, consequential, or punitive loss or damage;</li>
+              <li>loss of profit, revenue, business, contracts, anticipated savings, or opportunity;</li>
+              <li>loss or corruption of data or information;</li>
+              <li>reputational damage or loss of goodwill;</li>
+              <li>personal injury, death, or property damage arising from use of the parts; or</li>
+              <li>any third-party claim made against you,</li>
+            </ul>
+            whether or not 3 Axis Works was advised of the possibility of such loss; and
+          </li>
+          <li>3 Axis Works makes no representation or warranty that parts will meet your specific performance requirements, achieve any particular result, or be fit for any purpose other than that described in the accepted quote.</li>
+        </ol>
+        <p>The customer acknowledges that 3D printed parts are not a substitute for professionally certified components, and must not be relied upon in any safety-critical application without independent engineering assessment and, where required by law, certification by a registered engineer.</p>
       </div>
     </div>
 
     <div class="policy-section">
       <p class="policy-num">09</p>
-      <h2 class="policy-heading text-white">Cancellations and Returns</h2>
+      <h2 class="policy-heading text-white">Force Majeure</h2>
       <div class="policy-body">
-        <p>Orders may be cancelled prior to commencement of production. Cancellations after production has commenced may be subject to a cancellation fee reflecting materials used and labour incurred.</p>
-        <p>Due to the custom nature of 3D printed parts, we do not accept returns for change of mind. If a part is defective or does not match the agreed specifications, please contact us within 7 days of receiving the order and we will work with you to find a suitable resolution.</p>
+        <p>3 Axis Works will not be liable for any delay or failure to perform its obligations under these Terms where such delay or failure results from any cause beyond our reasonable control, including but not limited to:</p>
+        <ul>
+          <li>acts of God, fire, flood, storm, or natural disaster;</li>
+          <li>equipment failure or breakdown;</li>
+          <li>material or supply chain shortages;</li>
+          <li>pandemic, epidemic, or public health emergency;</li>
+          <li>government restrictions, directions, or regulatory changes;</li>
+          <li>power outages or utility failures; or</li>
+          <li>industrial action or labour disputes.</li>
+        </ul>
+        <p>In such circumstances, we will notify you as soon as reasonably practicable and will use our best endeavours to resume performance as soon as possible. If a force majeure event continues for more than 30 consecutive days, either party may cancel the affected order by written notice, and we will refund any amounts paid for work not yet commenced.</p>
       </div>
     </div>
 
     <div class="policy-section">
       <p class="policy-num">10</p>
-      <h2 class="policy-heading text-white">Governing Law</h2>
+      <h2 class="policy-heading text-white">Cancellations and Returns</h2>
       <div class="policy-body">
-        <p>These Terms and Conditions are governed by the laws of Western Australia, Australia. Any disputes arising out of or in connection with these terms will be subject to the exclusive jurisdiction of the courts of Western Australia.</p>
+        <p>Orders may be cancelled in writing prior to commencement of production with a full refund of any deposit paid. Cancellations after production has commenced will forfeit the deposit, and you may be charged for reasonable costs incurred up to the point of cancellation (not to exceed the total order value).</p>
+        <p>Due to the bespoke nature of 3D printed parts, we do not accept returns for change of mind or where the part meets the specifications in the accepted quote.</p>
+        <p>If a part is defective (as defined in Section 03), please notify us in writing within <strong>7 days</strong> of receiving the order. We will, at our election, repair, reprint, or issue a credit for the defective part. This is your sole remedy for defective goods, to the extent permitted by law.</p>
+        <p>Notification of defects outside the 7-day window will not be accepted except where required by the Australian Consumer Law.</p>
       </div>
     </div>
 
     <div class="policy-section">
       <p class="policy-num">11</p>
-      <h2 class="policy-heading text-white">Changes to These Terms</h2>
+      <h2 class="policy-heading text-white">Dispute Resolution</h2>
       <div class="policy-body">
-        <p>We may update these Terms and Conditions from time to time. The current version will always be available on this page with the date of the most recent update. Your continued use of our services after any changes constitutes acceptance of the revised terms.</p>
+        <p>Before either party commences any legal proceedings in relation to a dispute arising under or in connection with these Terms, that party must:</p>
+        <ol>
+          <li>give the other party written notice specifying the nature of the dispute and the remedy sought ("Dispute Notice"); and</li>
+          <li>attempt in good faith to resolve the dispute by direct negotiation within 30 days of the Dispute Notice being received.</li>
+        </ol>
+        <p>If the dispute is not resolved within that 30-day period (or such longer period as the parties agree in writing), either party may commence legal proceedings or pursue such other remedies as may be available.</p>
+        <p>Nothing in this clause prevents either party from seeking urgent interlocutory relief from a court of competent jurisdiction where necessary to protect their rights pending resolution of the dispute.</p>
       </div>
     </div>
 
     <div class="policy-section">
       <p class="policy-num">12</p>
+      <h2 class="policy-heading text-white">Australian Consumer Law</h2>
+      <div class="policy-body">
+        <p>Nothing in these Terms excludes, restricts, or modifies any right or remedy, or any guarantee, warranty, or other term or condition implied or imposed by the <em>Australian Consumer Law</em> (Schedule 2 of the <em>Competition and Consumer Act 2010</em> (Cth)) that cannot lawfully be excluded or limited.</p>
+        <p>Where the Australian Consumer Law applies and you are a "consumer" as defined therein, your statutory remedies (including repair, replacement, or refund for major failures) apply in addition to, and are not limited by, these Terms.</p>
+      </div>
+    </div>
+
+    <div class="policy-section">
+      <p class="policy-num">13</p>
+      <h2 class="policy-heading text-white">Governing Law &amp; Jurisdiction</h2>
+      <div class="policy-body">
+        <p>These Terms are governed by the laws of Western Australia, Australia. Each party irrevocably submits to the exclusive jurisdiction of the courts of Western Australia for the resolution of any dispute arising under or in connection with these Terms.</p>
+      </div>
+    </div>
+
+    <div class="policy-section">
+      <p class="policy-num">14</p>
+      <h2 class="policy-heading text-white">Severability</h2>
+      <div class="policy-body">
+        <p>If any provision of these Terms is found to be invalid, void, unlawful, or unenforceable by a court of competent jurisdiction, that provision will be severed from these Terms and the remaining provisions will continue in full force and effect as if the severed provision had never existed.</p>
+      </div>
+    </div>
+
+    <div class="policy-section">
+      <p class="policy-num">15</p>
+      <h2 class="policy-heading text-white">Changes to These Terms</h2>
+      <div class="policy-body">
+        <p>We may update these Terms from time to time. The current version will always be published on this page with the date of the most recent update. Changes take effect from the date of publication. Your continued use of our services after any change constitutes acceptance of the revised Terms. For orders already in progress, the Terms in effect at the time of order confirmation will apply.</p>
+      </div>
+    </div>
+
+    <div class="policy-section">
+      <p class="policy-num">16</p>
       <h2 class="policy-heading text-white">Contact</h2>
       <div class="policy-body">
-        <p>If you have any questions about these Terms and Conditions, please contact us via the <a href="index.html#contact">enquiry form</a> on our website.</p>
+        <p>For any questions regarding these Terms, please contact us via the <a href="index.html#contact">enquiry form</a> on our website.</p>
         <p><strong>3 Axis Works</strong><br />ABN 12 386 703 207<br />Perth, Western Australia</p>
       </div>
     </div>
