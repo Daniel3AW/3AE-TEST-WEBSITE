@@ -474,6 +474,23 @@
     }
     .orb-panel-fade { transition: opacity 0.2s ease; }
 
+    /* ── Orbital spinner (CSS-driven rotation) ── */
+    #orbit-spinner {
+      position: absolute;
+      left: 50%; top: 50%;
+      width: 0; height: 0;
+      animation: orb-ccw 36s linear infinite;
+    }
+    @keyframes orb-ccw { to { transform: rotate(-360deg); } }
+    /* Counter-rotate dots and labels so they stay upright */
+    .orbit-node .orbit-dot { animation: orb-cw 36s linear infinite; }
+    @keyframes orb-cw { to { transform: rotate(360deg); } }
+    .orbit-node .orbit-label { animation: orb-lbl-cw 36s linear infinite; }
+    @keyframes orb-lbl-cw {
+      from { transform: translateX(-50%) rotate(0deg); }
+      to   { transform: translateX(-50%) rotate(360deg); }
+    }
+
     /* ── THEME TOGGLE ── */
     .theme-toggle {
       display: flex;
@@ -914,31 +931,31 @@
           </div>
         </div>
 
-        <!-- Orbit track -->
-        <div id="orbit-track" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;border:1px solid var(--orb-track);pointer-events:none;"></div>
+        <!-- Static orbit track ring (fixed 370 px / r=185 px) -->
+        <div id="orbit-track" style="position:absolute;left:50%;top:50%;width:370px;height:370px;transform:translate(-50%,-50%);border-radius:50%;border:1px solid var(--orb-track);pointer-events:none;"></div>
 
-        <!-- Step 01 -->
-        <div class="orbit-node" data-sid="1">
-          <div class="orbit-dot">01</div>
-          <div class="orbit-label">Submit File</div>
-        </div>
-
-        <!-- Step 02 -->
-        <div class="orbit-node" data-sid="2">
-          <div class="orbit-dot">02</div>
-          <div class="orbit-label">Review &amp; Quote</div>
-        </div>
-
-        <!-- Step 03 -->
-        <div class="orbit-node" data-sid="3">
-          <div class="orbit-dot">03</div>
-          <div class="orbit-label">Print &amp; Finish</div>
-        </div>
-
-        <!-- Step 04 -->
-        <div class="orbit-node" data-sid="4">
-          <div class="orbit-dot">04</div>
-          <div class="orbit-label">Delivered</div>
+        <!-- Rotating container — CSS spins this, nodes ride along -->
+        <div id="orbit-spinner">
+          <!-- Step 01 — 12 o'clock -->
+          <div class="orbit-node" data-sid="1" style="position:absolute;top:-185px;left:0;">
+            <div class="orbit-dot">01</div>
+            <div class="orbit-label">Submit File</div>
+          </div>
+          <!-- Step 02 — 3 o'clock (arrives at top after 9 s) -->
+          <div class="orbit-node" data-sid="2" style="position:absolute;top:0;left:185px;">
+            <div class="orbit-dot">02</div>
+            <div class="orbit-label">Review &amp; Quote</div>
+          </div>
+          <!-- Step 03 — 6 o'clock (arrives at top after 18 s) -->
+          <div class="orbit-node" data-sid="3" style="position:absolute;top:185px;left:0;">
+            <div class="orbit-dot">03</div>
+            <div class="orbit-label">Print &amp; Finish</div>
+          </div>
+          <!-- Step 04 — 9 o'clock (arrives at top after 27 s) -->
+          <div class="orbit-node" data-sid="4" style="position:absolute;top:0;left:-185px;">
+            <div class="orbit-dot">04</div>
+            <div class="orbit-label">Delivered</div>
+          </div>
         </div>
 
       </div>
@@ -1455,17 +1472,16 @@
   revealEls.forEach(el => observer.observe(el));
 
   // ── Orbital timeline ──────────────────────────────────────────
+  // CSS animation drives the visual spin (#orbit-spinner keyframe).
+  // JS only manages the step content panel, switching every 9 s.
   (function () {
-    const scene = document.getElementById('orbital-scene');
-    if (!scene) return;
-
-    const nodes = Array.from(scene.querySelectorAll('.orbit-node'));
-    const track = document.getElementById('orbit-track');
     const panelNum   = document.getElementById('orb-panel-num');
     const panelTitle = document.getElementById('orb-panel-title');
     const panelDesc  = document.getElementById('orb-panel-desc');
     const navDots    = Array.from(document.querySelectorAll('.orb-nav-dot'));
+    const allNodes   = Array.from(document.querySelectorAll('.orbit-node'));
 
+    const steps = ['1', '2', '3', '4'];
     const stepContent = {
       '1': { num: 'Step 01', title: 'Submit Your File',    desc: 'Upload your STL, STEP, OBJ or 3MF via the quote form. Alternatively, send a sketch and we can model the part.' },
       '2': { num: 'Step 02', title: 'File Review & Quote', desc: 'We check printability, flag any DFM issues, and return a detailed quote within 24 hours — including material and finish recommendations.' },
@@ -1473,54 +1489,15 @@
       '4': { num: 'Step 04', title: 'Delivered to You',    desc: 'Perth-local pickup or express shipping Australia-wide. Most orders ready within 48–72 hours of approval and payment.' }
     };
 
-    let rotAngle = 0;
-    let autoSpin = true;
     let activeId = null;
-    let rafId = null;
-    let lastTs = null;
-
-    function radius() {
-      return Math.min(185, Math.max(120, scene.offsetWidth / 2 - 90));
-    }
-
-    function placeTrack(r) {
-      const d = r * 2;
-      track.style.width = d + 'px';
-      track.style.height = d + 'px';
-    }
-
-    function getCoords(i, total, r) {
-      const deg = ((i / total) * 360 + rotAngle) % 360;
-      const rad = (deg * Math.PI) / 180;
-      const x = r * Math.cos(rad);
-      const y = r * Math.sin(rad);
-      const z = Math.round(100 + 50 * Math.cos(rad));
-      const opacity = Math.max(0.35, Math.min(1, 0.35 + 0.65 * ((1 + Math.sin(rad)) / 2)));
-      return { x, y, z, opacity };
-    }
-
-    function layout() {
-      const r = radius();
-      placeTrack(r);
-      nodes.forEach((node, i) => {
-        const { x, y, z, opacity } = getCoords(i, nodes.length, r);
-        node.style.left = (scene.offsetWidth / 2 + x) + 'px';
-        node.style.top  = (scene.offsetHeight / 2 + y) + 'px';
-        node.style.zIndex = z;
-        const dot = node.querySelector('.orbit-dot');
-        if (dot) dot.style.opacity = opacity;
-      });
-    }
+    let stepIndex = 0;
+    let timerId = null;
 
     function setActive(id) {
       if (activeId === id) return;
       activeId = id;
-      nodes.forEach(n => {
-        n.classList.toggle('active', n.dataset.sid === id);
-      });
-      navDots.forEach(d => {
-        d.classList.toggle('active', d.dataset.sid === id);
-      });
+      allNodes.forEach(n => n.classList.toggle('active', n.dataset.sid === id));
+      navDots.forEach(d => d.classList.toggle('active', d.dataset.sid === id));
       const s = stepContent[id];
       if (s && panelTitle && panelDesc) {
         panelTitle.style.opacity = '0';
@@ -1535,39 +1512,36 @@
       }
     }
 
-    nodes.forEach(node => {
-      node.addEventListener('click', () => {
-        autoSpin = false;
-        setActive(node.dataset.sid);
-      });
-    });
-
-    navDots.forEach(dot => {
-      dot.addEventListener('click', () => {
-        autoSpin = false;
-        setActive(dot.dataset.sid);
-      });
-    });
-
-    function tick(ts) {
-      if (lastTs !== null && autoSpin) {
-        const dt = ts - lastTs;
-        rotAngle = (rotAngle + dt * 0.012) % 360;
-      }
-      lastTs = ts;
-      layout();
-      rafId = requestAnimationFrame(tick);
+    function startCycle(fromIndex) {
+      if (timerId) clearInterval(timerId);
+      stepIndex = fromIndex;
+      // Each node takes 9 s to travel from its clock position to the top
+      timerId = setInterval(() => {
+        stepIndex = (stepIndex + 1) % 4;
+        setActive(steps[stepIndex]);
+      }, 9000);
     }
 
-    // Start after fonts settle
-    setTimeout(() => {
-      layout();
-      setActive('1');
-      autoSpin = false;
-      rafId = requestAnimationFrame(tick);
-    }, 200);
+    // Manual navigation: clicking a dot or node shows that step immediately
+    // and resets the 9-second countdown from that step
+    allNodes.forEach(node => {
+      node.addEventListener('click', () => {
+        const idx = steps.indexOf(node.dataset.sid);
+        setActive(node.dataset.sid);
+        startCycle(idx);
+      });
+    });
+    navDots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        const idx = steps.indexOf(dot.dataset.sid);
+        setActive(dot.dataset.sid);
+        startCycle(idx);
+      });
+    });
 
-    window.addEventListener('resize', layout);
+    // Boot: show step 1, start auto-advance
+    setActive('1');
+    startCycle(0);
   })();
 
   // File upload label
