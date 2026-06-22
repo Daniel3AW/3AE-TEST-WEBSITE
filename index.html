@@ -439,7 +439,7 @@
     }
     .orbit-label {
       position: absolute;
-      left: 0; top: 26px;
+      left: 0; top: -48px;
       transform: translateX(-50%);
       white-space: nowrap;
       font-size: 0.66rem; font-weight: 600;
@@ -487,8 +487,8 @@
     @keyframes orb-cw { to { transform: rotate(360deg); } }
     .orbit-node .orbit-label { animation: orb-lbl-cw 36s linear infinite; }
     @keyframes orb-lbl-cw {
-      from { transform: translateX(-50%) rotate(0deg); }
-      to   { transform: translateX(-50%) rotate(360deg); }
+      from { transform: translate(-50%, 0) rotate(0deg); }
+      to   { transform: translate(-50%, 0) rotate(360deg); }
     }
 
     /* ── THEME TOGGLE ── */
@@ -1481,14 +1481,15 @@
   revealEls.forEach(el => observer.observe(el));
 
   // ── Orbital timeline ──────────────────────────────────────────
-  // CSS animation drives the visual spin (#orbit-spinner keyframe).
-  // JS only manages the step content panel, switching every 9 s.
   (function () {
     const panelNum   = document.getElementById('orb-panel-num');
     const panelTitle = document.getElementById('orb-panel-title');
     const panelDesc  = document.getElementById('orb-panel-desc');
     const navDots    = Array.from(document.querySelectorAll('.orb-nav-dot'));
     const allNodes   = Array.from(document.querySelectorAll('.orbit-node'));
+    const spinner    = document.getElementById('orbit-spinner');
+    const allDots    = Array.from(document.querySelectorAll('.orbit-dot'));
+    const allLabels  = Array.from(document.querySelectorAll('.orbit-label'));
 
     const steps = ['1', '2', '3', '4'];
     const stepContent = {
@@ -1498,12 +1499,10 @@
       '4': { num: 'Step 04', title: 'Delivered to You',    desc: 'Perth-local pickup or express shipping Australia-wide. Most orders ready within 48–72 hours of approval and payment.' }
     };
 
-    let activeId = null;
-    let stepIndex = 0;
-    let timerId = null;
+    let activeId = null, stepIndex = 0, timerId = null, resumeTimeout = null, hoveredSid = null;
 
-    function setActive(id) {
-      if (activeId === id) return;
+    function setActive(id, force) {
+      if (activeId === id && !force) return;
       activeId = id;
       allNodes.forEach(n => n.classList.toggle('active', n.dataset.sid === id));
       navDots.forEach(d => d.classList.toggle('active', d.dataset.sid === id));
@@ -1521,34 +1520,62 @@
       }
     }
 
+    function pauseOrbit() {
+      if (spinner) spinner.style.animationPlayState = 'paused';
+      allDots.forEach(d => d.style.animationPlayState = 'paused');
+      allLabels.forEach(l => l.style.animationPlayState = 'paused');
+      clearInterval(timerId);
+      timerId = null;
+    }
+
+    function resumeOrbit() {
+      if (spinner) spinner.style.animationPlayState = 'running';
+      allDots.forEach(d => d.style.animationPlayState = 'running');
+      allLabels.forEach(l => l.style.animationPlayState = 'running');
+      startCycle(steps.indexOf(activeId));
+    }
+
     function startCycle(fromIndex) {
       if (timerId) clearInterval(timerId);
       stepIndex = fromIndex;
-      // Each node takes 9 s to travel from its clock position to the top
       timerId = setInterval(() => {
         stepIndex = (stepIndex + 1) % 4;
         setActive(steps[stepIndex]);
       }, 9000);
     }
 
-    // Manual navigation: clicking a dot or node shows that step immediately
-    // and resets the 9-second countdown from that step
+    // Hover: pause orbit and show that step's content
     allNodes.forEach(node => {
+      node.addEventListener('mouseenter', () => {
+        clearTimeout(resumeTimeout);
+        hoveredSid = node.dataset.sid;
+        pauseOrbit();
+        setActive(node.dataset.sid, true);
+      });
+      node.addEventListener('mouseleave', () => {
+        hoveredSid = null;
+        // Small delay so moving between nodes doesn't flicker
+        resumeTimeout = setTimeout(() => {
+          if (!hoveredSid) resumeOrbit();
+        }, 80);
+      });
+      // Click still works as before
       node.addEventListener('click', () => {
         const idx = steps.indexOf(node.dataset.sid);
-        setActive(node.dataset.sid);
-        startCycle(idx);
+        setActive(node.dataset.sid, true);
+        if (!hoveredSid) startCycle(idx);
       });
     });
+
     navDots.forEach(dot => {
       dot.addEventListener('click', () => {
         const idx = steps.indexOf(dot.dataset.sid);
-        setActive(dot.dataset.sid);
+        setActive(dot.dataset.sid, true);
         startCycle(idx);
       });
     });
 
-    // Boot: show step 1, start auto-advance
+    // Boot
     setActive('1');
     startCycle(0);
   })();
