@@ -1723,6 +1723,17 @@
     e.preventDefault();
     const form = e.target;
     const btn = form.querySelector('button[type="submit"]');
+
+    const fileInput = document.getElementById('file-input');
+    if (fileInput.files[0]) {
+      const allowed = ['.stl', '.step', '.stp', '.obj', '.3mf'];
+      const ext = '.' + fileInput.files[0].name.split('.').pop().toLowerCase();
+      if (!allowed.includes(ext)) {
+        alert('Only STL, STEP, OBJ, or 3MF files are accepted. Please remove the file and try again.');
+        return;
+      }
+    }
+
     btn.textContent = 'Sending...';
     btn.disabled = true;
 
