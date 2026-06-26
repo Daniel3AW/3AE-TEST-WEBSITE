@@ -214,13 +214,18 @@
     /* Marquee */
     .marquee-track {
       display: flex;
-      gap: 3rem;
       animation: marquee 28s linear infinite;
+      width: max-content;
+    }
+    .marquee-copy {
+      display: flex;
+      gap: 3rem;
+      padding-right: 3rem; /* trailing gap so both halves are exactly equal */
       white-space: nowrap;
     }
     @keyframes marquee {
       from { transform: translateX(0); }
-      to { transform: translateX(-50%); }
+      to   { transform: translateX(-50%); }
     }
 
     /* Section headers */
@@ -741,23 +746,27 @@
 
 <!-- ═══════════════════════ MARQUEE ═══════════════════════ -->
 <div class="border-y divider py-5 overflow-hidden">
-  <div class="marquee-track text-white/20 uppercase tracking-widest text-xs font-medium select-none">
-    <span>FDM Printing</span><span class="text-brand-light">✦</span>
-    <span>Resin / SLA</span><span class="text-brand-light">✦</span>
-    <span>Rapid Prototyping</span><span class="text-brand-light">✦</span>
-    <span>Custom Parts</span><span class="text-brand-light">✦</span>
-    <span>Industrial Grade</span><span class="text-brand-light">✦</span>
-    <span>Engineering Plastics</span><span class="text-brand-light">✦</span>
-    <span>Post Processing</span><span class="text-brand-light">✦</span>
-    <span>Same Week Delivery</span><span class="text-brand-light">✦</span>
-    <span>FDM Printing</span><span class="text-brand-light">✦</span>
-    <span>Resin / SLA</span><span class="text-brand-light">✦</span>
-    <span>Rapid Prototyping</span><span class="text-brand-light">✦</span>
-    <span>Custom Parts</span><span class="text-brand-light">✦</span>
-    <span>Industrial Grade</span><span class="text-brand-light">✦</span>
-    <span>Engineering Plastics</span><span class="text-brand-light">✦</span>
-    <span>Post Processing</span><span class="text-brand-light">✦</span>
-    <span>Same Week Delivery</span><span class="text-brand-light">✦</span>
+  <div class="marquee-track text-white/20 uppercase tracking-widest text-xs font-medium select-none" aria-hidden="true">
+    <div class="marquee-copy">
+      <span>FDM Printing</span><span class="text-brand-light">✦</span>
+      <span>Resin / SLA</span><span class="text-brand-light">✦</span>
+      <span>Rapid Prototyping</span><span class="text-brand-light">✦</span>
+      <span>Custom Parts</span><span class="text-brand-light">✦</span>
+      <span>Industrial Grade</span><span class="text-brand-light">✦</span>
+      <span>Engineering Plastics</span><span class="text-brand-light">✦</span>
+      <span>Post Processing</span><span class="text-brand-light">✦</span>
+      <span>Same Week Delivery</span><span class="text-brand-light">✦</span>
+    </div>
+    <div class="marquee-copy">
+      <span>FDM Printing</span><span class="text-brand-light">✦</span>
+      <span>Resin / SLA</span><span class="text-brand-light">✦</span>
+      <span>Rapid Prototyping</span><span class="text-brand-light">✦</span>
+      <span>Custom Parts</span><span class="text-brand-light">✦</span>
+      <span>Industrial Grade</span><span class="text-brand-light">✦</span>
+      <span>Engineering Plastics</span><span class="text-brand-light">✦</span>
+      <span>Post Processing</span><span class="text-brand-light">✦</span>
+      <span>Same Week Delivery</span><span class="text-brand-light">✦</span>
+    </div>
   </div>
 </div>
 
