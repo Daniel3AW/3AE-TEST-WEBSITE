@@ -811,26 +811,32 @@
       <!-- Image stage container -->
       <div class="relative rounded-sm overflow-hidden" style="aspect-ratio: 3/4; background: #080f09;">
 
-        <!-- Stage 1: Design software -->
-        <img id="about-s1"
-             src="https://placehold.co/600x800/080f09/1a5c2e?text=Design+Software"
-             alt="CAD design software"
-             class="absolute inset-0 w-full h-full object-cover"
-             style="opacity:1;" />
+        <!-- Stage 1: Design (CAD model) -->
+        <div id="about-s1"
+             class="absolute inset-0"
+             style="background-image: url('images/design-hex.png');
+                    background-size: 150%;
+                    background-position: 50% 50%;
+                    background-repeat: no-repeat;
+                    opacity:1;"></div>
 
-        <!-- Stage 2: Printer in action -->
-        <img id="about-s2"
-             src="images/printer.jpg"
-             alt="Printer in action"
-             class="absolute inset-0 w-full h-full object-cover"
-             style="opacity:0; object-position: center top;" />
+        <!-- Stage 2: Slicer view -->
+        <div id="about-s2"
+             class="absolute inset-0"
+             style="background-image: url('images/slicer-hex.png');
+                    background-size: 250%;
+                    background-position: 50% 70%;
+                    background-repeat: no-repeat;
+                    opacity:0;"></div>
 
         <!-- Stage 3: Finished part -->
-        <img id="about-s3"
-             src="https://placehold.co/600x800/0a1a0f/3a9e52?text=Finished+Part"
-             alt="Finished 3D printed part"
-             class="absolute inset-0 w-full h-full object-cover"
-             style="opacity:0;" />
+        <div id="about-s3"
+             class="absolute inset-0"
+             style="background-image: url('https://placehold.co/600x800/0a1a0f/3a9e52?text=Finished+Part');
+                    background-size: cover;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    opacity:0;"></div>
 
         <!-- Bottom gradient -->
         <div class="absolute inset-0 pointer-events-none" style="background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.15) 45%, transparent 100%);"></div>
@@ -838,7 +844,7 @@
         <!-- Stage labels -->
         <div class="absolute bottom-14 left-5 right-5 flex justify-between items-end">
           <span id="about-l1" class="text-xs uppercase tracking-widest font-semibold" style="color:#2a7a3e; transition: color 0.25s, opacity 0.25s; opacity:1;">Design</span>
-          <span id="about-l2" class="text-xs uppercase tracking-widest font-semibold text-white/40" style="transition: color 0.25s, opacity 0.25s; opacity:0.35;">Print</span>
+          <span id="about-l2" class="text-xs uppercase tracking-widest font-semibold text-white/40" style="transition: color 0.25s, opacity 0.25s; opacity:0.35;">Slice</span>
           <span id="about-l3" class="text-xs uppercase tracking-widest font-semibold text-white/40" style="transition: color 0.25s, opacity 0.25s; opacity:0.35;">Finished</span>
         </div>
 
