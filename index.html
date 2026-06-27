@@ -569,52 +569,6 @@
     html[data-theme="light"] [style*="border: 1px solid rgba(255,255,255,0.08)"] { border-color: rgba(0,0,0,0.09) !important; }
     html[data-theme="light"] select option { background: #fff; color: #1a1a1a; }
 
-    /* About journey slider */
-    .about-slider {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 100%;
-      height: 2px;
-      background: rgba(255,255,255,0.15);
-      border-radius: 9999px;
-      outline: none;
-      cursor: ew-resize;
-    }
-    .about-slider::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      width: 26px;
-      height: 26px;
-      border-radius: 50%;
-      background: #2a7a3e;
-      cursor: ew-resize;
-      border: 2px solid rgba(255,255,255,0.9);
-      box-shadow: 0 0 0 4px rgba(42,122,62,0.25), 0 2px 10px rgba(0,0,0,0.5);
-      transition: box-shadow 0.2s, transform 0.15s;
-    }
-    .about-slider::-webkit-slider-thumb:hover,
-    .about-slider:active::-webkit-slider-thumb {
-      box-shadow: 0 0 0 8px rgba(42,122,62,0.2), 0 2px 10px rgba(0,0,0,0.5);
-      transform: scale(1.1);
-    }
-    .about-slider::-moz-range-thumb {
-      width: 26px;
-      height: 26px;
-      border-radius: 50%;
-      background: #2a7a3e;
-      cursor: ew-resize;
-      border: 2px solid rgba(255,255,255,0.9);
-      box-shadow: 0 0 0 4px rgba(42,122,62,0.25), 0 2px 10px rgba(0,0,0,0.5);
-    }
-    .about-slider::-moz-range-track {
-      height: 2px;
-      background: rgba(255,255,255,0.15);
-      border-radius: 9999px;
-    }
-    @keyframes hint-drift {
-      0%, 100% { transform: translateX(0); opacity: 0.5; }
-      50% { transform: translateX(6px); opacity: 0.9; }
-    }
-    .hint-drift { animation: hint-drift 1.8s ease-in-out infinite; }
   </style>
 </head>
 <body>
@@ -816,71 +770,19 @@
       <a href="#contact" class="btn-primary">Work With Us</a>
     </div>
 
-    <!-- About journey slider -->
-    <div class="reveal" style="transition-delay: 0.15s;">
-
-      <!-- Image stage container -->
-      <div class="relative rounded-sm overflow-hidden" style="aspect-ratio: 3/4; background: #080f09;">
-
-        <!-- Stage 1: Design (CAD model) -->
-        <div id="about-s1"
-             class="absolute inset-0"
-             style="background-image: url('images/design-hex-cropped.png');
-                    background-size: cover;
-                    background-position: center;
-                    opacity:1;"></div>
-
-        <!-- Stage 2: Slicer view -->
-        <div id="about-s2"
-             class="absolute inset-0"
-             style="background-image: url('images/slicer-hex-cropped.png');
-                    background-size: cover;
-                    background-position: center;
-                    opacity:0;"></div>
-
-        <!-- Stage 3: Finished part -->
-        <div id="about-s3"
-             class="absolute inset-0"
-             style="background-image: url('https://placehold.co/600x800/0a1a0f/3a9e52?text=Finished+Part');
-                    background-size: cover;
-                    background-position: center;
-                    background-repeat: no-repeat;
-                    opacity:0;"></div>
-
-        <!-- Bottom gradient -->
-        <div class="absolute inset-0 pointer-events-none" style="background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.15) 45%, transparent 100%);"></div>
-
-        <!-- Stage labels -->
-        <div class="absolute bottom-14 left-5 right-5 flex justify-between items-end">
-          <span id="about-l1" class="text-xs uppercase tracking-widest font-semibold" style="color:#2a7a3e; transition: color 0.25s, opacity 0.25s; opacity:1;">Design</span>
-          <span id="about-l2" class="text-xs uppercase tracking-widest font-semibold text-white/40" style="transition: color 0.25s, opacity 0.25s; opacity:0.35;">Slice</span>
-          <span id="about-l3" class="text-xs uppercase tracking-widest font-semibold text-white/40" style="transition: color 0.25s, opacity 0.25s; opacity:0.35;">Finished</span>
-        </div>
-
-        <!-- Slider -->
-        <div class="absolute bottom-4 left-5 right-5">
-          <input type="range" id="about-slider" min="0" max="100" value="0" class="about-slider" />
-        </div>
-
-        <!-- Drag hint (fades on first interaction) -->
-        <div id="about-hint" class="absolute inset-0 flex items-center justify-center pointer-events-none" style="transition: opacity 0.5s;">
-          <div class="flex items-center gap-2 px-4 py-2 rounded-full" style="background: rgba(0,0,0,0.45); backdrop-filter: blur(6px);">
-            <svg class="hint-drift" width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M2 8h12M10 4l4 4-4 4" stroke="rgba(255,255,255,0.7)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <span class="text-white/60 text-xs tracking-widest uppercase">Drag to explore</span>
-          </div>
-        </div>
-
+    <!-- About image grid -->
+    <div class="reveal grid grid-cols-2 gap-3" style="transition-delay: 0.15s;">
+      <div class="aspect-[3/4] rounded-sm overflow-hidden" style="background: var(--bg-photo);">
+        <img src="https://placehold.co/400x533/111111/2a7a3e?text=Studio" alt="3 Axis Works studio" class="w-full h-full object-cover" />
       </div>
-
-      <!-- Step indicator dots -->
-      <div class="flex justify-center gap-2 mt-4">
-        <div id="about-d1" class="rounded-full transition-all duration-300" style="width:6px; height:6px; background:#2a7a3e; transform:scale(1.3);"></div>
-        <div id="about-d2" class="rounded-full transition-all duration-300" style="width:6px; height:6px; background:rgba(255,255,255,0.2);"></div>
-        <div id="about-d3" class="rounded-full transition-all duration-300" style="width:6px; height:6px; background:rgba(255,255,255,0.2);"></div>
+      <div class="flex flex-col gap-3 pt-8">
+        <div class="aspect-square rounded-sm overflow-hidden" style="background: var(--bg-photo);">
+          <img src="images/printer.jpg" alt="Bambu Lab P2S 3D printer with AMS" class="w-full h-full object-cover" style="object-position: center top;" />
+        </div>
+        <div class="aspect-square rounded-sm overflow-hidden" style="background: var(--bg-photo);">
+          <img src="https://placehold.co/400x400/0a1a0f/3a9e52?text=Parts" alt="Finished parts" class="w-full h-full object-cover" />
+        </div>
       </div>
-
     </div>
   </div>
 </section>
@@ -1777,59 +1679,7 @@
     }
   }
 
-  // ── About journey slider ────────────────────────────────────────
-  (function () {
-    const slider = document.getElementById('about-slider');
-    if (!slider) return;
 
-    const s1 = document.getElementById('about-s1');
-    const s2 = document.getElementById('about-s2');
-    const s3 = document.getElementById('about-s3');
-    const l1 = document.getElementById('about-l1');
-    const l2 = document.getElementById('about-l2');
-    const l3 = document.getElementById('about-l3');
-    const d1 = document.getElementById('about-d1');
-    const d2 = document.getElementById('about-d2');
-    const d3 = document.getElementById('about-d3');
-    const hint = document.getElementById('about-hint');
-    let hintGone = false;
-
-    function update(t) {
-      // Two-phase cross-fade: s1→s2 over first half, s2→s3 over second half
-      let o1, o2, o3;
-      if (t <= 50) {
-        const p = t / 50;
-        o1 = 1 - p; o2 = p; o3 = 0;
-      } else {
-        const p = (t - 50) / 50;
-        o1 = 0; o2 = 1 - p; o3 = p;
-      }
-      s1.style.opacity = o1;
-      s2.style.opacity = o2;
-      s3.style.opacity = o3;
-
-      // Slider track fill
-      slider.style.background = `linear-gradient(to right, #2a7a3e ${t}%, rgba(255,255,255,0.15) ${t}%)`;
-
-      // Active stage (threshold at quarter-points)
-      const active = t < 25 ? 0 : t < 75 ? 1 : 2;
-      [[l1, d1], [l2, d2], [l3, d3]].forEach(([l, d], i) => {
-        const on = i === active;
-        l.style.color   = on ? '#2a7a3e' : 'rgba(255,255,255,0.35)';
-        l.style.opacity = on ? '1' : '0.35';
-        d.style.background = on ? '#2a7a3e' : 'rgba(255,255,255,0.2)';
-        d.style.transform  = on ? 'scale(1.4)' : 'scale(1)';
-      });
-
-      // Fade hint on first touch
-      if (!hintGone) {
-        hintGone = true;
-        hint.style.opacity = '0';
-      }
-    }
-
-    slider.addEventListener('input', () => update(parseFloat(slider.value)));
-  })();
 </script>
 
 </body>
