@@ -324,7 +324,7 @@
           <li>Project details, messages, and enquiry information</li>
           <li>Design files you upload for quoting (e.g. STL, STEP, OBJ, 3MF)</li>
         </ul>
-        <p>We do not collect personal information passively through analytics tools or tracking pixels. We do not use cookies for advertising or tracking purposes.</p>
+        <p>We use a privacy-focused analytics tool (Vercel Analytics) to understand aggregate website traffic, such as page views and visitor counts. This tool is cookieless, does not track individuals, and does not collect any personally identifiable information. We do not use cookies for advertising or tracking purposes.</p>
       </div>
     </div>
 
@@ -350,7 +350,7 @@
         <p>Our contact form is processed by <strong style="color: inherit; font-weight: 600;">Web3Forms</strong>, a third-party form submission service. When you submit a form, your data is transmitted to Web3Forms' servers (which may be located outside Australia) and forwarded to our email address. By submitting the form, you consent to this transfer. Web3Forms operates under its own privacy policy.</p>
         <p>Please be aware that data transferred to overseas recipients may not receive the same level of protection as under Australian law. We take reasonable steps to ensure Web3Forms handles your information appropriately, but we cannot guarantee that overseas privacy laws provide an equivalent standard of protection to the <em>Privacy Act 1988</em> (Cth).</p>
         <p>Our website is hosted via <strong style="color: inherit; font-weight: 600;">Vercel</strong>, which may log basic server request data (IP address, browser type, pages visited) for operational purposes only. This data is not shared with us in identifiable form. Vercel's servers may also be located outside Australia.</p>
-        <p>We do not use Google Analytics, Facebook Pixel, or any other advertising or behavioural tracking technology.</p>
+        <p>We use Vercel Analytics to measure aggregate site traffic. It is cookieless, does not track individuals, and does not collect personally identifiable information. We do not use Google Analytics, Facebook Pixel, or any other advertising or behavioural tracking technology.</p>
       </div>
     </div>
 
@@ -537,5 +537,6 @@
     menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { if (open) toggle(); }));
   })();
 </script>
+<script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
