@@ -13,6 +13,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <!-- Prevent flash of wrong theme -->
   <script>(function(){var t=localStorage.getItem('theme')||'dark';document.documentElement.setAttribute('data-theme',t);})();</script>
+  <!-- Real mobile viewport height (fixes browsers without dvh/svh support miscalculating 100vh) -->
+  <script>
+    (function () {
+      function setVh() {
+        document.documentElement.style.setProperty('--vh', window.innerHeight * 0.01 + 'px');
+      }
+      setVh();
+      window.addEventListener('resize', setVh);
+      window.addEventListener('orientationchange', setVh);
+    })();
+  </script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -174,6 +185,7 @@
       min-height: 100vh;
       min-height: 100svh;
       min-height: 100dvh;
+      min-height: calc(var(--vh, 1vh) * 100);
       background:
         radial-gradient(ellipse 80% 60% at 60% 40%, rgba(30, 92, 46, 0.18) 0%, transparent 60%),
         radial-gradient(ellipse 60% 80% at 10% 80%, rgba(30, 92, 46, 0.10) 0%, transparent 50%),
