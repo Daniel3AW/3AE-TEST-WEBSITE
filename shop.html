@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shop — 3 Axis Works</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="/images/favicon-512.png" type="image/png" sizes="512x512" />
+  <link rel="icon" href="/images/favicon-32.png" type="image/png" sizes="32x32" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script>(function(){var t=localStorage.getItem('theme')||'dark';document.documentElement.setAttribute('data-theme',t);})();</script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { DEFAULT: '#1e5c2e', light: '#2a7a3e', lighter: '#3a9e52', dark: '#143f20', muted: '#1e5c2e33' },
+            surface: { base: '#0a0a0a', 1: '#111111', 2: '#171717', 3: '#1e1e1e', 4: '#262626' },
+          },
+          fontFamily: { display: ['Playfair Display', 'Georgia', 'serif'], body: ['Inter', 'system-ui', 'sans-serif'] },
+        },
+      },
+    };
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --bg-base:    #0a0a0a;
+      --bg-footer:  #080808;
+      --c-text:     #e8e8e8;
+      --c-logo:     #f0f0f0;
+      --bg-card:    #111111;
+      --br-subtle:  rgba(255,255,255,0.06);
+      --br-light:   rgba(255,255,255,0.08);
+      --br-mid:     rgba(255,255,255,0.1);
+      --nav-bg:     rgba(10,10,10,0.85);
+      --nav-br:     rgba(255,255,255,0.06);
+      --nav-link:   rgba(255,255,255,0.6);
+      --nav-link-h: #ffffff;
+      --nav-outline:rgba(255,255,255,0.3);
+      --product-bg: #111111;
+      --product-br: rgba(255,255,255,0.07);
+      --product-br-h: rgba(42,122,62,0.4);
+      --product-desc: rgba(255,255,255,0.5);
+    }
+    html[data-theme="light"] {
+      --bg-base:    #eae6de;
+      --bg-footer:  #dedad2;
+      --c-text:     #1a1a1a;
+      --c-logo:     #1a1a1a;
+      --bg-card:    #f0ece4;
+      --br-subtle:  rgba(0,0,0,0.07);
+      --br-light:   rgba(0,0,0,0.09);
+      --br-mid:     rgba(0,0,0,0.1);
+      --nav-bg:     rgba(247,245,240,0.92);
+      --nav-br:     rgba(0,0,0,0.08);
+      --nav-link:   rgba(0,0,0,0.55);
+      --nav-link-h: #1a1a1a;
+      --nav-outline:rgba(0,0,0,0.3);
+      --product-bg: #ffffff;
+      --product-br: rgba(0,0,0,0.08);
+      --product-br-h: rgba(30,92,46,0.35);
+      --product-desc: rgba(0,0,0,0.55);
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--c-text);
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 0.35s ease, color 0.35s ease;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      pointer-events: none;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+    }
+
+    #nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      transition: background 0.4s ease, backdrop-filter 0.4s ease, border-color 0.4s ease;
+      border-bottom: 1px solid transparent;
+    }
+    #nav.scrolled {
+      background: var(--nav-bg);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-bottom-color: var(--nav-br);
+    }
+    .nav-link {
+      color: var(--nav-link);
+      font-size: 0.8rem; font-weight: 500;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .nav-link:hover { color: var(--nav-link-h); }
+    .nav-link.active { color: var(--nav-link-h); }
+    .nav-link:focus-visible { outline: 2px solid var(--nav-outline); outline-offset: 3px; border-radius: 1px; }
+
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: #1e5c2e; color: #fff;
+      font-size: 0.8rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.9rem 2rem; border-radius: 1px;
+      border: 1px solid transparent; cursor: pointer;
+      transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+      text-decoration: none;
+    }
+    .btn-primary:hover { background: #2a7a3e; box-shadow: 0 8px 32px rgba(30,92,46,0.35); transform: translateY(-1px); }
+    .btn-primary:active { transform: translateY(0); }
+    .btn-primary:focus-visible { outline: 2px solid #2a7a3e; outline-offset: 3px; }
+    .btn-primary:disabled {
+      background: #2a2a2a; color: rgba(255,255,255,0.35);
+      box-shadow: none; transform: none; cursor: not-allowed;
+    }
+    html[data-theme="light"] .btn-primary:disabled { background: rgba(0,0,0,0.08); color: rgba(0,0,0,0.3); }
+
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: transparent; color: var(--c-text);
+      font-size: 0.8rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.9rem 2rem; border-radius: 1px;
+      border: 1px solid var(--br-mid); cursor: pointer;
+      transition: border-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
+      text-decoration: none;
+    }
+    .btn-ghost:hover { border-color: rgba(42,122,62,0.5); color: #3a9e52; transform: translateY(-1px); }
+    .btn-ghost:focus-visible { outline: 2px solid var(--nav-outline); outline-offset: 3px; }
+
+    .divider { border-color: var(--br-subtle); }
+    .section-label { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #2a7a3e; }
+    .accent-line { display: block; width: 40px; height: 2px; background: #2a7a3e; margin-bottom: 1.5rem; }
+
+    .theme-toggle {
+      display: flex; align-items: center;
+      width: 60px; height: 30px; padding: 3px;
+      border-radius: 9999px; cursor: pointer;
+      border: 1px solid #3f3f46; background: #18181b;
+      transition: background 0.3s ease, border-color 0.3s ease;
+      flex-shrink: 0;
+    }
+    html[data-theme="light"] .theme-toggle { background: #ffffff; border-color: #e4e4e7; }
+    .theme-toggle:focus-visible { outline: 2px solid #2a7a3e; outline-offset: 2px; }
+    .theme-toggle-inner { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+    .theme-toggle-thumb {
+      width: 22px; height: 22px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      background: #3f3f46;
+      transform: translateX(0);
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), background 0.3s ease;
+      flex-shrink: 0;
+    }
+    html[data-theme="light"] .theme-toggle-thumb { background: #e4e4e7; transform: translateX(30px); }
+    .theme-toggle-idle {
+      width: 22px; height: 22px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
+    }
+    html[data-theme="light"] .theme-toggle-idle { transform: translateX(-30px); }
+    .theme-toggle svg { width: 13px; height: 13px; }
+
+    html[data-theme="light"] .text-white\/15 { color: rgba(0,0,0,0.30) !important; }
+    html[data-theme="light"] .text-white\/20 { color: rgba(0,0,0,0.38) !important; }
+    html[data-theme="light"] .text-white\/30 { color: rgba(0,0,0,0.52) !important; }
+    html[data-theme="light"] .text-white\/40 { color: rgba(0,0,0,0.63) !important; }
+    html[data-theme="light"] .text-white\/45 { color: rgba(0,0,0,0.68) !important; }
+    html[data-theme="light"] .text-white\/50 { color: rgba(0,0,0,0.72) !important; }
+    html[data-theme="light"] .text-white\/60 { color: rgba(0,0,0,0.78) !important; }
+    html[data-theme="light"] .text-white { color: #1a1a1a !important; }
+    html[data-theme="light"] .hover\:text-white:hover { color: #1a1a1a !important; }
+    html[data-theme="light"] #mobile-menu { background: rgba(247,245,240,0.97) !important; }
+
+    /* Cart icon button */
+    .cart-btn {
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+      width: 40px; height: 40px;
+      color: var(--nav-link);
+      background: transparent;
+      border: 1px solid var(--br-mid);
+      border-radius: 1px;
+      cursor: pointer;
+      transition: color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+      flex-shrink: 0;
+    }
+    .cart-btn:hover { color: var(--nav-link-h); border-color: rgba(42,122,62,0.5); transform: translateY(-1px); }
+    .cart-btn:focus-visible { outline: 2px solid var(--nav-outline); outline-offset: 2px; }
+    .cart-btn svg { width: 18px; height: 18px; }
+    .cart-badge {
+      position: absolute;
+      top: -6px; right: -6px;
+      min-width: 17px; height: 17px;
+      padding: 0 4px;
+      display: flex; align-items: center; justify-content: center;
+      background: #2a7a3e;
+      color: #fff;
+      font-size: 0.62rem;
+      font-weight: 700;
+      border-radius: 9999px;
+      line-height: 1;
+      transform: scale(0);
+      transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .cart-badge.show { transform: scale(1); }
+
+    /* Page header */
+    .page-header {
+      background: var(--bg-base);
+      border-bottom: 1px solid var(--br-subtle);
+    }
+
+    /* Category tabs */
+    .cat-nav {
+      display: flex; gap: 0.5rem; flex-wrap: wrap;
+    }
+    .cat-nav a {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--product-desc);
+      padding: 0.6rem 1.1rem;
+      border: 1px solid var(--br-light);
+      border-radius: 9999px;
+      text-decoration: none;
+      transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+    .cat-nav a:hover { color: var(--c-text); border-color: rgba(42,122,62,0.4); background: rgba(30,92,46,0.06); }
+
+    .cat-label {
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
+      color: #2a7a3e;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--br-subtle);
+      margin-bottom: 2rem;
+    }
+
+    /* Product grid */
+    .shop-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2.25rem;
+    }
+    @media (min-width: 640px) { .shop-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .shop-grid { grid-template-columns: repeat(3, 1fr); } }
+
+    .product-card {
+      background: var(--product-bg);
+      border: 1px solid var(--product-br);
+      border-radius: 3px;
+      overflow: hidden;
+      transition: border-color 0.3s ease, transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease;
+    }
+    .product-card:hover {
+      border-color: var(--product-br-h);
+      transform: translateY(-3px);
+      box-shadow: 0 20px 40px -12px rgba(0,0,0,0.35);
+    }
+    .product-media {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      background: #0d0d0d;
+    }
+    .product-media img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .product-card:hover .product-media img { transform: scale(1.05); }
+    .product-media::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.35) 0%, transparent 45%);
+      pointer-events: none;
+    }
+    .product-info { padding: 1.5rem; }
+    .product-eyebrow {
+      font-size: 0.62rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+      color: #3a9e52;
+      margin-bottom: 0.5rem;
+    }
+    .product-name {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-weight: 700;
+      font-size: 1.15rem;
+      letter-spacing: -0.01em;
+      color: var(--c-text);
+      margin-bottom: 0.4rem;
+    }
+    .product-desc {
+      font-size: 0.83rem;
+      color: var(--product-desc);
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+    }
+    .product-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 1rem;
+    }
+    .product-price {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--c-text);
+    }
+    .btn-add {
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+      color: #2a7a3e;
+      background: transparent;
+      border: 1px solid rgba(42,122,62,0.4);
+      border-radius: 1px;
+      padding: 0.6rem 1rem;
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
+      white-space: nowrap;
+    }
+    .btn-add:hover { background: #1e5c2e; color: #fff; border-color: #1e5c2e; transform: translateY(-1px); }
+    .btn-add:active { transform: translateY(0); }
+    .btn-add:focus-visible { outline: 2px solid #2a7a3e; outline-offset: 2px; }
+    .btn-add.added { background: #143f20; color: #fff; border-color: #143f20; }
+
+    /* Cart drawer */
+    .cart-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(2px);
+      z-index: 300;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+    .cart-overlay.open { opacity: 1; pointer-events: auto; }
+
+    .cart-drawer {
+      position: fixed;
+      top: 0; right: 0; bottom: 0;
+      width: min(420px, 100vw);
+      background: var(--bg-base);
+      border-left: 1px solid var(--br-mid);
+      z-index: 301;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(100%);
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: -20px 0 60px rgba(0,0,0,0.35);
+    }
+    .cart-drawer.open { transform: translateX(0); }
+
+    .cart-drawer-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--br-subtle);
+      flex-shrink: 0;
+    }
+    .cart-drawer-header h2 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: var(--c-text);
+    }
+    .cart-close {
+      width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      background: transparent;
+      border: 1px solid var(--br-light);
+      border-radius: 1px;
+      color: var(--c-text);
+      cursor: pointer;
+      font-size: 1.1rem;
+      line-height: 1;
+      transition: border-color 0.2s ease, color 0.2s ease;
+    }
+    .cart-close:hover { border-color: rgba(42,122,62,0.5); color: #3a9e52; }
+    .cart-close:focus-visible { outline: 2px solid var(--nav-outline); outline-offset: 2px; }
+
+    .cart-items { flex: 1; overflow-y: auto; padding: 0.5rem 1.5rem; }
+    .cart-item {
+      display: flex; gap: 1rem;
+      padding: 1.25rem 0;
+      border-bottom: 1px solid var(--br-subtle);
+    }
+    .cart-item img {
+      width: 64px; height: 64px;
+      object-fit: cover;
+      border-radius: 2px;
+      flex-shrink: 0;
+      background: #0d0d0d;
+    }
+    .cart-item-info { flex: 1; min-width: 0; }
+    .cart-item-name { font-size: 0.88rem; font-weight: 500; color: var(--c-text); margin-bottom: 0.25rem; }
+    .cart-item-price { font-size: 0.78rem; color: var(--product-desc); margin-bottom: 0.6rem; }
+    .cart-item-row { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; }
+    .qty-stepper { display: flex; align-items: center; border: 1px solid var(--br-light); border-radius: 1px; }
+    .qty-stepper button {
+      width: 26px; height: 26px;
+      display: flex; align-items: center; justify-content: center;
+      background: transparent; border: none; color: var(--c-text);
+      cursor: pointer; font-size: 0.9rem;
+      transition: color 0.2s ease;
+    }
+    .qty-stepper button:hover { color: #3a9e52; }
+    .qty-stepper span { min-width: 22px; text-align: center; font-size: 0.8rem; }
+    .cart-item-remove {
+      background: none; border: none;
+      color: rgba(255,255,255,0.3);
+      font-size: 0.72rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      transition: color 0.2s ease;
+    }
+    .cart-item-remove:hover { color: #e05c5c; }
+    html[data-theme="light"] .cart-item-remove { color: rgba(0,0,0,0.35); }
+
+    .cart-empty { padding: 3rem 0; text-align: center; color: var(--product-desc); font-size: 0.9rem; }
+
+    .cart-drawer-footer {
+      padding: 1.5rem;
+      border-top: 1px solid var(--br-subtle);
+      flex-shrink: 0;
+    }
+    .cart-subtotal-row {
+      display: flex; align-items: center; justify-content: space-between;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--c-text);
+      margin-bottom: 0.5rem;
+    }
+    .cart-shipping-note { font-size: 0.75rem; color: var(--product-desc); margin-bottom: 1.25rem; }
+    .w-full { width: 100%; }
+    .justify-center { justify-content: center; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav" class="px-6 md:px-12 lg:px-20">
+  <div class="max-w-7xl mx-auto flex items-center justify-between h-20">
+    <a href="index.html" class="flex-shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-light rounded-sm">
+      <img id="nav-logo-img" src="logo/3AW-primary-dark.png" alt="3 Axis Works" style="height:44px;width:auto;display:block;" />
+    </a>
+    <div class="hidden md:flex items-center gap-8">
+      <a href="index.html#services" class="nav-link">Services</a>
+      <a href="index.html#process" class="nav-link">Process</a>
+      <a href="index.html#portfolio" class="nav-link">Portfolio</a>
+      <a href="shop.html" class="nav-link active">Shop</a>
+      <a href="index.html#contact" class="nav-link">Contact</a>
+    </div>
+    <div class="hidden md:flex items-center gap-4">
+      <button id="theme-toggle-btn" class="theme-toggle" aria-label="Toggle light/dark mode" tabindex="0">
+        <div class="theme-toggle-inner">
+          <div class="theme-toggle-thumb">
+            <svg id="toggle-moon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+            <svg id="toggle-sun-active" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          </div>
+          <div class="theme-toggle-idle">
+            <svg id="toggle-sun-idle" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            <svg id="toggle-moon-idle" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+          </div>
+        </div>
+      </button>
+      <button id="cart-btn" class="cart-btn" aria-label="Open cart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293A1 1 0 005 17h12M9 21a1 1 0 100-2 1 1 0 000 2zM20 21a1 1 0 100-2 1 1 0 000 2z"/></svg>
+        <span id="cart-badge" class="cart-badge">0</span>
+      </button>
+    </div>
+    <div class="flex md:hidden items-center gap-2">
+      <button id="cart-btn-mobile" class="cart-btn" aria-label="Open cart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293A1 1 0 005 17h12M9 21a1 1 0 100-2 1 1 0 000 2zM20 21a1 1 0 100-2 1 1 0 000 2z"/></svg>
+        <span id="cart-badge-mobile" class="cart-badge">0</span>
+      </button>
+      <button id="menu-btn" class="p-2 text-white/60 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-light rounded-sm" aria-label="Toggle menu">
+        <svg id="menu-icon-bars" width="22" height="16" viewBox="0 0 22 16" fill="none"><path d="M0 1h22M0 8h22M0 15h22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <svg id="menu-icon-close" width="20" height="20" viewBox="0 0 20 20" fill="none" style="display:none;"><path d="M1 1l18 18M19 1L1 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile menu -->
+<div id="mobile-menu" class="fixed inset-0 bg-surface-base/95 backdrop-blur-xl flex-col items-center justify-center gap-8" style="display:none; z-index:200;">
+  <div class="flex flex-col items-center gap-8">
+    <a href="index.html#services" class="text-white text-2xl font-display font-bold">Services</a>
+    <a href="index.html#process" class="text-white text-2xl font-display font-bold">Process</a>
+    <a href="index.html#portfolio" class="text-white text-2xl font-display font-bold">Portfolio</a>
+    <a href="shop.html" class="text-white text-2xl font-display font-bold" style="color:#3a9e52;">Shop</a>
+    <a href="index.html#contact" class="text-white text-2xl font-display font-bold">Contact</a>
+    <a href="index.html#contact" class="btn-primary mt-4">Get a Quote</a>
+  </div>
+</div>
+
+<!-- PAGE HEADER -->
+<section class="page-header pt-40 pb-16 px-6 md:px-12 lg:px-20">
+  <div class="max-w-7xl mx-auto">
+    <div class="max-w-3xl">
+      <span class="accent-line"></span>
+      <p class="section-label mb-4">Shop</p>
+      <h1 class="font-display font-black text-white" style="font-size: clamp(2.5rem, 6vw, 4.5rem); line-height: 1.05; letter-spacing: -0.03em;">Simple objects.<br /><em>Precision made.</em></h1>
+      <p class="text-white/50 mt-6" style="font-size: 1rem; max-width: 42ch; line-height: 1.7;">Ready-to-order pieces for hospitality spaces and everyday use — no custom quote required. Need something bespoke instead? <a href="index.html#contact" style="color: #3a9e52; text-underline-offset: 3px;">Get a custom quote.</a></p>
+    </div>
+    <div class="cat-nav mt-10">
+      <a href="#hospitality">For Hospitality</a>
+      <a href="#essentials">Everyday Essentials</a>
+    </div>
+  </div>
+</section>
+
+<!-- SHOP CONTENT -->
+<main class="px-6 md:px-12 lg:px-20 py-16">
+  <div class="max-w-7xl mx-auto">
+
+    <!-- Category: Hospitality -->
+    <div id="hospitality" class="mb-20" style="scroll-margin-top: 6rem;">
+      <p class="cat-label">For Hospitality</p>
+      <div class="shop-grid">
+
+        <article class="product-card">
+          <div class="product-media">
+            <img src="https://placehold.co/700x700/111111/3a9e52?text=Table+Numbers" alt="Engraved Table Numbers" loading="lazy" />
+          </div>
+          <div class="product-info">
+            <p class="product-eyebrow">Hospitality</p>
+            <h3 class="product-name">Engraved Table Numbers</h3>
+            <p class="product-desc">Set of 10, brushed matte finish, numbered 1–10.</p>
+            <div class="product-footer">
+              <span class="product-price">$45.00</span>
+              <button type="button" class="btn-add" data-id="table-numbers" data-name="Engraved Table Numbers" data-price="45.00" data-image="https://placehold.co/200x200/111111/3a9e52?text=Table+Numbers">Add to Cart</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card">
+          <div class="product-media">
+            <img src="https://placehold.co/700x700/111111/3a9e52?text=Coaster+Set" alt="Modular Coaster Set" loading="lazy" />
+          </div>
+          <div class="product-info">
+            <p class="product-eyebrow">Hospitality</p>
+            <h3 class="product-name">Modular Coaster Set</h3>
+            <p class="product-desc">Set of 4, stackable, cork-backed base.</p>
+            <div class="product-footer">
+              <span class="product-price">$28.00</span>
+              <button type="button" class="btn-add" data-id="coaster-set" data-name="Modular Coaster Set" data-price="28.00" data-image="https://placehold.co/200x200/111111/3a9e52?text=Coaster+Set">Add to Cart</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card">
+          <div class="product-media">
+            <img src="https://placehold.co/700x700/111111/3a9e52?text=Menu+Stand" alt="Freestanding Menu Stand" loading="lazy" />
+          </div>
+          <div class="product-info">
+            <p class="product-eyebrow">Hospitality</p>
+            <h3 class="product-name">Freestanding Menu Stand</h3>
+            <p class="product-desc">Slim tabletop stand, fits A6 and A5 cards.</p>
+            <div class="product-footer">
+              <span class="product-price">$65.00</span>
+              <button type="button" class="btn-add" data-id="menu-stand" data-name="Freestanding Menu Stand" data-price="65.00" data-image="https://placehold.co/200x200/111111/3a9e52?text=Menu+Stand">Add to Cart</button>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+
+    <!-- Category: Everyday Essentials -->
+    <div id="essentials" style="scroll-margin-top: 6rem;">
+      <p class="cat-label">Everyday Essentials</p>
+      <div class="shop-grid">
+
+        <article class="product-card">
+          <div class="product-media">
+            <img src="https://placehold.co/700x700/111111/3a9e52?text=Fidget+Cube" alt="Fidget Cube" loading="lazy" />
+          </div>
+          <div class="product-info">
+            <p class="product-eyebrow">Everyday</p>
+            <h3 class="product-name">Fidget Cube</h3>
+            <p class="product-desc">Six-sided desk toy with tactile mechanisms.</p>
+            <div class="product-footer">
+              <span class="product-price">$14.00</span>
+              <button type="button" class="btn-add" data-id="fidget-cube" data-name="Fidget Cube" data-price="14.00" data-image="https://placehold.co/200x200/111111/3a9e52?text=Fidget+Cube">Add to Cart</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card">
+          <div class="product-media">
+            <img src="https://placehold.co/700x700/111111/3a9e52?text=Camera+Mount" alt="Universal Phone Camera Mount" loading="lazy" />
+          </div>
+          <div class="product-info">
+            <p class="product-eyebrow">Everyday</p>
+            <h3 class="product-name">Universal Phone Camera Mount</h3>
+            <p class="product-desc">Tripod-thread adapter, fits most phone cases.</p>
+            <div class="product-footer">
+              <span class="product-price">$24.00</span>
+              <button type="button" class="btn-add" data-id="camera-mount" data-name="Universal Phone Camera Mount" data-price="24.00" data-image="https://placehold.co/200x200/111111/3a9e52?text=Camera+Mount">Add to Cart</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card">
+          <div class="product-media">
+            <img src="https://placehold.co/700x700/111111/3a9e52?text=Cable+Clips" alt="Cable Organizer Clip Set" loading="lazy" />
+          </div>
+          <div class="product-info">
+            <p class="product-eyebrow">Everyday</p>
+            <h3 class="product-name">Cable Organizer Clip Set</h3>
+            <p class="product-desc">Pack of 6, adhesive-backed, desk or wall mount.</p>
+            <div class="product-footer">
+              <span class="product-price">$12.00</span>
+              <button type="button" class="btn-add" data-id="cable-clips" data-name="Cable Organizer Clip Set" data-price="12.00" data-image="https://placehold.co/200x200/111111/3a9e52?text=Cable+Clips">Add to Cart</button>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="px-6 md:px-12 lg:px-20 border-t divider" style="background: var(--bg-footer);">
+  <div class="max-w-7xl mx-auto">
+    <div class="grid md:grid-cols-4 gap-12 py-16">
+      <div class="md:col-span-2">
+        <img id="footer-logo-img" src="logo/3AW-primary-dark.png" alt="3 Axis Works" class="mb-5" style="height:36px;width:auto;" />
+        <p class="text-white/30 text-sm max-w-xs" style="line-height: 1.8;">Precision 3D printing for engineers, designers, and businesses. Based in Perth, WA.</p>
+      </div>
+      <div>
+        <div class="text-white/20 text-xs uppercase tracking-widest mb-5">Services</div>
+        <ul class="space-y-3">
+          <li><a href="index.html#services" class="text-white/45 text-sm hover:text-white transition-colors">FDM Printing</a></li>
+          <li><a href="index.html#services" class="text-white/45 text-sm hover:text-white transition-colors">Resin / SLA</a></li>
+          <li><a href="index.html#services" class="text-white/45 text-sm hover:text-white transition-colors">Rapid Prototyping</a></li>
+          <li><a href="shop.html" class="text-white/45 text-sm hover:text-white transition-colors">Shop</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-white/20 text-xs uppercase tracking-widest mb-5">Company</div>
+        <ul class="space-y-3">
+          <li><a href="index.html#about" class="text-white/45 text-sm hover:text-white transition-colors">About</a></li>
+          <li><a href="index.html#contact" class="text-white/45 text-sm hover:text-white transition-colors">Contact</a></li>
+          <li><a href="faq.html" class="text-white/45 text-sm hover:text-white transition-colors">FAQs</a></li>
+          <li><a href="privacy-policy.html" class="text-white/45 text-sm hover:text-white transition-colors">Privacy Policy</a></li>
+          <li><a href="terms.html" class="text-white/45 text-sm hover:text-white transition-colors">Terms &amp; Conditions</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t divider py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p class="text-white/20 text-xs">© 2025 3 Axis Works. ABN 12 386 703 207. All rights reserved.</p>
+      <div class="flex items-center gap-4">
+        <a href="privacy-policy.html" class="text-white/20 text-xs hover:text-white/40 transition-colors">Privacy Policy</a>
+        <span class="text-white/15 text-xs">·</span>
+        <a href="terms.html" class="text-white/20 text-xs hover:text-white/40 transition-colors">Terms &amp; Conditions</a>
+        <span class="text-white/15 text-xs">·</span>
+        <p class="text-white/15 text-xs">Perth, Western Australia</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Cart Drawer -->
+<div id="cart-overlay" class="cart-overlay"></div>
+<aside id="cart-drawer" class="cart-drawer" aria-label="Shopping cart">
+  <div class="cart-drawer-header">
+    <h2>Your Cart</h2>
+    <button id="cart-close" class="cart-close" aria-label="Close cart">&times;</button>
+  </div>
+  <div id="cart-items" class="cart-items"></div>
+  <div class="cart-drawer-footer">
+    <div class="cart-subtotal-row">
+      <span>Subtotal</span>
+      <span id="cart-subtotal">$0.00</span>
+    </div>
+    <p class="cart-shipping-note">Flat-rate shipping calculated at checkout.</p>
+    <button id="cart-checkout" type="button" class="btn-primary w-full justify-center" disabled>Checkout — Coming Soon</button>
+  </div>
+</aside>
+
+<!-- Cookie Consent Banner -->
+<div id="cookie-banner" class="cookie-banner" role="region" aria-label="Cookie consent">
+  <div class="cookie-banner-inner">
+    <p class="cookie-banner-text">We use optional analytics cookies to understand site traffic. Read our <a href="/privacy-policy.html">Privacy Policy</a>.</p>
+    <div class="cookie-banner-actions">
+      <button type="button" id="cookie-decline" class="btn-ghost cookie-btn">Decline</button>
+      <button type="button" id="cookie-accept" class="btn-primary cookie-btn">Accept</button>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Cookie consent banner */
+  .cookie-banner {
+    position: fixed;
+    left: 1.25rem;
+    right: 1.25rem;
+    bottom: 1.25rem;
+    z-index: 200;
+    max-width: 640px;
+    margin: 0 auto;
+    background: var(--nav-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--br-mid);
+    border-radius: 4px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+    padding: 1.25rem 1.5rem;
+    transform: translateY(calc(100% + 2rem));
+    opacity: 0;
+    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.7s ease;
+    pointer-events: none;
+  }
+  .cookie-banner.visible { transform: translateY(0); opacity: 1; pointer-events: auto; }
+  .cookie-banner-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 1.5rem;
+    justify-content: space-between;
+  }
+  .cookie-banner-text {
+    color: var(--c-text);
+    font-size: 0.82rem;
+    line-height: 1.6;
+    opacity: 0.75;
+    margin: 0;
+    flex: 1 1 260px;
+  }
+  .cookie-banner-text a { color: #4ade80; text-decoration: underline; text-underline-offset: 2px; }
+  .cookie-banner-text a:hover { color: #6ee7a0; }
+  .cookie-banner-actions { display: flex; gap: 0.75rem; flex-shrink: 0; }
+  .cookie-btn { padding: 0.6rem 1.25rem !important; font-size: 0.7rem !important; }
+  @media (max-width: 480px) {
+    .cookie-banner { left: 0.75rem; right: 0.75rem; bottom: 0.75rem; padding: 1.1rem; }
+    .cookie-banner-actions { width: 100%; }
+    .cookie-banner-actions .cookie-btn { flex: 1; justify-content: center; }
+  }
+</style>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 20); }, { passive: true });
+  nav.classList.toggle('scrolled', window.scrollY > 20);
+
+  // Theme toggle
+  (function () {
+    const btn = document.getElementById('theme-toggle-btn');
+    const moonActive = document.getElementById('toggle-moon');
+    const sunActive  = document.getElementById('toggle-sun-active');
+    const sunIdle    = document.getElementById('toggle-sun-idle');
+    const moonIdle   = document.getElementById('toggle-moon-idle');
+
+    function applyTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('theme', theme);
+      const isLight = theme === 'light';
+      moonActive.style.display = isLight ? 'none' : '';
+      sunActive.style.display  = isLight ? '' : 'none';
+      sunIdle.style.display    = isLight ? 'none' : '';
+      moonIdle.style.display   = isLight ? '' : 'none';
+      const logoSrc = isLight ? 'logo/3AW-primary-light.png' : 'logo/3AW-primary-dark.png';
+      document.getElementById('nav-logo-img').src    = logoSrc;
+      document.getElementById('footer-logo-img').src = logoSrc;
+    }
+
+    btn.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme') || 'dark';
+      applyTheme(current === 'dark' ? 'light' : 'dark');
+    });
+
+    const t = document.documentElement.getAttribute('data-theme') || 'dark';
+    const isLight = t === 'light';
+    moonActive.style.display = isLight ? 'none' : '';
+    sunActive.style.display  = isLight ? '' : 'none';
+    sunIdle.style.display    = isLight ? 'none' : '';
+    moonIdle.style.display   = isLight ? '' : 'none';
+    if (isLight) {
+      document.getElementById('nav-logo-img').src    = 'logo/3AW-primary-light.png';
+      document.getElementById('footer-logo-img').src = 'logo/3AW-primary-light.png';
+    }
+  })();
+
+  // Mobile menu
+  (function () {
+    const btn  = document.getElementById('menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    const bars = document.getElementById('menu-icon-bars');
+    const close = document.getElementById('menu-icon-close');
+    let open = false;
+    function toggle() {
+      open = !open;
+      menu.style.display = open ? 'flex' : 'none';
+      bars.style.display  = open ? 'none' : '';
+      close.style.display = open ? '' : 'none';
+      document.body.style.overflow = open ? 'hidden' : '';
+    }
+    btn.addEventListener('click', toggle);
+    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { if (open) toggle(); }));
+  })();
+
+  // Cart
+  (function () {
+    const CART_KEY = '3aw-cart';
+    const itemsEl = document.getElementById('cart-items');
+    const subtotalEl = document.getElementById('cart-subtotal');
+    const drawer = document.getElementById('cart-drawer');
+    const overlay = document.getElementById('cart-overlay');
+    const badges = [document.getElementById('cart-badge'), document.getElementById('cart-badge-mobile')];
+
+    function loadCart() {
+      try { return JSON.parse(localStorage.getItem(CART_KEY)) || []; }
+      catch { return []; }
+    }
+    function saveCart(cart) {
+      localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    }
+    function money(n) { return '$' + n.toFixed(2); }
+
+    function render() {
+      const cart = loadCart();
+      const count = cart.reduce((sum, i) => sum + i.qty, 0);
+      badges.forEach(b => {
+        b.textContent = count;
+        b.classList.toggle('show', count > 0);
+      });
+
+      if (cart.length === 0) {
+        itemsEl.innerHTML = '<div class="cart-empty">Your cart is empty.<br>Browse the shop to add something.</div>';
+        subtotalEl.textContent = money(0);
+        return;
+      }
+
+      itemsEl.innerHTML = cart.map(item => `
+        <div class="cart-item" data-id="${item.id}">
+          <img src="${item.image}" alt="${item.name}" />
+          <div class="cart-item-info">
+            <div class="cart-item-name">${item.name}</div>
+            <div class="cart-item-price">${money(item.price)} each</div>
+            <div class="cart-item-row">
+              <div class="qty-stepper">
+                <button type="button" data-action="dec">−</button>
+                <span>${item.qty}</span>
+                <button type="button" data-action="inc">+</button>
+              </div>
+              <button type="button" class="cart-item-remove" data-action="remove">Remove</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+      const subtotal = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
+      subtotalEl.textContent = money(subtotal);
+    }
+
+    function addItem(id, name, price, image) {
+      const cart = loadCart();
+      const existing = cart.find(i => i.id === id);
+      if (existing) existing.qty += 1;
+      else cart.push({ id, name, price, image, qty: 1 });
+      saveCart(cart);
+      render();
+    }
+
+    function changeQty(id, delta) {
+      const cart = loadCart();
+      const item = cart.find(i => i.id === id);
+      if (!item) return;
+      item.qty += delta;
+      const next = item.qty > 0 ? cart : cart.filter(i => i.id !== id);
+      saveCart(next);
+      render();
+    }
+
+    function removeItem(id) {
+      saveCart(loadCart().filter(i => i.id !== id));
+      render();
+    }
+
+    function openCart() {
+      drawer.classList.add('open');
+      overlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeCart() {
+      drawer.classList.remove('open');
+      overlay.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('cart-btn').addEventListener('click', openCart);
+    document.getElementById('cart-btn-mobile').addEventListener('click', openCart);
+    document.getElementById('cart-close').addEventListener('click', closeCart);
+    overlay.addEventListener('click', closeCart);
+
+    document.querySelectorAll('.btn-add').forEach(btn => {
+      btn.addEventListener('click', () => {
+        addItem(btn.dataset.id, btn.dataset.name, parseFloat(btn.dataset.price), btn.dataset.image);
+        const original = btn.textContent;
+        btn.textContent = 'Added ✓';
+        btn.classList.add('added');
+        setTimeout(() => { btn.textContent = original; btn.classList.remove('added'); }, 1200);
+        openCart();
+      });
+    });
+
+    itemsEl.addEventListener('click', (e) => {
+      const btn = e.target.closest('button[data-action]');
+      if (!btn) return;
+      const id = btn.closest('.cart-item').dataset.id;
+      if (btn.dataset.action === 'inc') changeQty(id, 1);
+      if (btn.dataset.action === 'dec') changeQty(id, -1);
+      if (btn.dataset.action === 'remove') removeItem(id);
+    });
+
+    render();
+  })();
+</script>
+<script>
+  (function () {
+    var CONSENT_KEY = '3aw-analytics-consent';
+    var GA_ID = 'G-X7TF0B4L6T';
+    var banner = document.getElementById('cookie-banner');
+    var acceptBtn = document.getElementById('cookie-accept');
+    var declineBtn = document.getElementById('cookie-decline');
+
+    function loadGA() {
+      if (window.__gaLoaded) return;
+      window.__gaLoaded = true;
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+      document.head.appendChild(s);
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function () { window.dataLayer.push(arguments); };
+      window.gtag('js', new Date());
+      window.gtag('config', GA_ID, { anonymize_ip: true });
+    }
+
+    function showBanner() {
+      if (!banner) return;
+      setTimeout(function () { banner.classList.add('visible'); }, 1000);
+    }
+
+    function hideBanner() {
+      if (banner) banner.classList.remove('visible');
+    }
+
+    var consent = localStorage.getItem(CONSENT_KEY);
+    if (consent === 'granted') {
+      loadGA();
+    } else if (consent !== 'denied') {
+      showBanner();
+    }
+
+    if (acceptBtn) acceptBtn.addEventListener('click', function () {
+      localStorage.setItem(CONSENT_KEY, 'granted');
+      hideBanner();
+      loadGA();
+    });
+    if (declineBtn) declineBtn.addEventListener('click', function () {
+      localStorage.setItem(CONSENT_KEY, 'denied');
+      hideBanner();
+    });
+  })();
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>
