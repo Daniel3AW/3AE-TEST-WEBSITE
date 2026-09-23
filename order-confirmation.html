@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Order Confirmation — 3 Axis Works</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="/images/favicon-512.png" type="image/png" sizes="512x512" />
+  <link rel="icon" href="/images/favicon-32.png" type="image/png" sizes="32x32" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script>(function(){var t=localStorage.getItem('theme')||'dark';document.documentElement.setAttribute('data-theme',t);})();</script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    :root {
+      --bg-base: #0a0a0a; --c-text: #e8e8e8; --product-desc: rgba(255,255,255,0.5);
+    }
+    html[data-theme="light"] { --bg-base: #eae6de; --c-text: #1a1a1a; --product-desc: rgba(0,0,0,0.55); }
+    body {
+      background: var(--bg-base);
+      color: var(--c-text);
+      font-family: 'Inter', system-ui, sans-serif;
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      padding: 2rem;
+      text-align: center;
+    }
+    .icon-success { color: #3a9e52; }
+    .icon-error { color: #e05c5c; }
+    h1 { font-family: 'Playfair Display', Georgia, serif; font-size: 1.8rem; margin: 1.25rem 0 0.75rem; letter-spacing: -0.02em; }
+    p { color: var(--product-desc); line-height: 1.7; max-width: 40ch; margin: 0 auto 1.5rem; }
+    a.btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: #1e5c2e; color: #fff;
+      font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.9rem 2rem; border-radius: 1px; text-decoration: none;
+      transition: background 0.2s ease, transform 0.15s ease;
+    }
+    a.btn:hover { background: #2a7a3e; transform: translateY(-1px); }
+    .spinner {
+      width: 28px; height: 28px; margin: 0 auto;
+      border: 3px solid rgba(255,255,255,0.2); border-top-color: #3a9e52;
+      border-radius: 50%; animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <div id="content">
+    <div class="spinner"></div>
+    <h1>Checking your order…</h1>
+    <p>Just a moment while we confirm your payment.</p>
+  </div>
+
+  <script src="https://js.stripe.com/v3/"></script>
+  <script>
+    (function () {
+      const stripe = Stripe('pk_test_51UIhB4Eech5ruMbjdhKBpW7A6YQFraZuIVZRwVztykBxcNpO3qCp01DvxRQGxd1JMYXjBz06TXMUWE4YG9FQzD5200H57hxOAW');
+      const params = new URLSearchParams(window.location.search);
+      const clientSecret = params.get('payment_intent_client_secret');
+      const content = document.getElementById('content');
+
+      function render(iconClass, title, message, showShopLink) {
+        content.innerHTML = `
+          <svg class="${iconClass}" width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <h1>${title}</h1>
+          <p>${message}</p>
+          ${showShopLink ? '<a href="shop.html" class="btn">Back to Shop</a>' : '<a href="shop.html" class="btn">Try Again</a>'}
+        `;
+      }
+
+      if (!clientSecret) {
+        render('icon-error', 'No order found', "We couldn't find an order to confirm. If you completed a payment, check your email for a receipt.", true);
+        return;
+      }
+
+      stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
+        if (!paymentIntent) {
+          render('icon-error', 'Something went wrong', 'We could not retrieve your order status. Please contact us if you were charged.', false);
+          return;
+        }
+        if (paymentIntent.status === 'succeeded') {
+          try { localStorage.setItem('3aw-cart', '[]'); } catch (e) {}
+          render('icon-success', 'Order Confirmed', 'Thanks for your order! A confirmation has been sent to your email. We\'ll be in touch with shipping details shortly.', true);
+        } else if (paymentIntent.status === 'processing') {
+          render('icon-success', 'Payment Processing', "Your payment is processing — we'll email you once it's confirmed.", true);
+        } else {
+          render('icon-error', 'Payment Not Completed', 'Your payment was not completed. Please try again.', false);
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

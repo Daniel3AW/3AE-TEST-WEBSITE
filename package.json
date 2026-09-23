@@ -3,6 +3,7 @@
   "type": "module",
   "private": true,
   "dependencies": {
-    "puppeteer": "^25.1.0"
+    "puppeteer": "^25.1.0",
+    "stripe": "^22.6.2"
   }
 }

@@ -2,3 +2,6 @@ node_modules/
 temporary screenshots/
 .cache/
 *.log
+.env
+.env.*
+.vercel

@@ -48,6 +48,10 @@
       --product-br: rgba(255,255,255,0.07);
       --product-br-h: rgba(42,122,62,0.4);
       --product-desc: rgba(255,255,255,0.5);
+      --form-bg:    rgba(255,255,255,0.04);
+      --form-br:    rgba(255,255,255,0.1);
+      --form-text:  #e8e8e8;
+      --form-ph:    #555555;
     }
     html[data-theme="light"] {
       --bg-base:    #eae6de;
@@ -67,6 +71,10 @@
       --product-br: rgba(0,0,0,0.08);
       --product-br-h: rgba(30,92,46,0.35);
       --product-desc: rgba(0,0,0,0.55);
+      --form-bg:    rgba(0,0,0,0.03);
+      --form-br:    rgba(0,0,0,0.12);
+      --form-text:  #1a1a1a;
+      --form-ph:    #999999;
     }
 
     body {
@@ -446,6 +454,103 @@
     .cart-shipping-note { font-size: 0.75rem; color: var(--product-desc); margin-bottom: 1.25rem; }
     .w-full { width: 100%; }
     .justify-center { justify-content: center; }
+    /* Checkout form */
+    .form-label {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--product-desc);
+      margin-bottom: 0.4rem;
+    }
+    .form-input {
+      width: 100%;
+      background: var(--form-bg);
+      border: 1px solid var(--form-br);
+      border-radius: 1px;
+      color: var(--form-text);
+      padding: 0.7rem 0.85rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      transition: border-color 0.2s ease, background 0.2s ease;
+      outline: none;
+    }
+    .form-input::placeholder { color: var(--form-ph); }
+    .form-input:focus { border-color: rgba(42, 122, 62, 0.7); background: rgba(30, 92, 46, 0.06); }
+    select.form-input { appearance: none; cursor: pointer; }
+    .form-field { margin-bottom: 1.1rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; }
+
+    .checkout-view { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+    .checkout-scroll { flex: 1; overflow-y: auto; padding: 1.25rem 1.5rem; }
+    .checkout-back {
+      background: none; border: none; cursor: pointer;
+      color: var(--product-desc);
+      font-size: 0.78rem;
+      display: flex; align-items: center; gap: 0.4rem;
+      margin-bottom: 1.5rem;
+      padding: 0;
+      transition: color 0.2s ease;
+    }
+    .checkout-back:hover { color: #3a9e52; }
+    .checkout-section-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--c-text);
+      margin-bottom: 1.25rem;
+    }
+    .checkout-summary {
+      background: var(--form-bg);
+      border: 1px solid var(--br-subtle);
+      border-radius: 2px;
+      padding: 1rem 1.1rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.8rem;
+    }
+    .checkout-summary-row { display: flex; justify-content: space-between; padding: 0.25rem 0; color: var(--product-desc); }
+    .checkout-summary-row.total { color: var(--c-text); font-weight: 600; border-top: 1px solid var(--br-subtle); margin-top: 0.4rem; padding-top: 0.6rem; }
+    .checkout-error {
+      background: rgba(224,92,92,0.1);
+      border: 1px solid rgba(224,92,92,0.3);
+      color: #e05c5c;
+      font-size: 0.8rem;
+      padding: 0.75rem 1rem;
+      border-radius: 2px;
+      margin-top: 1rem;
+    }
+    .checkout-success { text-align: center; padding: 2rem 0; }
+    .checkout-success svg { color: #3a9e52; margin: 0 auto 1.25rem; display: block; }
+    .checkout-success h3 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: var(--c-text);
+      margin-bottom: 0.6rem;
+    }
+    .checkout-success p { color: var(--product-desc); font-size: 0.85rem; line-height: 1.7; }
+    #payment-element { margin-bottom: 1rem; }
+    .btn-secondary-link {
+      display: block; text-align: center;
+      color: var(--product-desc);
+      font-size: 0.78rem;
+      margin-top: 0.9rem;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      background: none; border: none; cursor: pointer;
+      width: 100%;
+    }
+    .btn-secondary-link:hover { color: #3a9e52; }
+    .spinner {
+      display: inline-block;
+      width: 14px; height: 14px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
   </style>
 </head>
 <body>
@@ -683,16 +788,103 @@
     <h2>Your Cart</h2>
     <button id="cart-close" class="cart-close" aria-label="Close cart">&times;</button>
   </div>
-  <div id="cart-items" class="cart-items"></div>
-  <div class="cart-drawer-footer">
-    <div class="cart-subtotal-row">
-      <span>Subtotal</span>
-      <span id="cart-subtotal">$0.00</span>
+  <div id="cart-view" style="display:flex; flex-direction:column; flex:1; min-height:0;">
+    <div id="cart-items" class="cart-items"></div>
+    <div class="cart-drawer-footer">
+      <div class="cart-subtotal-row">
+        <span>Subtotal</span>
+        <span id="cart-subtotal">$0.00</span>
+      </div>
+      <p class="cart-shipping-note">Flat-rate shipping ($8.00 AU-wide) added at checkout.</p>
+      <button id="cart-checkout" type="button" class="btn-primary w-full justify-center">Proceed to Checkout</button>
     </div>
-    <p class="cart-shipping-note">Flat-rate shipping calculated at checkout.</p>
-    <button id="cart-checkout" type="button" class="btn-primary w-full justify-center" disabled>Checkout — Coming Soon</button>
+  </div>
+
+  <!-- Checkout view -->
+  <div id="checkout-view" class="checkout-view" hidden>
+    <div class="checkout-scroll">
+      <button type="button" id="checkout-back" class="checkout-back">&larr; Back to cart</button>
+
+      <!-- Step 1: Shipping -->
+      <div id="checkout-shipping-step">
+        <p class="checkout-section-title">Shipping Details</p>
+        <form id="shipping-form">
+          <div class="form-field">
+            <label class="form-label" for="ship-name">Full Name</label>
+            <input class="form-input" id="ship-name" name="name" type="text" autocomplete="name" required />
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="ship-email">Email</label>
+            <input class="form-input" id="ship-email" name="email" type="email" autocomplete="email" required />
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="ship-line1">Address</label>
+            <input class="form-input" id="ship-line1" name="line1" type="text" autocomplete="address-line1" placeholder="Street address" required />
+          </div>
+          <div class="form-field">
+            <input class="form-input" id="ship-line2" name="line2" type="text" autocomplete="address-line2" placeholder="Apt, suite, etc. (optional)" />
+          </div>
+          <div class="form-field form-row">
+            <div>
+              <label class="form-label" for="ship-city">City</label>
+              <input class="form-input" id="ship-city" name="city" type="text" autocomplete="address-level2" required />
+            </div>
+            <div>
+              <label class="form-label" for="ship-state">State</label>
+              <select class="form-input" id="ship-state" name="state" autocomplete="address-level1" required>
+                <option value="">Select</option>
+                <option value="WA">WA</option>
+                <option value="NSW">NSW</option>
+                <option value="VIC">VIC</option>
+                <option value="QLD">QLD</option>
+                <option value="SA">SA</option>
+                <option value="TAS">TAS</option>
+                <option value="ACT">ACT</option>
+                <option value="NT">NT</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="ship-postcode">Postcode</label>
+            <input class="form-input" id="ship-postcode" name="postcode" type="text" inputmode="numeric" autocomplete="postal-code" style="max-width: 140px;" required />
+          </div>
+
+          <div class="checkout-summary">
+            <div class="checkout-summary-row"><span>Subtotal</span><span id="checkout-summary-subtotal">$0.00</span></div>
+            <div class="checkout-summary-row"><span>Shipping</span><span>$8.00</span></div>
+            <div class="checkout-summary-row total"><span>Total</span><span id="checkout-summary-total">$0.00</span></div>
+          </div>
+
+          <button type="submit" id="continue-to-payment" class="btn-primary w-full justify-center">
+            <span id="continue-label">Continue to Payment</span>
+            <span id="continue-spinner" class="spinner" hidden></span>
+          </button>
+        </form>
+      </div>
+
+      <!-- Step 2: Payment -->
+      <div id="checkout-payment-step" hidden>
+        <p class="checkout-section-title">Payment</p>
+        <div id="payment-element"></div>
+        <button type="button" id="pay-button" class="btn-primary w-full justify-center">
+          <span id="pay-button-label">Pay <span id="pay-amount">$0.00</span></span>
+          <span id="pay-button-spinner" class="spinner" hidden></span>
+        </button>
+        <button type="button" id="back-to-shipping" class="btn-secondary-link">Back to shipping details</button>
+        <p id="checkout-error" class="checkout-error" hidden></p>
+      </div>
+
+      <!-- Step 3: Success -->
+      <div id="checkout-success-step" class="checkout-success" hidden>
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <h3>Order Confirmed</h3>
+        <p>Thanks for your order! A confirmation has been sent to your email. We'll be in touch with shipping details shortly.</p>
+      </div>
+    </div>
   </div>
 </aside>
+
+<script src="https://js.stripe.com/v3/"></script>
 
 <!-- Cookie Consent Banner -->
 <div id="cookie-banner" class="cookie-banner" role="region" aria-label="Cookie consent">
@@ -927,6 +1119,171 @@
       if (btn.dataset.action === 'inc') changeQty(id, 1);
       if (btn.dataset.action === 'dec') changeQty(id, -1);
       if (btn.dataset.action === 'remove') removeItem(id);
+    });
+
+    // Checkout
+    const STRIPE_PUBLISHABLE_KEY = 'pk_test_51UIhB4Eech5ruMbjdhKBpW7A6YQFraZuIVZRwVztykBxcNpO3qCp01DvxRQGxd1JMYXjBz06TXMUWE4YG9FQzD5200H57hxOAW';
+    const FLAT_SHIPPING = 8.00;
+    const stripe = window.Stripe ? window.Stripe(STRIPE_PUBLISHABLE_KEY) : null;
+    let elements = null;
+
+    const cartView = document.getElementById('cart-view');
+    const checkoutView = document.getElementById('checkout-view');
+    const shippingStep = document.getElementById('checkout-shipping-step');
+    const paymentStep = document.getElementById('checkout-payment-step');
+    const successStep = document.getElementById('checkout-success-step');
+    const shippingForm = document.getElementById('shipping-form');
+    const continueBtn = document.getElementById('continue-to-payment');
+    const continueLabel = document.getElementById('continue-label');
+    const continueSpinner = document.getElementById('continue-spinner');
+    const paymentElementContainer = document.getElementById('payment-element');
+    const payButton = document.getElementById('pay-button');
+    const payButtonLabel = document.getElementById('pay-button-label');
+    const payButtonSpinner = document.getElementById('pay-button-spinner');
+    const payAmountEl = document.getElementById('pay-amount');
+    const checkoutErrorEl = document.getElementById('checkout-error');
+    const summarySubtotalEl = document.getElementById('checkout-summary-subtotal');
+    const summaryTotalEl = document.getElementById('checkout-summary-total');
+    const checkoutBackBtn = document.getElementById('checkout-back');
+    const backToShippingBtn = document.getElementById('back-to-shipping');
+
+    function stripeAppearance() {
+      const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      return {
+        theme: isLight ? 'stripe' : 'night',
+        variables: {
+          colorPrimary: '#2a7a3e',
+          colorBackground: isLight ? '#ffffff' : '#111111',
+          colorText: isLight ? '#1a1a1a' : '#e8e8e8',
+          colorDanger: '#e05c5c',
+          fontFamily: 'Inter, system-ui, sans-serif',
+          borderRadius: '2px',
+        },
+      };
+    }
+
+    function showCheckoutView() {
+      const cart = loadCart();
+      if (cart.length === 0) return;
+      cartView.style.display = 'none';
+      checkoutView.hidden = false;
+      shippingStep.hidden = false;
+      paymentStep.hidden = true;
+      successStep.hidden = true;
+      const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
+      summarySubtotalEl.textContent = money(subtotal);
+      summaryTotalEl.textContent = money(subtotal + FLAT_SHIPPING);
+    }
+
+    function showCartView() {
+      checkoutView.hidden = true;
+      cartView.style.display = 'flex';
+    }
+
+    document.getElementById('cart-checkout').addEventListener('click', showCheckoutView);
+
+    checkoutBackBtn.addEventListener('click', () => {
+      if (!paymentStep.hidden) {
+        paymentStep.hidden = true;
+        shippingStep.hidden = false;
+      } else {
+        showCartView();
+      }
+    });
+    backToShippingBtn.addEventListener('click', () => {
+      paymentStep.hidden = true;
+      shippingStep.hidden = false;
+    });
+
+    shippingForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const cart = loadCart();
+      if (cart.length === 0 || !stripe) return;
+
+      continueBtn.disabled = true;
+      continueLabel.hidden = true;
+      continueSpinner.hidden = false;
+      checkoutErrorEl.hidden = true;
+
+      const shipping = {
+        name: document.getElementById('ship-name').value,
+        line1: document.getElementById('ship-line1').value,
+        line2: document.getElementById('ship-line2').value,
+        city: document.getElementById('ship-city').value,
+        state: document.getElementById('ship-state').value,
+        postalCode: document.getElementById('ship-postcode').value,
+        country: 'AU',
+      };
+      const email = document.getElementById('ship-email').value;
+
+      try {
+        const res = await fetch('/api/create-payment-intent', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            items: cart.map(i => ({ id: i.id, qty: i.qty })),
+            email,
+            shipping,
+          }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Something went wrong. Please try again.');
+
+        payAmountEl.textContent = money(data.amount / 100);
+        elements = stripe.elements({ clientSecret: data.clientSecret, appearance: stripeAppearance() });
+        const paymentElement = elements.create('payment');
+        paymentElementContainer.innerHTML = '';
+        paymentElement.mount('#payment-element');
+
+        shippingStep.hidden = true;
+        paymentStep.hidden = false;
+      } catch (err) {
+        checkoutErrorEl.textContent = err.message;
+        checkoutErrorEl.hidden = false;
+      } finally {
+        continueBtn.disabled = false;
+        continueLabel.hidden = false;
+        continueSpinner.hidden = true;
+      }
+    });
+
+    payButton.addEventListener('click', async () => {
+      if (!elements || !stripe) return;
+      payButton.disabled = true;
+      payButtonLabel.hidden = true;
+      payButtonSpinner.hidden = false;
+      checkoutErrorEl.hidden = true;
+
+      const email = document.getElementById('ship-email').value;
+
+      const { error, paymentIntent } = await stripe.confirmPayment({
+        elements,
+        confirmParams: {
+          return_url: window.location.origin + '/order-confirmation.html',
+          receipt_email: email,
+        },
+        redirect: 'if_required',
+      });
+
+      if (error) {
+        checkoutErrorEl.textContent = error.message || 'Payment failed. Please try again.';
+        checkoutErrorEl.hidden = false;
+        payButton.disabled = false;
+        payButtonLabel.hidden = false;
+        payButtonSpinner.hidden = true;
+        return;
+      }
+
+      if (paymentIntent && paymentIntent.status === 'succeeded') {
+        saveCart([]);
+        render();
+        paymentStep.hidden = true;
+        successStep.hidden = false;
+      }
+
+      payButton.disabled = false;
+      payButtonLabel.hidden = false;
+      payButtonSpinner.hidden = true;
     });
 
     render();
