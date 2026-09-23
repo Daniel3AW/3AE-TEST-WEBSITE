@@ -176,6 +176,53 @@
       color: rgba(255,255,255,0.7);
     }
     html[data-theme="light"] .callout { color: rgba(0,0,0,0.65); background: rgba(30,92,46,0.05); }
+
+    /* Cookie consent banner */
+    .cookie-banner {
+      position: fixed;
+      left: 1.25rem;
+      right: 1.25rem;
+      bottom: 1.25rem;
+      z-index: 200;
+      max-width: 640px;
+      margin: 0 auto;
+      background: var(--nav-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--br-mid);
+      border-radius: 4px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+      padding: 1.25rem 1.5rem;
+      transform: translateY(calc(100% + 2rem));
+      opacity: 0;
+      transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.7s ease;
+      pointer-events: none;
+    }
+    .cookie-banner.visible { transform: translateY(0); opacity: 1; pointer-events: auto; }
+    .cookie-banner-inner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1rem 1.5rem;
+      justify-content: space-between;
+    }
+    .cookie-banner-text {
+      color: var(--c-text);
+      font-size: 0.82rem;
+      line-height: 1.6;
+      opacity: 0.75;
+      margin: 0;
+      flex: 1 1 260px;
+    }
+    .cookie-banner-text a { color: #4ade80; text-decoration: underline; text-underline-offset: 2px; }
+    .cookie-banner-text a:hover { color: #6ee7a0; }
+    .cookie-banner-actions { display: flex; gap: 0.75rem; flex-shrink: 0; }
+    .cookie-btn { padding: 0.6rem 1.25rem !important; font-size: 0.7rem !important; }
+    @media (max-width: 480px) {
+      .cookie-banner { left: 0.75rem; right: 0.75rem; bottom: 0.75rem; padding: 1.1rem; }
+      .cookie-banner-actions { width: 100%; }
+      .cookie-banner-actions .cookie-btn { flex: 1; justify-content: center; }
+    }
   </style>
 </head>
 <body>
@@ -521,6 +568,17 @@
   </div>
 </footer>
 
+<!-- Cookie Consent Banner -->
+<div id="cookie-banner" class="cookie-banner" role="region" aria-label="Cookie consent">
+  <div class="cookie-banner-inner">
+    <p class="cookie-banner-text">We use optional analytics cookies to understand site traffic. Read our <a href="/privacy-policy.html">Privacy Policy</a>.</p>
+    <div class="cookie-banner-actions">
+      <button type="button" id="cookie-decline" class="btn-ghost cookie-btn">Decline</button>
+      <button type="button" id="cookie-accept" class="btn-primary cookie-btn">Accept</button>
+    </div>
+  </div>
+</div>
+
 <script>
   const nav = document.getElementById('nav');
   window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 20); }, { passive: true });
@@ -578,6 +636,54 @@
     }
     btn.addEventListener('click', toggle);
     menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { if (open) toggle(); }));
+  })();
+</script>
+<script>
+  (function () {
+    var CONSENT_KEY = '3aw-analytics-consent';
+    var GA_ID = 'G-X7TF0B4L6T';
+    var banner = document.getElementById('cookie-banner');
+    var acceptBtn = document.getElementById('cookie-accept');
+    var declineBtn = document.getElementById('cookie-decline');
+
+    function loadGA() {
+      if (window.__gaLoaded) return;
+      window.__gaLoaded = true;
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+      document.head.appendChild(s);
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function () { window.dataLayer.push(arguments); };
+      window.gtag('js', new Date());
+      window.gtag('config', GA_ID, { anonymize_ip: true });
+    }
+
+    function showBanner() {
+      if (!banner) return;
+      setTimeout(function () { banner.classList.add('visible'); }, 1000);
+    }
+
+    function hideBanner() {
+      if (banner) banner.classList.remove('visible');
+    }
+
+    var consent = localStorage.getItem(CONSENT_KEY);
+    if (consent === 'granted') {
+      loadGA();
+    } else if (consent !== 'denied') {
+      showBanner();
+    }
+
+    if (acceptBtn) acceptBtn.addEventListener('click', function () {
+      localStorage.setItem(CONSENT_KEY, 'granted');
+      hideBanner();
+      loadGA();
+    });
+    if (declineBtn) declineBtn.addEventListener('click', function () {
+      localStorage.setItem(CONSENT_KEY, 'denied');
+      hideBanner();
+    });
   })();
 </script>
 <script defer src="/_vercel/insights/script.js"></script>

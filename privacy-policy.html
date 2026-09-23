@@ -233,6 +233,53 @@
     }
     .policy-body a { color: #3a9e52; text-decoration: underline; text-underline-offset: 3px; }
     .policy-body a:hover { color: #2a7a3e; }
+
+    /* Cookie consent banner */
+    .cookie-banner {
+      position: fixed;
+      left: 1.25rem;
+      right: 1.25rem;
+      bottom: 1.25rem;
+      z-index: 200;
+      max-width: 640px;
+      margin: 0 auto;
+      background: var(--nav-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--br-mid);
+      border-radius: 4px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+      padding: 1.25rem 1.5rem;
+      transform: translateY(calc(100% + 2rem));
+      opacity: 0;
+      transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.7s ease;
+      pointer-events: none;
+    }
+    .cookie-banner.visible { transform: translateY(0); opacity: 1; pointer-events: auto; }
+    .cookie-banner-inner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1rem 1.5rem;
+      justify-content: space-between;
+    }
+    .cookie-banner-text {
+      color: var(--c-text);
+      font-size: 0.82rem;
+      line-height: 1.6;
+      opacity: 0.75;
+      margin: 0;
+      flex: 1 1 260px;
+    }
+    .cookie-banner-text a { color: #4ade80; text-decoration: underline; text-underline-offset: 2px; }
+    .cookie-banner-text a:hover { color: #6ee7a0; }
+    .cookie-banner-actions { display: flex; gap: 0.75rem; flex-shrink: 0; }
+    .cookie-btn { padding: 0.6rem 1.25rem !important; font-size: 0.7rem !important; }
+    @media (max-width: 480px) {
+      .cookie-banner { left: 0.75rem; right: 0.75rem; bottom: 0.75rem; padding: 1.1rem; }
+      .cookie-banner-actions { width: 100%; }
+      .cookie-banner-actions .cookie-btn { flex: 1; justify-content: center; }
+    }
   </style>
 </head>
 <body>
@@ -324,7 +371,8 @@
           <li>Project details, messages, and enquiry information</li>
           <li>Design files you upload for quoting (e.g. STL, STEP, OBJ, 3MF)</li>
         </ul>
-        <p>We use a privacy-focused analytics tool (Vercel Analytics) to understand aggregate website traffic, such as page views and visitor counts. This tool is cookieless, does not track individuals, and does not collect any personally identifiable information. We do not use cookies for advertising or tracking purposes.</p>
+        <p>We use Vercel Analytics, a privacy-focused, cookieless tool, to understand aggregate website traffic such as page views and visitor counts. It does not collect any personally identifiable information.</p>
+        <p>With your consent, we also use <strong style="color: inherit; font-weight: 600;">Google Analytics 4</strong> to understand traffic sources, device types, and how visitors use our site in more detail. Google Analytics uses cookies and collects information such as your approximate location, device and browser type, and pages visited. It does not collect your name, email address, or the contents of any form you submit. See section 05 for how consent is obtained and how to withdraw it.</p>
       </div>
     </div>
 
@@ -350,7 +398,8 @@
         <p>Our contact form is processed by <strong style="color: inherit; font-weight: 600;">Web3Forms</strong>, a third-party form submission service. When you submit a form, your data is transmitted to Web3Forms' servers (which may be located outside Australia) and forwarded to our email address. By submitting the form, you consent to this transfer. Web3Forms operates under its own privacy policy.</p>
         <p>Please be aware that data transferred to overseas recipients may not receive the same level of protection as under Australian law. We take reasonable steps to ensure Web3Forms handles your information appropriately, but we cannot guarantee that overseas privacy laws provide an equivalent standard of protection to the <em>Privacy Act 1988</em> (Cth).</p>
         <p>Our website is hosted via <strong style="color: inherit; font-weight: 600;">Vercel</strong>, which may log basic server request data (IP address, browser type, pages visited) for operational purposes only. This data is not shared with us in identifiable form. Vercel's servers may also be located outside Australia.</p>
-        <p>We use Vercel Analytics to measure aggregate site traffic. It is cookieless, does not track individuals, and does not collect personally identifiable information. We do not use Google Analytics, Facebook Pixel, or any other advertising or behavioural tracking technology.</p>
+        <p>We use Vercel Analytics to measure aggregate site traffic. It is cookieless and does not collect personally identifiable information.</p>
+        <p>Where you consent to analytics cookies, we use <strong style="color: inherit; font-weight: 600;">Google Analytics 4</strong>, provided by Google LLC. Google may process this data on servers located outside Australia, including in the United States. Google acts as an independent controller of this data under its own privacy policy. We do not use Facebook Pixel or any advertising or behavioural retargeting technology.</p>
       </div>
     </div>
 
@@ -359,7 +408,7 @@
       <h2 class="policy-heading text-white">Cookies and Local Storage</h2>
       <div class="policy-body">
         <p>We use a single item of browser local storage to remember your light or dark theme preference. This data never leaves your device and is not associated with your identity.</p>
-        <p>We do not use any cookies for tracking, advertising, or analytics.</p>
+        <p>On your first visit, a banner asks whether you'd like to accept analytics cookies. If you accept, Google Analytics 4 sets cookies to distinguish you from other visitors and remembers your choice in local storage. If you decline, no analytics cookies are set and only cookieless Vercel Analytics is used. You can change your choice at any time by clearing your browser's site data for this website, which will bring the banner back on your next visit. We do not use cookies for advertising purposes.</p>
       </div>
     </div>
 
@@ -472,6 +521,17 @@
   </div>
 </footer>
 
+<!-- Cookie Consent Banner -->
+<div id="cookie-banner" class="cookie-banner" role="region" aria-label="Cookie consent">
+  <div class="cookie-banner-inner">
+    <p class="cookie-banner-text">We use optional analytics cookies to understand site traffic. Read our <a href="/privacy-policy.html">Privacy Policy</a>.</p>
+    <div class="cookie-banner-actions">
+      <button type="button" id="cookie-decline" class="btn-ghost cookie-btn">Decline</button>
+      <button type="button" id="cookie-accept" class="btn-primary cookie-btn">Accept</button>
+    </div>
+  </div>
+</div>
+
 <script>
   // Nav scroll
   const nav = document.getElementById('nav');
@@ -535,6 +595,54 @@
 
     btn.addEventListener('click', toggle);
     menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { if (open) toggle(); }));
+  })();
+</script>
+<script>
+  (function () {
+    var CONSENT_KEY = '3aw-analytics-consent';
+    var GA_ID = 'G-X7TF0B4L6T';
+    var banner = document.getElementById('cookie-banner');
+    var acceptBtn = document.getElementById('cookie-accept');
+    var declineBtn = document.getElementById('cookie-decline');
+
+    function loadGA() {
+      if (window.__gaLoaded) return;
+      window.__gaLoaded = true;
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+      document.head.appendChild(s);
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function () { window.dataLayer.push(arguments); };
+      window.gtag('js', new Date());
+      window.gtag('config', GA_ID, { anonymize_ip: true });
+    }
+
+    function showBanner() {
+      if (!banner) return;
+      setTimeout(function () { banner.classList.add('visible'); }, 1000);
+    }
+
+    function hideBanner() {
+      if (banner) banner.classList.remove('visible');
+    }
+
+    var consent = localStorage.getItem(CONSENT_KEY);
+    if (consent === 'granted') {
+      loadGA();
+    } else if (consent !== 'denied') {
+      showBanner();
+    }
+
+    if (acceptBtn) acceptBtn.addEventListener('click', function () {
+      localStorage.setItem(CONSENT_KEY, 'granted');
+      hideBanner();
+      loadGA();
+    });
+    if (declineBtn) declineBtn.addEventListener('click', function () {
+      localStorage.setItem(CONSENT_KEY, 'denied');
+      hideBanner();
+    });
   })();
 </script>
 <script defer src="/_vercel/insights/script.js"></script>
